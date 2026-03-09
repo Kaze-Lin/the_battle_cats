@@ -494,6 +494,3 @@ lib/
 
 # Doxygen generated files
 docs/html/
-*.webp
-*.jpg
-*.png
