@@ -1,0 +1,6 @@
+#ifndef IMAGE_SCALING_HPP
+#define IMAGE_SCALING_HPP
+
+const double YELLOW_BUTTON_SCALE = 0.43F;
+
+#endif //IMAGE_SCALING_HPP
