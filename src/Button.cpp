@@ -2,7 +2,6 @@
 
 Button::Button(const std::string& imagePath)
     : GameObject(std::make_shared<Util::Image>(imagePath), -8) {
-    // No need for `this->` when there's no ambiguity.
     b_OriginalSize = m_Drawable->GetSize();
 }
 

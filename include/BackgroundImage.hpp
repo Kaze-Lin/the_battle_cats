@@ -1,5 +1,5 @@
-#ifndef BACKGROUNDIMAGE_HPP
-#define BACKGROUNDIMAGE_HPP
+#ifndef BACKGROUND_IMAGE_HPP
+#define BACKGROUND_IMAGE_HPP
 
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
