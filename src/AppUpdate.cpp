@@ -1,13 +1,14 @@
 #include "App.hpp"
 
-
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
 
-
-
 void App::Update() {
+
+    m_b_Start->Update();
+    m_b_Upgrade->Update();
+    m_b_TeamBuild->Update();
 
     m_Root.Update();
 
@@ -20,4 +21,3 @@ void App::Update() {
         m_CurrentState = State::END;
         }
 }
-
