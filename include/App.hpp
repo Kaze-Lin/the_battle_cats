@@ -2,6 +2,11 @@
 #define APP_HPP
 
 #include "pch.hpp" // IWYU pragma: export
+#include "BackgroundImage.hpp"
+#include "Button.hpp"
+#include "ImageScaling.hpp"
+#include "SystemInfo.hpp"
+#include "Util/Renderer.hpp"
 
 class App {
 public:
@@ -23,7 +28,14 @@ private:
     void ValidTask();
 
 private:
+    Util::Renderer m_Root;
+
     State m_CurrentState = State::START;
+    std::shared_ptr<BackgroundImage> m_BackgroundImage;
+
+    std::shared_ptr<Button> m_b_Start;
+    std::shared_ptr<Button> m_b_Upgrade;
+    std::shared_ptr<Button> m_b_TeamBuild;
 };
 
 #endif
