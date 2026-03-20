@@ -1,7 +1,7 @@
 #include "Button.hpp"
 
 Button::Button(const std::string& imagePath)
-    : GameObject(std::make_shared<Util::Image>(imagePath), -8) {
+    : GameObject(std::make_shared<Util::Image>(imagePath), -5) {
     m_OriginalSize = m_Drawable->GetSize();
 }
 

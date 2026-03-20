@@ -31,11 +31,23 @@ private:
     Util::Renderer m_Root;
 
     State m_CurrentState = State::START;
-    std::shared_ptr<BackgroundImage> m_BackgroundImage;
 
+    // background image (without interaction image)
+    std::shared_ptr<BackgroundImage> m_BackgroundImage;
+    std::shared_ptr<BackgroundImage> m_LobbyBanner;
+    std::shared_ptr<BackgroundImage> m_BottomBanner;
+    std::shared_ptr<BackgroundImage> m_PlayerLevel;
+    std::shared_ptr<BackgroundImage> m_CatBaseCatFace;
+
+    // button image (with interaction image)
     std::shared_ptr<Button> m_b_Start;
     std::shared_ptr<Button> m_b_Upgrade;
     std::shared_ptr<Button> m_b_TeamBuild;
+    std::shared_ptr<Button> m_b_RestoreIcon;
+    std::shared_ptr<Button> m_b_NormalGachaIcon;
+    std::shared_ptr<Button> m_SpecialGachaIcon;
+    std::shared_ptr<Button> m_PropsStore;
+    std::shared_ptr<Button> m_Back;
 };
 
 #endif
