@@ -4,6 +4,7 @@ set(SRC_FILES
     AppEnd.cpp
     BackgroundImage.cpp
     Button.cpp
+    Phase/CatBase.cpp
 )
 
 set(INCLUDE_FILES
@@ -12,6 +13,7 @@ set(INCLUDE_FILES
     Button.hpp
     ImageScaling.hpp
     SystemInfo.hpp
+    Phase/CatBase.hpp
 )
 
 set(TEST_FILES

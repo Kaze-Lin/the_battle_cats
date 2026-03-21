@@ -15,6 +15,8 @@ void Button::Place(glm::vec2 p) {
 }
 
 void Button::Update() {
+    if (!m_Visible) return;
+
     constexpr float animationSpeed = 0.2F;
     const glm::vec2 idleScaleFactor = {1.0F, 1.0F};
     const glm::vec2 hoverScaleFactor = {0.97F, 0.97F};

@@ -7,6 +7,7 @@
 #include "ImageScaling.hpp"
 #include "SystemInfo.hpp"
 #include "Util/Renderer.hpp"
+#include "Phase/CatBase.hpp"
 
 class App {
 public:
@@ -28,26 +29,32 @@ private:
     void ValidTask();
 
 private:
+    enum class Phase {
+        Base,
+        StageSelection,
+        Fight,
+
+        Upgrade,
+        TeamBuild,
+        PropsStore,
+
+        Restore,
+        NormalGacha,
+        SpecialGacha,
+
+        Exit
+    };
+
     Util::Renderer m_Root;
+    // Phase m_Phase = Phase::Base;
 
     State m_CurrentState = State::START;
 
-    // background image (without interaction image)
-    std::shared_ptr<BackgroundImage> m_BackgroundImage;
-    std::shared_ptr<BackgroundImage> m_LobbyBanner;
-    std::shared_ptr<BackgroundImage> m_BottomBanner;
-    std::shared_ptr<BackgroundImage> m_PlayerLevel;
-    std::shared_ptr<BackgroundImage> m_CatBaseCatFace;
+    std::shared_ptr<CatBase> catBase;
 
-    // button image (with interaction image)
-    std::shared_ptr<Button> m_b_Start;
-    std::shared_ptr<Button> m_b_Upgrade;
-    std::shared_ptr<Button> m_b_TeamBuild;
-    std::shared_ptr<Button> m_b_RestoreIcon;
-    std::shared_ptr<Button> m_b_NormalGachaIcon;
-    std::shared_ptr<Button> m_SpecialGachaIcon;
-    std::shared_ptr<Button> m_PropsStore;
-    std::shared_ptr<Button> m_Back;
+public:
+    void Initialize();
+
 };
 
 #endif
