@@ -52,8 +52,6 @@ private:
 
     std::shared_ptr<CatBase> catBase;
 
-public:
-    void Initialize();
 
 };
 

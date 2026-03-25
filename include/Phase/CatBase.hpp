@@ -28,9 +28,9 @@ private:
     std::shared_ptr<Button> m_b_Back;
 
 public:
-    CatBase();
     std::vector<std::shared_ptr<Util::GameObject>> m_catBase;
-    std::vector<std::shared_ptr<Util::GameObject>> n;
+
+    CatBase();
 
     void Update();
 };
