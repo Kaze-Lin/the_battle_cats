@@ -119,6 +119,7 @@ void App::Start() {
 
     if (!DatabaseManager::GetInstance().LoadCatData(RESOURCE_DIR "/assets/Database/CatData.json")) {
         m_CurrentState = State::END;
+        return;
     }
 
     m_CurrentState = State::UPDATE;
