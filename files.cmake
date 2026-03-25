@@ -4,6 +4,8 @@ set(SRC_FILES
     AppEnd.cpp
     BackgroundImage.cpp
     Button.cpp
+    UnitData.cpp
+    DatabaseManager.cpp
 )
 
 set(INCLUDE_FILES
@@ -12,6 +14,9 @@ set(INCLUDE_FILES
     Button.hpp
     ImageScaling.hpp
     SystemInfo.hpp
+    UnitData.hpp
+    nlohmann/json.hpp
+    DatabaseManager.hpp
 )
 
 set(TEST_FILES

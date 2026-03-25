@@ -3,6 +3,7 @@
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Logger.hpp"
+#include "DatabaseManager.hpp"
 
 #include <iostream>
 
@@ -116,7 +117,10 @@ void App::Start() {
     m_SpecialGachaIcon->Place({specialGachaIconX, specialGachaIconY});
     m_Root.AddChild(m_SpecialGachaIcon);
 
-
+    if (!DatabaseManager::GetInstance().LoadCatData(RESOURCE_DIR "/assets/Database/CatData.json")) {
+        m_CurrentState = State::END;
+        return;
+    }
 
     m_CurrentState = State::UPDATE;
 }
