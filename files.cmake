@@ -6,6 +6,8 @@ set(SRC_FILES
     Button.cpp
     Phase/CatBase.cpp
     Phase/StageSelection.cpp
+    UnitData.cpp
+    DatabaseManager.cpp
 )
 
 set(INCLUDE_FILES
@@ -16,6 +18,9 @@ set(INCLUDE_FILES
     SystemInfo.hpp
     Phase/CatBase.hpp
     Phase/StageSelection.hpp
+    UnitData.hpp
+    nlohmann/json.hpp
+    DatabaseManager.hpp
 )
 
 set(TEST_FILES
