@@ -17,6 +17,7 @@ public:
     void AlignWithWindow();
     void AlignWithWindowWidth();
     void ScaleSize(glm::vec2 s = {1.0F, 1.0F});
+    void SetImage(const std::string& ImagePath);
 
     void Place(glm::vec2 p);
 

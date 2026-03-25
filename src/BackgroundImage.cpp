@@ -29,6 +29,10 @@ void BackgroundImage::Place(glm::vec2 p) {
     m_Transform.translation = p;
 }
 
+void BackgroundImage::SetImage(const std::string& ImagePath){
+    m_Drawable = std::make_shared<Util::Image>(ImagePath);
+}
+
 glm::vec2 BackgroundImage::GetSize() {
     return m_OriginalSize * m_BaseScale;
 }
