@@ -1,45 +1,86 @@
 #include "Phase/CatBase.hpp"
 
-CatBase::CatBase() {
+#include "Phase/StageSelection.hpp"
+
+CatBase::CatBase(): Phase() {
     // background image (without interaction image)
-    m_BackgroundImage = std::make_shared<BackgroundImage>(RESOURCE_DIR "/lobby/Img009_3.png", -10.0F);
-    m_catBase.push_back(m_BackgroundImage);
+    m_BackgroundImage =
+        std::make_shared<BackgroundImage>(
+            RESOURCE_DIR "/lobby/Img009_3.png",
+            -10.0F);
+    AddChild(m_BackgroundImage);
 
-    m_LobbyBanner = std::make_shared<BackgroundImage>(RESOURCE_DIR "/lobby/lobby_banner.png", -7.0F);
-    m_catBase.push_back(m_LobbyBanner);
+    m_LobbyBanner =
+        std::make_shared<BackgroundImage>(
+            RESOURCE_DIR "/lobby/lobby_banner.png",
+            -7.0F);
+    AddChild(m_LobbyBanner);
 
-    m_BottomBanner = std::make_shared<BackgroundImage>(RESOURCE_DIR "/lobby/bottom_banner.png", -7.0F);
-    m_catBase.push_back(m_BottomBanner);
+    m_BottomBanner =
+        std::make_shared<BackgroundImage>(
+            RESOURCE_DIR "/lobby/bottom_banner.png",
+            -7.0F);
+    AddChild(m_BottomBanner);
 
-    m_PlayerLevel = std::make_shared<BackgroundImage>(RESOURCE_DIR "/lobby/player_level.png", -7.0F);
-    m_catBase.push_back(m_PlayerLevel);
+    m_PlayerLevel =
+        std::make_shared<BackgroundImage>(
+            RESOURCE_DIR "/lobby/player_level.png",
+            -7.0F);
+    AddChild(m_PlayerLevel);
 
-    m_CatBaseCatFace = std::make_shared<BackgroundImage>(RESOURCE_DIR "/lobby/Cat_base_cat_face.png", -9.0F);
-    m_catBase.push_back(m_CatBaseCatFace);
+    m_CatBaseCatFace =
+        std::make_shared<BackgroundImage>(
+            RESOURCE_DIR "/lobby/Cat_base_cat_face.png",
+            -9.0F);
+    AddChild(m_CatBaseCatFace);
 
     // button image (with interaction image)
-    m_b_Start = std::make_shared<Button>(RESOURCE_DIR "/lobby/start_battle.png");
+    m_b_Start =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/lobby/start_battle.png",
+            [this](){this->ToStageSelection();});
     m_b_Start->ScaleSize({YELLOW_BUTTON_SCALE, YELLOW_BUTTON_SCALE});
 
-    m_b_Upgrade = std::make_shared<Button>(RESOURCE_DIR "/lobby/level_up.png");
+    m_b_Upgrade =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/lobby/level_up.png",
+            nullptr);
     m_b_Upgrade->ScaleSize({YELLOW_BUTTON_SCALE, YELLOW_BUTTON_SCALE});
 
-    m_b_TeamBuild = std::make_shared<Button>(RESOURCE_DIR "/lobby/team_buildup.png");
+    m_b_TeamBuild =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/lobby/team_buildup.png",
+            nullptr);
     m_b_TeamBuild->ScaleSize({YELLOW_BUTTON_SCALE, YELLOW_BUTTON_SCALE});
 
-    m_b_RestoreIcon = std::make_shared<Button>(RESOURCE_DIR "/lobby/restore_icon.png");
+    m_b_RestoreIcon =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/lobby/restore_icon.png",
+            nullptr);
     m_b_RestoreIcon->ScaleSize({WOOD_BAR_BUTTON_SCALE, WOOD_BAR_BUTTON_SCALE});
 
-    m_b_NormalGachaIcon = std::make_shared<Button>(RESOURCE_DIR "/lobby/normal_gacha_icon.png");
+    m_b_NormalGachaIcon =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/lobby/normal_gacha_icon.png",
+            nullptr);
     m_b_NormalGachaIcon->ScaleSize({WOOD_BAR_BUTTON_SCALE, WOOD_BAR_BUTTON_SCALE});
 
-    m_b_SpecialGachaIcon = std::make_shared<Button>(RESOURCE_DIR "/lobby/special_gacha_icon.png");
+    m_b_SpecialGachaIcon =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/lobby/special_gacha_icon.png",
+            nullptr);
     m_b_SpecialGachaIcon->ScaleSize({WOOD_BAR_BUTTON_SCALE, WOOD_BAR_BUTTON_SCALE});
 
-    m_b_PropsStore = std::make_shared<Button>(RESOURCE_DIR "/lobby/props_store_button.png");
+    m_b_PropsStore =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/lobby/props_store_button.png",
+            nullptr);
     m_b_PropsStore->ScaleSize({YELLOW_BUTTON_SCALE, YELLOW_BUTTON_SCALE});
 
-    m_b_Back = std::make_shared<Button>(RESOURCE_DIR "/lobby/back_button.png");
+    m_b_Back =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/lobby/back_button.png",
+            [this](){this->ToExit();});
     m_b_Back->ScaleSize({YELLOW_BUTTON_SCALE + 0.03F, YELLOW_BUTTON_SCALE + 0.03F});
 
     // --- Layout settings ---
@@ -67,56 +108,59 @@ CatBase::CatBase() {
     // button image (with interaction image)
     const float startX = -1.0F * (System::GetWindowWidth() / 2.0F) + m_b_Start->GetSize().x / 2.0F + 50.0F;
     m_b_Start->Place({startX, 140.0F});
-    m_catBase.push_back(m_b_Start);
+    AddChild(m_b_Start);
 
     const auto startPos = m_b_Start->GetCoordinate();
     const auto startSize = m_b_Start->GetSize();
     const float upgradeY = startPos.y - startSize.y / 2.0F - 15.0F - m_b_Upgrade->GetSize().y / 2.0F;
     m_b_Upgrade->Place({startPos.x, upgradeY});
-    m_catBase.push_back(m_b_Upgrade);
+    AddChild(m_b_Upgrade);
 
     const auto upgradePos = m_b_Upgrade->GetCoordinate();
     const auto upgradeSize = m_b_Upgrade->GetSize();
     const float teamBuildY = upgradePos.y - upgradeSize.y / 2.0F - 15.0F - m_b_TeamBuild->GetSize().y / 2.0F;
     m_b_TeamBuild->Place({upgradePos.x, teamBuildY});
-    m_catBase.push_back(m_b_TeamBuild);
+    AddChild(m_b_TeamBuild);
 
     const auto propsStroeButtonX = m_BottomBanner->GetCoordinate().x + 80.0F;
     const auto propsStroeButtonY = m_BottomBanner->GetCoordinate().y;
     m_b_PropsStore->Place({propsStroeButtonX, propsStroeButtonY});
-    m_catBase.push_back(m_b_PropsStore);
+    AddChild(m_b_PropsStore);
 
     const auto backButtonX = -1.0F * System::GetWindowWidth() / 2.0F + m_b_Back->GetSize().x / 2.0F + 5.0F;
     const auto backButtonY = -1.0F * System::GetWindowHeight() / 2.0F + m_b_Back->GetSize().y / 2.0F + 15.0F;
     m_b_Back->Place({backButtonX, backButtonY});
-    m_catBase.push_back(m_b_Back);
+    AddChild(m_b_Back);
 
     // layout of wood area buttons
     const auto restoreIconX = -5.0F;
     const auto restoreIconY = m_BottomBanner->GetCoordinate().y + m_BottomBanner->GetSize().y / 2.0F + m_b_RestoreIcon->GetSize().y / 2.0F + 40.0F;
     m_b_RestoreIcon->Place({restoreIconX, restoreIconY});
-    m_catBase.push_back(m_b_RestoreIcon);
+    AddChild(m_b_RestoreIcon);
 
     const auto normalGachaIconX = m_b_RestoreIcon->GetCoordinate().x + m_b_RestoreIcon->GetSize().x / 2.0F + m_b_NormalGachaIcon->GetSize().x / 2.0F + 30.0F;
     const auto normalGachaIconY = restoreIconY;
     m_b_NormalGachaIcon->Place({normalGachaIconX, normalGachaIconY});
-    m_catBase.push_back(m_b_NormalGachaIcon);
+    AddChild(m_b_NormalGachaIcon);
 
     const auto specialGachaIconX = m_b_NormalGachaIcon->GetCoordinate().x + m_b_NormalGachaIcon->GetSize().x / 2.0F + m_b_SpecialGachaIcon->GetSize().x / 2.0F + 20.0F;
     const auto specialGachaIconY = restoreIconY;
     m_b_SpecialGachaIcon->Place({specialGachaIconX, specialGachaIconY});
-    m_catBase.push_back(m_b_SpecialGachaIcon);
+    AddChild(m_b_SpecialGachaIcon);
 
 }
 
-void CatBase::Update() {
-    m_b_Start->Update();
-    m_b_Upgrade->Update();
-    m_b_TeamBuild->Update();
-    m_b_RestoreIcon->Update();
-    m_b_NormalGachaIcon->Update();
-    m_b_SpecialGachaIcon->Update();
-    m_b_PropsStore->Update();
-    m_b_Back->Update();
+std::shared_ptr<Phase> CatBase::GetDestinationPhase() {
+    return this->m_DestinationPhase;
 }
 
+void CatBase::ToStageSelection() {
+    this->m_DestinationPhase = std::make_shared<StageSelection>();
+}
+
+void CatBase::ToExit() {
+    LOG_INFO("The game be quit by the m_b_Back button in Phase 'CatBase'.");
+
+    const auto context = Core::Context::GetInstance();
+    context->SetExit(true);
+}

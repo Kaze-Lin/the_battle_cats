@@ -8,6 +8,7 @@ set(SRC_FILES
     Phase/StageSelection.cpp
     UnitData.cpp
     DatabaseManager.cpp
+    Phase.cpp
 )
 
 set(INCLUDE_FILES
@@ -21,6 +22,8 @@ set(INCLUDE_FILES
     UnitData.hpp
     nlohmann/json.hpp
     DatabaseManager.hpp
+    IStateful.hpp
+    Phase.hpp
 )
 
 set(TEST_FILES

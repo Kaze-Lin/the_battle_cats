@@ -29,28 +29,12 @@ private:
     void ValidTask();
 
 private:
-    enum class Phase {
-        Base,
-        StageSelection,
-        Fight,
-
-        Upgrade,
-        TeamBuild,
-        PropsStore,
-
-        Restore,
-        NormalGacha,
-        SpecialGacha,
-
-        Exit
-    };
 
     Util::Renderer m_Root;
-    // Phase m_Phase = Phase::Base;
+
+    std::shared_ptr<Phase> m_Phase;
 
     State m_CurrentState = State::START;
-
-    std::shared_ptr<CatBase> catBase;
 
 
 };

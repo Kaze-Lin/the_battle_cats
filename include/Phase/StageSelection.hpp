@@ -2,13 +2,14 @@
 #define STAGE_SELECTION_HPP
 
 #include "BackgroundImage.hpp"
+#include "Phase.hpp"
 
-class StageSelection {
+class StageSelection: public Phase {
 private:
     std::shared_ptr<BackgroundImage> m_BackgroundImage;
 
 public:
-    std::vector<std::shared_ptr<Util::GameObject>> m_stageSelection;
+
 
     StageSelection();
 
