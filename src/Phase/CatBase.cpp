@@ -159,7 +159,7 @@ void CatBase::ToStageSelection() {
 }
 
 void CatBase::ToExit() {
-    LOG_INFO("The game be quit by the m_b_Back button in Phase 'CatBase'.");
+    LOG_INFO("The game be quit by the m_b_Back button in Phase 'CatBase'");
 
     const auto context = Core::Context::GetInstance();
     context->SetExit(true);

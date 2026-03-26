@@ -1,8 +1,8 @@
 #ifndef CAT_BASE_HPP
 #define CAT_BASE_HPP
 
-#include "BackgroundImage.hpp"
-#include "Button.hpp"
+#include "Component/BackgroundImage.hpp"
+#include "Component/Button.hpp"
 #include "ImageScaling.hpp"
 #include "Phase.hpp"
 #include "Util/Renderer.hpp"

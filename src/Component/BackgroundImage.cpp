@@ -1,4 +1,4 @@
-#include "BackgroundImage.hpp"
+#include "Component/BackgroundImage.hpp"
 
 BackgroundImage::BackgroundImage(const std::string& imagePath, float zIndex)
     : GameObject(std::make_shared<Util::Image>(imagePath), zIndex) {

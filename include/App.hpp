@@ -2,10 +2,6 @@
 #define APP_HPP
 
 #include "pch.hpp" // IWYU pragma: export
-#include "BackgroundImage.hpp"
-#include "Button.hpp"
-#include "ImageScaling.hpp"
-#include "SystemInfo.hpp"
 #include "Util/Renderer.hpp"
 #include "Phase/CatBase.hpp"
 

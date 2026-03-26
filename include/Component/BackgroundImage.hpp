@@ -3,7 +3,7 @@
 
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
-#include "SystemInfo.hpp"
+#include "../SystemInfo.hpp"
 
 class BackgroundImage: public Util::GameObject {
 private:
