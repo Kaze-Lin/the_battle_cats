@@ -8,8 +8,8 @@
 void App::Start() {
     LOG_TRACE("Start");
 
-    catBase = std::make_shared<CatBase>();
-    m_Root.AddChildren(catBase->m_catBase);
+    m_Phase = std::make_shared<CatBase>();
+    m_Root.AddChild(m_Phase);
 
 
 

@@ -1,12 +1,14 @@
 #ifndef CAT_BASE_HPP
 #define CAT_BASE_HPP
 
-#include "BackgroundImage.hpp"
-#include "Button.hpp"
+#include "Component/BackgroundImage.hpp"
+#include "Component/Button.hpp"
 #include "ImageScaling.hpp"
+#include "Phase.hpp"
 #include "Util/Renderer.hpp"
+#include "Phase/Upgrade.hpp"
 
-class CatBase {
+class CatBase: public Phase {
 private:
 
 
@@ -27,12 +29,19 @@ private:
     std::shared_ptr<Button> m_b_PropsStore;
     std::shared_ptr<Button> m_b_Back;
 
+    // Destination Phase
+    std::shared_ptr<Phase> m_DestinationPhase = nullptr;
+
 public:
-    std::vector<std::shared_ptr<Util::GameObject>> m_catBase;
 
     CatBase();
+    ~CatBase() override = default;
 
-    void Update();
+    std::shared_ptr<Phase> GetDestinationPhase() override;
+
+    void ToStageSelection();
+    void ToUpgrade();
+    void ToExit();
 };
 
 

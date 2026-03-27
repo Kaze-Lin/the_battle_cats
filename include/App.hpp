@@ -2,10 +2,6 @@
 #define APP_HPP
 
 #include "pch.hpp" // IWYU pragma: export
-#include "BackgroundImage.hpp"
-#include "Button.hpp"
-#include "ImageScaling.hpp"
-#include "SystemInfo.hpp"
 #include "Util/Renderer.hpp"
 #include "Phase/CatBase.hpp"
 
@@ -29,28 +25,12 @@ private:
     void ValidTask();
 
 private:
-    enum class Phase {
-        Base,
-        StageSelection,
-        Fight,
-
-        Upgrade,
-        TeamBuild,
-        PropsStore,
-
-        Restore,
-        NormalGacha,
-        SpecialGacha,
-
-        Exit
-    };
 
     Util::Renderer m_Root;
-    // Phase m_Phase = Phase::Base;
+
+    std::shared_ptr<Phase> m_Phase;
 
     State m_CurrentState = State::START;
-
-    std::shared_ptr<CatBase> catBase;
 
 
 };

@@ -1,10 +1,12 @@
 #include "Phase/StageSelection.hpp"
 
-StageSelection::StageSelection() {
+StageSelection::StageSelection(): Phase() {
     // background image (without interaction image)
-    m_BackgroundImage = std::make_shared<BackgroundImage>(RESOURCE_DIR "/lobby/Img009_3.png", -10.0F);
-    m_stageSelection.push_back(m_BackgroundImage);
-
+    m_BackgroundImage =
+        std::make_shared<BackgroundImage>(
+            RESOURCE_DIR "/phase/stage_selection/EOC_map.jpg",
+            -10.0F);
+    AddChild(m_BackgroundImage);
 
     // button image (with interaction image)
 
@@ -15,6 +17,3 @@ StageSelection::StageSelection() {
     m_BackgroundImage->AlignWithWindow();
 }
 
-void StageSelection::Update() {
-    return;
-}
