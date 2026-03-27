@@ -1,7 +1,7 @@
 #include "Component/Button.hpp"
 
 Button::Button(const std::string& imagePath, std::function<void()> Go)
-    : GameObject(std::make_shared<Util::Image>(imagePath), -5), Go(Go) {
+    : GameObject(std::make_shared<Util::Image>(imagePath), -5), Move(Go) {
     m_OriginalSize = m_Drawable->GetSize();
 }
 
@@ -56,7 +56,7 @@ void Button::Update() {
         break;
     case State::PRESSUP:
         targetScaleFactor = pressUpScaleFactor;
-        this->Go();
+        this->Move();
         break;
     case State::IDLE:
     default:

@@ -13,7 +13,6 @@ public:
 
     StageSelection();
 
-    void Update();
 };
 
 #endif //STAGE_SELECTION_HPP

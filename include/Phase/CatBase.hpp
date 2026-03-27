@@ -6,6 +6,7 @@
 #include "ImageScaling.hpp"
 #include "Phase.hpp"
 #include "Util/Renderer.hpp"
+#include "Phase/Upgrade.hpp"
 
 class CatBase: public Phase {
 private:
@@ -39,6 +40,7 @@ public:
     std::shared_ptr<Phase> GetDestinationPhase() override;
 
     void ToStageSelection();
+    void ToUpgrade();
     void ToExit();
 };
 

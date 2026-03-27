@@ -21,7 +21,7 @@ private:
     glm::vec2 m_BaseScale = {1.0F, 1.0F};
 
     // where thr button to go for
-    std::function<void()> Go = nullptr;
+    std::function<void()> Move = nullptr;
 
 public:
     explicit Button(
