@@ -1,7 +1,7 @@
 #ifndef STAGE_SELECTION_HPP
 #define STAGE_SELECTION_HPP
 
-#include "../Component/BackgroundImage.hpp"
+#include "Component/BackgroundImage.hpp"
 #include "Phase.hpp"
 
 class StageSelection: public Phase {

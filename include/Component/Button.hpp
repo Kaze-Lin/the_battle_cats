@@ -26,7 +26,7 @@ private:
 public:
     explicit Button(
         const std::string &imagePath,
-        std::function<void()> Go);
+        std::function<void()> Move);
 
     ~Button() override = default;
 

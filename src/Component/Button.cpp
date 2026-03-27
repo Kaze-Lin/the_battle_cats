@@ -1,7 +1,7 @@
 #include "Component/Button.hpp"
 
-Button::Button(const std::string& imagePath, std::function<void()> Go)
-    : GameObject(std::make_shared<Util::Image>(imagePath), -5), Move(Go) {
+Button::Button(const std::string& imagePath, std::function<void()> Move)
+    : GameObject(std::make_shared<Util::Image>(imagePath), -5), Move(Move) {
     m_OriginalSize = m_Drawable->GetSize();
 }
 
