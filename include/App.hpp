@@ -4,6 +4,9 @@
 #include "pch.hpp" // IWYU pragma: export
 #include "Util/Renderer.hpp"
 #include "Phase/CatBase.hpp"
+#include "Phase/PropsStore.hpp"
+#include "Phase/StageSelection.hpp"
+#include "PhaseManager.hpp"
 
 class App {
 public:

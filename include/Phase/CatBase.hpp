@@ -29,9 +29,6 @@ private:
     std::shared_ptr<Button> m_b_PropsStore;
     std::shared_ptr<Button> m_b_Back;
 
-    // Destination Phase
-    std::shared_ptr<Phase> m_DestinationPhase = nullptr;
-
 public:
 
     CatBase();
@@ -41,6 +38,7 @@ public:
 
     void ToStageSelection();
     void ToUpgrade();
+    void ToPropsStore();
     void ToExit();
 };
 

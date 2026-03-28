@@ -8,7 +8,9 @@
 void App::Start() {
     LOG_TRACE("Start");
 
-    m_Phase = std::make_shared<CatBase>();
+    PhaseManager::MapInitialize();
+
+    m_Phase = PhaseManager::GetFirstPhase();
     m_Root.AddChild(m_Phase);
 
 

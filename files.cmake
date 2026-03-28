@@ -10,6 +10,8 @@ set(SRC_FILES
     DatabaseManager.cpp
     Phase.cpp
     Phase/Upgrade.cpp
+    Phase/PropsStore.cpp
+    PhaseManager.cpp
 )
 
 set(INCLUDE_FILES
@@ -26,6 +28,8 @@ set(INCLUDE_FILES
     IStateful.hpp
     Phase.hpp
     Phase/Upgrade.hpp
+    Phase/PropsStore.hpp
+    PhaseManager.hpp
 )
 
 set(TEST_FILES

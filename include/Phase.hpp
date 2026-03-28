@@ -5,6 +5,9 @@
 #include "IStateful.hpp"
 
 class Phase: public Util::GameObject {
+protected:
+    std::string m_DestinationPhase = "Non";
+
 public:
     Phase() = default;
 

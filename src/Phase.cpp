@@ -14,3 +14,4 @@ void Phase::Update() {
 std::shared_ptr<Phase> Phase::GetDestinationPhase() {
     return nullptr;
 }
+
