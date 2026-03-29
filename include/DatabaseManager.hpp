@@ -3,8 +3,8 @@
 
 #include <string>
 #include <unordered_map>
-#include "UnitData.hpp"
-#include "EnemyData.hpp"
+#include "DataBase/UnitData.hpp"
+#include "DataBase/EnemyData.hpp"
 
 class DatabaseManager {
 private:
