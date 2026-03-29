@@ -6,6 +6,7 @@ set(SRC_FILES
     Button.cpp
     UnitData.cpp
     DatabaseManager.cpp
+    EnemyData.cpp
 )
 
 set(INCLUDE_FILES
@@ -17,6 +18,7 @@ set(INCLUDE_FILES
     UnitData.hpp
     nlohmann/json.hpp
     DatabaseManager.hpp
+    EnemyData.hpp
 )
 
 set(TEST_FILES

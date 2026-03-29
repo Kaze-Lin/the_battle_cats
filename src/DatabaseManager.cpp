@@ -53,3 +53,39 @@ const UnitData* DatabaseManager::GetCatData(int id) const {
     std::cerr << "[DatabaseManager] warning" << id << " data！\n";
     return nullptr;
 }
+
+bool DatabaseManager::LoadEnemyData(const std::string& filepath) {
+    std::ifstream file(filepath);
+    if (!file.is_open()) {
+        std::cerr << "[DatabaseManager] 錯誤：無法開啟敵人檔案 " << filepath << std::endl;
+        return false;
+    }
+
+    try {
+        json j;
+        file >> j;
+
+        // 從 JSON 的 "Enemy" 陣列中抓取資料並自動轉換
+        std::vector<EnemyData> enemyList = j.at("Enemy").get<std::vector<EnemyData>>();
+
+        for (const auto& enemy : enemyList) {
+            m_enemyDatabase[enemy.id] = enemy;
+        }
+
+        std::cout << "[DatabaseManager] 成功載入 " << m_enemyDatabase.size() << " 種敵人的資料！\n";
+        return true;
+
+    } catch (const json::exception& e) {
+        std::cerr << "[DatabaseManager] 敵人 JSON 解析失敗：" << e.what() << std::endl;
+        return false;
+    }
+}
+
+const EnemyData* DatabaseManager::GetEnemyData(int id) const {
+    auto it = m_enemyDatabase.find(id);
+    if (it != m_enemyDatabase.end()) {
+        return &(it->second);
+    }
+    std::cerr << "[DatabaseManager] 警告：找不到 ID 為 " << id << " 的敵人資料！\n";
+    return nullptr;
+}

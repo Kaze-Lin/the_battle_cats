@@ -4,10 +4,12 @@
 #include <string>
 #include <unordered_map>
 #include "UnitData.hpp"
+#include "EnemyData.hpp"
 
 class DatabaseManager {
 private:
     std::unordered_map<int, UnitData> m_catDatabase;
+    std::unordered_map<int, EnemyData> m_enemyDatabase;
 
     DatabaseManager() = default;
     ~DatabaseManager() = default;
@@ -22,8 +24,10 @@ public:
     }
 
     bool LoadCatData(const std::string& filepath);
-
     const UnitData* GetCatData(int id) const;
+
+    bool LoadEnemyData(const std::string& filepath);
+    const EnemyData* GetEnemyData(int id) const;
 };
 
 #endif
