@@ -1,5 +1,7 @@
 #include "Phase/CatBase.hpp"
 
+#include "PhaseManager.hpp"
+#include "Phase/PropsStore.hpp"
 #include "Phase/StageSelection.hpp"
 
 CatBase::CatBase(): Phase() {
@@ -74,7 +76,7 @@ CatBase::CatBase(): Phase() {
     m_b_PropsStore =
         std::make_shared<Button>(
             RESOURCE_DIR "/phase/lobby/props_store_button.png",
-            nullptr);
+            [this](){this->ToPropsStore();});
     m_b_PropsStore->ScaleSize({YELLOW_BUTTON_SCALE, YELLOW_BUTTON_SCALE});
 
     m_b_Back =
@@ -151,15 +153,19 @@ CatBase::CatBase(): Phase() {
 }
 
 std::shared_ptr<Phase> CatBase::GetDestinationPhase() {
-    return this->m_DestinationPhase;
+    return PhaseManager::GetNextPhase("CatBase", this->m_DestinationPhase);
 }
 
 void CatBase::ToStageSelection() {
-    this->m_DestinationPhase = std::make_shared<StageSelection>();
+    this->m_DestinationPhase = "StageSelection";
 }
 
 void CatBase::ToUpgrade() {
-    this->m_DestinationPhase = std::make_shared<Upgrade>();
+    this->m_DestinationPhase = "Upgrade";
+}
+
+void CatBase::ToPropsStore() {
+    this->m_DestinationPhase = "PropsStore";
 }
 
 void CatBase::ToExit() {
