@@ -1,7 +1,9 @@
-#include "Button.hpp"
+#include "Component/Button.hpp"
 
-Button::Button(const std::string& imagePath)
-    : GameObject(std::make_shared<Util::Image>(imagePath), -5) {
+#include "PhaseManager.hpp"
+
+Button::Button(const std::string& imagePath, std::function<void()> Move)
+    : GameObject(std::make_shared<Util::Image>(imagePath), -5), Move(Move) {
     m_OriginalSize = m_Drawable->GetSize();
 }
 
@@ -15,6 +17,8 @@ void Button::Place(glm::vec2 p) {
 }
 
 void Button::Update() {
+    if (!m_Visible) return;
+
     constexpr float animationSpeed = 0.2F;
     const glm::vec2 idleScaleFactor = {1.0F, 1.0F};
     const glm::vec2 hoverScaleFactor = {0.97F, 0.97F};
@@ -54,6 +58,7 @@ void Button::Update() {
         break;
     case State::PRESSUP:
         targetScaleFactor = pressUpScaleFactor;
+        if (this->Move) this->Move();
         break;
     case State::IDLE:
     default:

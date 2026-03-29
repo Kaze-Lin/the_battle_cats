@@ -2,11 +2,11 @@
 #define APP_HPP
 
 #include "pch.hpp" // IWYU pragma: export
-#include "BackgroundImage.hpp"
-#include "Button.hpp"
-#include "ImageScaling.hpp"
-#include "SystemInfo.hpp"
 #include "Util/Renderer.hpp"
+#include "Phase/CatBase.hpp"
+#include "Phase/PropsStore.hpp"
+#include "Phase/StageSelection.hpp"
+#include "PhaseManager.hpp"
 
 class App {
 public:
@@ -28,26 +28,14 @@ private:
     void ValidTask();
 
 private:
+
     Util::Renderer m_Root;
+
+    std::shared_ptr<Phase> m_Phase;
 
     State m_CurrentState = State::START;
 
-    // background image (without interaction image)
-    std::shared_ptr<BackgroundImage> m_BackgroundImage;
-    std::shared_ptr<BackgroundImage> m_LobbyBanner;
-    std::shared_ptr<BackgroundImage> m_BottomBanner;
-    std::shared_ptr<BackgroundImage> m_PlayerLevel;
-    std::shared_ptr<BackgroundImage> m_CatBaseCatFace;
 
-    // button image (with interaction image)
-    std::shared_ptr<Button> m_b_Start;
-    std::shared_ptr<Button> m_b_Upgrade;
-    std::shared_ptr<Button> m_b_TeamBuild;
-    std::shared_ptr<Button> m_b_RestoreIcon;
-    std::shared_ptr<Button> m_b_NormalGachaIcon;
-    std::shared_ptr<Button> m_SpecialGachaIcon;
-    std::shared_ptr<Button> m_PropsStore;
-    std::shared_ptr<Button> m_Back;
 };
 
 #endif

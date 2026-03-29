@@ -6,8 +6,8 @@
 #include <nlohmann/json.hpp>
 
 struct AnimationData {
-    int precast;
-    int postcast;
+    int precast; // 前搖
+    int postcast; // 後搖
 };
 
 struct FormData {

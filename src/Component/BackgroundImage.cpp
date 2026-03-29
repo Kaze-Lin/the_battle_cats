@@ -1,4 +1,4 @@
-#include "BackgroundImage.hpp"
+#include "Component/BackgroundImage.hpp"
 
 BackgroundImage::BackgroundImage(const std::string& imagePath, float zIndex)
     : GameObject(std::make_shared<Util::Image>(imagePath), zIndex) {
@@ -27,6 +27,10 @@ void BackgroundImage::ScaleSize(glm::vec2 s) {
 
 void BackgroundImage::Place(glm::vec2 p) {
     m_Transform.translation = p;
+}
+
+void BackgroundImage::SetImage(const std::string& ImagePath){
+    m_Drawable = std::make_shared<Util::Image>(ImagePath);
 }
 
 glm::vec2 BackgroundImage::GetSize() {
