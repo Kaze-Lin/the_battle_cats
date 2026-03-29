@@ -20,7 +20,6 @@ void App::Start() {
         m_CurrentState = State::END;
         return;
     }
-
     m_CurrentState = State::UPDATE;
 }
 

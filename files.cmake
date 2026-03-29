@@ -8,6 +8,7 @@ set(SRC_FILES
     Phase/StageSelection.cpp
     UnitData.cpp
     DatabaseManager.cpp
+    EnemyData.cpp
     Phase.cpp
     Phase/Upgrade.cpp
     Phase/PropsStore.cpp
@@ -25,6 +26,7 @@ set(INCLUDE_FILES
     UnitData.hpp
     nlohmann/json.hpp
     DatabaseManager.hpp
+    EnemyData.hpp
     IStateful.hpp
     Phase.hpp
     Phase/Upgrade.hpp
