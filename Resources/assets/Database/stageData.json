@@ -1,0 +1,39 @@
+{
+  "Chapters": [
+    {
+      "chapter_id": 1,
+      "chapter_name": "Empire_of_cats",
+      "chapter_level": {"1":100,"2":150,"3":400},
+      "stages": [
+        {
+          "stage_id": 1,
+          "enemy_limit": 3,
+          "background_length": 3000,
+          "stage_name": "Korea",
+          "enemy_base_hp": 500,
+          "experience": 1000,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 180,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 0,
+              "start_time": 600,
+              "interval": 180,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
