@@ -6,6 +6,7 @@ set(SRC_FILES
     Component/BackgroundImage.cpp
     Component/Button.cpp
 
+    Phase/Phase.cpp
     Phase/CatBase.cpp
     Phase/Upgrade.cpp
     Phase/StageSelection.cpp
@@ -14,7 +15,6 @@ set(SRC_FILES
     DataBase/UnitData.cpp
     DataBase/EnemyData.cpp
 
-    Phase.cpp
     PhaseManager.cpp
     DatabaseManager.cpp
 )
@@ -28,6 +28,7 @@ set(INCLUDE_FILES
     ImageScaling.hpp
     SystemInfo.hpp
 
+    Phase/Phase.hpp
     Phase/CatBase.hpp
     Phase/StageSelection.hpp
     Phase/Upgrade.hpp
@@ -38,7 +39,6 @@ set(INCLUDE_FILES
 
     IStateful.hpp
 
-    Phase.hpp
     PhaseManager.hpp
     DatabaseManager.hpp
 

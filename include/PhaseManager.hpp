@@ -2,7 +2,7 @@
 #define PHASE_MANAGER_HPP
 
 #include <pch.hpp>
-#include "Phase.hpp"
+#include "Phase/Phase.hpp"
 #include "Phase/CatBase.hpp"
 #include "Phase/PropsStore.hpp"
 #include "Phase/StageSelection.hpp"
