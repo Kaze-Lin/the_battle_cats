@@ -4,9 +4,10 @@
 #include <pch.hpp>
 #include "Phase/Phase.hpp"
 #include "Phase/CatBase.hpp"
-#include "Phase/PropsStore.hpp"
 #include "Phase/StageSelection.hpp"
 #include "Phase/Upgrade.hpp"
+#include "Phase/PropsStore.hpp"
+#include "Phase/Fight.hpp"
 
 
 class PhaseManager {

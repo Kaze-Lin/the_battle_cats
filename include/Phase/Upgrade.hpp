@@ -18,14 +18,15 @@ private:
     // button image (with interaction image)
     std::shared_ptr<Button> m_b_PropsStore;
     std::shared_ptr<Button> m_b_Back;
-
+    std::shared_ptr<Button> m_b_CatCan;
 
 public:
 
-    std::shared_ptr<Phase> GetDestinationPhase() override;
-
     Upgrade();
     ~Upgrade() override = default;
+
+    std::shared_ptr<Phase> GetDestinationPhase() override;
+
     void GoBack(); // this is for go back
     void ToPropsStore();
 };

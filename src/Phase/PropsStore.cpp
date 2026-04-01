@@ -19,16 +19,22 @@ PropsStore::PropsStore(): Phase() {
 
     m_BottomBanner =
         std::make_shared<BackgroundImage>(
-            RESOURCE_DIR "/phase/upgrade/bottom_banner.png",
+            RESOURCE_DIR "/phase/bottom_banner.png",
             -7.0F);
     AddChild(m_BottomBanner);
 
     // button image (with interaction image)
     m_b_Back =
         std::make_shared<Button>(
-            RESOURCE_DIR "/phase/lobby/back_button.png",
+            RESOURCE_DIR "/phase/back_button.png",
             [this](){this->GoBack();});
     m_b_Back->ScaleSize({YELLOW_BUTTON_SCALE + 0.03F, YELLOW_BUTTON_SCALE + 0.03F});
+
+    m_b_CatCan =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/phase/cat_can_button.png",
+            nullptr);
+    m_b_CatCan->ScaleSize({ORIGINAL_SCALING + 0.15F, ORIGINAL_SCALING + 0.15F});
 
 
     // --- Layout settings ---
@@ -47,6 +53,11 @@ PropsStore::PropsStore(): Phase() {
     const auto backButtonY = -1.0F * System::GetWindowHeight() / 2.0F + m_b_Back->GetSize().y / 2.0F + 15.0F;
     m_b_Back->Place({backButtonX, backButtonY});
     AddChild(m_b_Back);
+
+    const auto catcanX = 320.0F;
+    const auto catcanY = -353.0F;
+    m_b_CatCan->Place({catcanX, catcanY});
+    AddChild(m_b_CatCan);
 
 }
 
