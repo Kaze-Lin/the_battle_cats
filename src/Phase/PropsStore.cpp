@@ -1,7 +1,6 @@
 #include "Phase/PropsStore.hpp"
-
 #include "PhaseManager.hpp"
-#include "Phase/Upgrade.hpp"
+
 
 PropsStore::PropsStore(): Phase() {
     // background image (without interaction image)
