@@ -11,7 +11,6 @@
 class CatBase: public Phase {
 private:
 
-
     // background image (without interaction image)
     std::shared_ptr<BackgroundImage> m_BackgroundImage;
     std::shared_ptr<BackgroundImage> m_LobbyBanner;
@@ -28,6 +27,7 @@ private:
     std::shared_ptr<Button> m_b_SpecialGachaIcon;
     std::shared_ptr<Button> m_b_PropsStore;
     std::shared_ptr<Button> m_b_Back;
+    std::shared_ptr<Button> m_b_CatCan;
 
 public:
 
