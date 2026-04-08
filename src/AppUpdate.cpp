@@ -8,13 +8,16 @@ void App::Update() {
     // Phase transition
     const auto NewPhase = this->m_Phase->GetDestinationPhase();
     if (NewPhase) {
-        std::string temp = std::to_string(PhaseManager::m_PathSize) + " ";
-        for (auto &i: PhaseManager::m_Path) {
-            temp += i;
-            temp += " ";
+        if (PhaseManager::m_PathSize > 0) {
+            std::string temp = std::to_string(PhaseManager::m_PathSize) + " ";
+            for (auto &i: PhaseManager::m_Path) {
+                temp += i;
+                temp += " ";
+            }
+            LOG_DEBUG(temp);
+        } else {
+            LOG_DEBUG("should be back to CatBase now");
         }
-        LOG_DEBUG(temp);
-
         this->m_Root.RemoveChild(this->m_Phase);
         this->m_Phase = NewPhase;
         this->m_Root.AddChild(this->m_Phase);

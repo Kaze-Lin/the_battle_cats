@@ -15,7 +15,7 @@ private:
 
     // button image (with interaction image)
     std::shared_ptr<Button> m_b_Back;
-
+    std::shared_ptr<Button> m_b_CatCan;
 
 public:
 

@@ -1,6 +1,8 @@
 #ifndef IMAGE_SCALING_HPP
 #define IMAGE_SCALING_HPP
 
+const double ORIGINAL_SCALING = 1.0F;
+
 const double YELLOW_BUTTON_SCALE = 0.43F;
 
 const double WOOD_BAR_BUTTON_SCALE = 0.4F;

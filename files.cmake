@@ -11,6 +11,7 @@ set(SRC_FILES
     Phase/Upgrade.cpp
     Phase/StageSelection.cpp
     Phase/PropsStore.cpp
+    Phase/Fight.cpp
 
     DataBase/UnitData.cpp
     DataBase/EnemyData.cpp
@@ -33,6 +34,7 @@ set(INCLUDE_FILES
     Phase/StageSelection.hpp
     Phase/Upgrade.hpp
     Phase/PropsStore.hpp
+    Phase/Fight.hpp
 
     DataBase/UnitData.hpp
     DataBase/EnemyData.hpp

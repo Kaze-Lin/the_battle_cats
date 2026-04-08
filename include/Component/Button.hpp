@@ -26,7 +26,9 @@ private:
 public:
     explicit Button(
         const std::string &imagePath,
-        std::function<void()> Move);
+        std::function<void()> Move,
+        float zIndex = -5.0F
+        );
 
     ~Button() override = default;
 
