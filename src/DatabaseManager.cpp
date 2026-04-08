@@ -89,3 +89,24 @@ const EnemyData* DatabaseManager::GetEnemyData(int id) const {
     std::cerr << "[DatabaseManager] 警告：找不到 ID 為 " << id << " 的敵人資料！\n";
     return nullptr;
 }
+
+bool DatabaseManager::LoadStageData(const std::string& filepath) {
+    std::ifstream file(filepath);
+    if (!file.is_open()) return false;
+
+    try {
+        json j;
+        file >> j;
+
+        // 指定讀取 "Chapters" 這個陣列
+        std::vector<ChapterData> chapterList = j.at("Chapters").get<std::vector<ChapterData>>();
+
+        for (const auto& chapter : chapterList) {
+            m_chapterDatabase[chapter.chapterId] = chapter;
+        }
+        return true;
+    } catch (const json::exception& e) {
+        std::cerr << "關卡解析失敗: " << e.what() << std::endl;
+        return false;
+    }
+}
