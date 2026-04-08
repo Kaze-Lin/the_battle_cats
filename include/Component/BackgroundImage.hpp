@@ -7,12 +7,14 @@
 
 class BackgroundImage: public Util::GameObject {
 private:
-    std::shared_ptr<Util::Image> img = nullptr;
-
     glm::vec2 m_OriginalSize = { };
     glm::vec2 m_BaseScale = {1.0F, 1.0F};
+
 public:
-    explicit BackgroundImage(const std::string& imagePath, float zIndex = -10.0F);
+    explicit BackgroundImage(
+        const std::string& imagePath,
+        float zIndex = -10.0F
+        );
 
     void AlignWithWindow();
     void AlignWithWindowWidth();

@@ -60,6 +60,7 @@ StageSelection::StageSelection(): Phase() {
     const auto bottomBannerY = -1 * System::GetWindowHeight() / 2.0 + m_BottomBanner->GetSize().y / 2.0;
     m_BottomBanner->Place({0.0F, bottomBannerY});
 
+    // button image (with interaction image)
     const float startX = System::GetWindowWidth() / 2.0 - m_b_Start->GetSize().x / 2.0 - 20.0F;
     const float startY = m_BottomBanner->GetCoordinate().y + m_BottomBanner->GetSize().y / 2.0 + m_b_Start->GetSize().y / 2.0 + 125.0F;
     m_b_Start->Place({startX, startY});
