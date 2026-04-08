@@ -5,11 +5,13 @@
 #include <unordered_map>
 #include "DataBase/UnitData.hpp"
 #include "DataBase/EnemyData.hpp"
+#include "DataBase/StageData.hpp"
 
 class DatabaseManager {
 private:
     std::unordered_map<int, UnitData> m_catDatabase;
     std::unordered_map<int, EnemyData> m_enemyDatabase;
+    std::unordered_map<int, ChapterData> m_chapterDatabase;
 
     DatabaseManager() = default;
     ~DatabaseManager() = default;
@@ -28,6 +30,10 @@ public:
 
     bool LoadEnemyData(const std::string& filepath);
     const EnemyData* GetEnemyData(int id) const;
+
+    bool LoadStageData(const std::string& filepath);
+    const ChapterData* GetChapterData(int chapterId) const;
+    const StageData* GetStageData(int chapterId, int stageId) const;
 };
 
 #endif
