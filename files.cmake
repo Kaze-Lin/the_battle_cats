@@ -15,6 +15,7 @@ set(SRC_FILES
 
     DataBase/UnitData.cpp
     DataBase/EnemyData.cpp
+    DataBase/StageData.cpp
 
     PhaseManager.cpp
     DatabaseManager.cpp
@@ -38,6 +39,7 @@ set(INCLUDE_FILES
 
     DataBase/UnitData.hpp
     DataBase/EnemyData.hpp
+    DataBase/StageData.hpp
 
     IStateful.hpp
 
