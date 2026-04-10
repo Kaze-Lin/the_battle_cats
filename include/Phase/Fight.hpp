@@ -8,6 +8,7 @@
 
 #include "ImageScaling.hpp"
 #include "SystemInfo.hpp"
+#include "Component/Text.hpp"
 
 class Fight: public Phase {
 private:
@@ -16,7 +17,11 @@ private:
 
     // button image (with interaction image)
     std::shared_ptr<Button> m_b_Pause;
-    std::shared_ptr<Button> m_b_test;
+    std::shared_ptr<Button> m_b_RickUpgrade;
+    std::shared_ptr<Button> m_b_CannonCharge;
+
+    // stage name
+    std::shared_ptr<Text> m_StageName;
 
 public:
 

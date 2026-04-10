@@ -5,6 +5,7 @@ set(SRC_FILES
 
     Component/BackgroundImage.cpp
     Component/Button.cpp
+    Component/Text.cpp
 
     Phase/Phase.cpp
     Phase/CatBase.cpp
@@ -29,6 +30,7 @@ set(INCLUDE_FILES
 
     Component/BackgroundImage.hpp
     Component/Button.hpp
+    Component/Text.hpp
 
     ImageScaling.hpp
     SystemInfo.hpp
