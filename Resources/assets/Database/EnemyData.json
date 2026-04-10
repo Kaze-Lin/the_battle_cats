@@ -1,0 +1,366 @@
+{
+    "Enemy": [
+    {
+      "id": 0,
+      "name": "Doge",
+      "base_hp": 90,
+      "base_attack": 8,
+      "range": 110,
+      "is_area_attack": false,
+      "animation": {
+        "precast": 8,
+        "postcast": 10
+      },
+      "time_between_attacks": 47,
+      "move_speed": 5.0,
+      "Knockback": 3,
+      "money_drop": 15,
+      "traits": [
+        "White"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Snache",
+      "base_hp": 100,
+      "base_attack": 15,
+      "range": 110,
+      "is_area_attack": false,
+      "animation": {
+        "precast": 8,
+        "postcast": 8
+      },
+      "time_between_attacks": 37,
+      "move_speed": 8.0,
+      "Knockback": 3,
+      "money_drop": 30,
+      "traits": [
+        "White"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Those_Guys",
+      "base_hp": 200,
+      "base_attack": 20,
+      "range": 110,
+      "is_area_attack": false,
+      "animation": {
+        "precast": 10,
+        "postcast": 20
+      },
+      "time_between_attacks": 30,
+      "move_speed": 10.0,
+      "Knockback": 1,
+      "money_drop": 75,
+      "traits": [
+        "White"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Hippoe",
+      "base_hp": 1000,
+      "base_attack": 100,
+      "range": 160,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 8,
+        "postcast": 10
+      },
+      "time_between_attacks": 67,
+      "move_speed": 4.0,
+      "Knockback": 1,
+      "money_drop": 400,
+      "traits": [
+        "White"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Pigge",
+      "base_hp": 1500,
+      "base_attack": 120,
+      "range": 150,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 14,
+        "postcast": 8
+      },
+      "time_between_attacks": 73,
+      "move_speed": 5.0,
+      "Knockback": 2,
+      "money_drop": 400,
+      "traits": [
+        "Red"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Jackie_Peng",
+      "base_hp": 1300,
+      "base_attack": 80,
+      "range": 150,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 8,
+        "postcast": 16
+      },
+      "time_between_attacks": 24,
+      "move_speed": 11.0,
+      "Knockback": 3,
+      "money_drop": 450,
+      "traits": [
+        "White"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Gory",
+      "base_hp": 1200,
+      "base_attack": 140,
+      "range": 150,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 5,
+        "postcast": 10
+      },
+      "time_between_attacks": 20,
+      "move_speed": 15.0,
+      "Knockback": 3,
+      "money_drop": 125,
+      "traits": [
+        "White"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Baa_Baa",
+      "base_hp": 500,
+      "base_attack": 20,
+      "range": 130,
+      "is_area_attack": false,
+      "animation": {
+        "precast": 10,
+        "postcast": 15
+      },
+      "time_between_attacks": 40,
+      "move_speed": 7.0,
+      "Knockback": 3,
+      "money_drop": 60,
+      "traits": [
+        "White"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Sir_Seal",
+      "base_hp": 3000,
+      "base_attack": 200,
+      "range": 140,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 12,
+        "postcast": 15
+      },
+      "time_between_attacks": 30,
+      "move_speed": 12.0,
+      "Knockback": 1,
+      "money_drop": 350,
+      "traits": [
+        "Red"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Le_boin",
+      "base_hp": 10000,
+      "base_attack": 300,
+      "range": 350,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 20,
+        "postcast": 30
+      },
+      "time_between_attacks": 90,
+      "move_speed": 4.0,
+      "Knockback": 1,
+      "money_drop": 700,
+      "traits": [
+        "White"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Croco",
+      "base_hp": 150,
+      "base_attack": 20,
+      "range": 110,
+      "is_area_attack": false,
+      "animation": {
+        "precast": 8,
+        "postcast": 10
+      },
+      "time_between_attacks": 25,
+      "move_speed": 12.0,
+      "Knockback": 3,
+      "money_drop": 30,
+      "traits": [
+        "White"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Mooth",
+      "base_hp": 7000,
+      "base_attack": 400,
+      "range": 250,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 15,
+        "postcast": 20
+      },
+      "time_between_attacks": 60,
+      "move_speed": 10.0,
+      "Knockback": 4,
+      "money_drop": 1000,
+      "traits": [
+        "Floating"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Teacher_Bear",
+      "base_hp": 3000,
+      "base_attack": 400,
+      "range": 350,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 10,
+        "postcast": 15
+      },
+      "time_between_attacks": 40,
+      "move_speed": 6.0,
+      "Knockback": 5,
+      "money_drop": 400,
+      "traits": [
+        "White"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "One_Horn",
+      "base_hp": 8000,
+      "base_attack": 150,
+      "range": 130,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 10,
+        "postcast": 15
+      },
+      "time_between_attacks": 30,
+      "move_speed": 4.0,
+      "Knockback": 1,
+      "money_drop": 450,
+      "traits": [
+        "Red"
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Teacher_Bun_Bun",
+      "base_hp": 99999,
+      "base_attack": 2000,
+      "range": 200,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 15,
+        "postcast": 10
+      },
+      "time_between_attacks": 20,
+      "move_speed": 20.0,
+      "Knockback": 5,
+      "money_drop": 1500,
+      "traits": [
+        "Floating"
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Shy_Boy",
+      "base_hp": 4000,
+      "base_attack": 250,
+      "range": 130,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 5,
+        "postcast": 5
+      },
+      "time_between_attacks": 10,
+      "move_speed": 24.0,
+      "Knockback": 3,
+      "money_drop": 150,
+      "traits": [
+        "Red",
+        "Floating"
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Assassin_Bear",
+      "base_hp": 400,
+      "base_attack": 3000,
+      "range": 400,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 5,
+        "postcast": 5
+      },
+      "time_between_attacks": 5,
+      "move_speed": 50.0,
+      "Knockback": 1,
+      "money_drop": 100,
+      "traits": [
+        "Black"
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Kang_Roo",
+      "base_hp": 4000,
+      "base_attack": 120,
+      "range": 160,
+      "is_area_attack": true,
+      "animation": {
+        "precast": 10,
+        "postcast": 15
+      },
+      "time_between_attacks": 30,
+      "move_speed": 18.0,
+      "Knockback": 4,
+      "money_drop": 200,
+      "traits": [
+        "White"
+      ]
+    },
+    {
+      "id": 18,
+      "name": "B_B_Bunny",
+      "base_hp": 500,
+      "base_attack": 40,
+      "range": 140,
+      "is_area_attack": false,
+      "animation": {
+        "precast": 8,
+        "postcast": 12
+      },
+      "time_between_attacks": 30,
+      "move_speed": 12.0,
+      "Knockback": 3,
+      "money_drop": 50,
+      "traits": [
+        "Red"
+      ]
+    }
+  ]
+}
