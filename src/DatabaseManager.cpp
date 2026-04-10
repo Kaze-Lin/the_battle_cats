@@ -87,3 +87,24 @@ bool DatabaseManager::LoadStageData(const std::string& filepath) {
     return LoadDataHelper<ChapterData>(filepath, "Chapters", "關卡", m_chapterDatabase,
         [](const ChapterData& d) { return d.chapterId; });
 }
+
+const ChapterData* DatabaseManager::GetChapterData(int chapterId) const {
+    return GetDataHelper<ChapterData>(m_chapterDatabase, chapterId, "篇章");
+}
+
+const StageData* DatabaseManager::GetStageData(int chapterId, int stageId) const {
+    // 1. 先拿到該篇章的資料
+    const ChapterData* chapter = GetChapterData(chapterId);
+
+    // 2. 如果篇章存在，就在裡面的 stages 陣列尋找對應的 stageId
+    if (chapter != nullptr) {
+        for (const auto& stage : chapter->stages) {
+            if (stage.stageId == stageId) {
+                return &stage; // 找到了！回傳這個關卡的指標
+            }
+        }
+        std::cerr << "[DatabaseManager] 警告：在 Chapter " << chapterId << " 中找不到 Stage " << stageId << " 的資料！\n";
+    }
+
+    return nullptr;
+}
