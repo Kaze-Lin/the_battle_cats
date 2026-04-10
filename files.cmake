@@ -20,6 +20,9 @@ set(SRC_FILES
 
     PhaseManager.cpp
     DatabaseManager.cpp
+    EntityManager.cpp
+    LevelManager.cpp
+    Unit.cpp
 )
 
 set(INCLUDE_FILES
@@ -47,6 +50,10 @@ set(INCLUDE_FILES
 
     PhaseManager.hpp
     DatabaseManager.hpp
+    EntityManager.hpp
+    LevelManager.hpp
+    StatCalculator.hpp
+    Unit.hpp
 
     nlohmann/json.hpp
 )
