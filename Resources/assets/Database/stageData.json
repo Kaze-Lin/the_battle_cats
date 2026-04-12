@@ -4,6 +4,7 @@
       "chapter_id": 1,
       "chapter_name": "Empire_of_cats",
       "chapter_level": {"1":100,"2":150,"3":400},
+      "base_path" : "Resources/towel/koren.png",
       "stages": [
         {
           "stage_id": 1,
