@@ -18,16 +18,14 @@ void App::Start() {
     m_Phase = PhaseManager::GetFirstPhase();
     m_Root.AddChild(m_Phase);
 
-    DatabaseManager::GetInstance().LoadCatData("Resources/assets/Database/CatData.json");
-    DatabaseManager::GetInstance().LoadEnemyData("Resources/assets/Database/EnemyData.json");
-    DatabaseManager::GetInstance().LoadStageData("Resources/assets/Database/stageData.json");
+    bool loadFailed =
+        !DatabaseManager::GetInstance().LoadCatData(RESOURCE_DIR "/assets/Database/CatData.json") ||
+        !DatabaseManager::GetInstance().LoadEnemyData(RESOURCE_DIR "/assets/Database/EnemyData.json") ||
+        !DatabaseManager::GetInstance().LoadStageData(RESOURCE_DIR "/assets/Database/stageData.json");
 
-
-    if (!DatabaseManager::GetInstance().LoadCatData(RESOURCE_DIR "/assets/Database/CatData.json")) {
+    if (loadFailed) {
         m_CurrentState = State::END;
         return;
     }
     m_CurrentState = State::UPDATE;
 }
-
-
