@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <nlohmann/json.hpp>
+#include <Util/Logger.hpp>
 
 // 敵人的動畫資料 (可以跟貓咪共用同一個結構，這裡以防萬一再寫一次)
 struct EnemyAnimationData {
@@ -15,6 +16,7 @@ struct EnemyAnimationData {
 struct EnemyData {
     int id;
     std::string name;
+    std::string photoPath;
     int baseHp;
     int baseAttack;
     int range;

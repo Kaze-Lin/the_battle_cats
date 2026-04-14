@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Util/GameObject.hpp"
+#include "Util/Image.hpp"
 
 enum class Faction {
     Player,
@@ -21,6 +22,7 @@ enum class UnitState {
 
 struct UnitStats {
     std::string name;
+    std::string photoPath;
     int maxHp;
     int attackPower;
     float range;
@@ -31,8 +33,6 @@ struct UnitStats {
     float precastTime;
     float postcastTime;
     float cooldownTime;
-
-    std::string imagePath;
 };
 
 class Unit: public Util::GameObject {

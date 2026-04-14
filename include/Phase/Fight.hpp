@@ -23,10 +23,14 @@ private:
     // stage name
     std::shared_ptr<Text> m_StageName;
 
+    float m_timeScale = 1.0f;
+
 public:
 
     Fight();
     ~Fight() override = default;
+
+    void Update() override;
 };
 
 #endif //FIGHT_HPP

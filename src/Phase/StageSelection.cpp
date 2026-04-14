@@ -1,5 +1,5 @@
 #include "Phase/StageSelection.hpp"
-
+#include "LevelManager.hpp"
 #include "PhaseManager.hpp"
 
 StageSelection::StageSelection(): Phase() {
@@ -90,6 +90,7 @@ std::shared_ptr<Phase> StageSelection::GetDestinationPhase() {
 }
 
 void StageSelection::ToFight() {
+    LevelManager::GetInstance().LoadStage(1, 1);
     this->m_DestinationPhase = "Fight";
 }
 

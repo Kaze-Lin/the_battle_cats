@@ -1,4 +1,7 @@
 #include "Phase/Fight.hpp"
+#include "LevelManager.hpp"
+#include "EntityManager.hpp"
+#include "Util/Time.hpp"
 
 Fight::Fight(): Phase() {
     // background image (without interaction image)
@@ -12,21 +15,23 @@ Fight::Fight(): Phase() {
     m_b_Pause =
         std::make_shared<Button>(
             RESOURCE_DIR "/phase/fight/pause.png",
-            nullptr);
+            []() { LOG_INFO("Pause Button Clicked!"); });
+    m_b_Pause->SetZIndex(50.0F);
     m_b_Pause->ScaleSize({ORIGINAL_SCALING + 0.1F, ORIGINAL_SCALING + 0.1F});
 
     m_b_RickUpgrade =
         std::make_shared<Button>(
             RESOURCE_DIR "/phase/fight/Richupgrade_1.png",
-            nullptr,
-            -6.0F);
+            []() { LOG_INFO("Wallet Upgrade Clicked!"); },
+            50.0F);
+
     m_b_RickUpgrade->ScaleSize({ORIGINAL_SCALING + 0.5F, ORIGINAL_SCALING + 0.5F});
 
     m_b_CannonCharge =
         std::make_shared<Button>(
             RESOURCE_DIR "/phase/fight/Cannoncharge_0.png",
-            nullptr,
-            -6.0F);
+            []() { LOG_INFO("Cat Cannon Clicked!"); },
+            50.0F);
     m_b_CannonCharge->ScaleSize({ORIGINAL_SCALING + 0.5F, ORIGINAL_SCALING + 0.5F});
 
     // stage name
@@ -63,4 +68,46 @@ Fight::Fight(): Phase() {
     const auto stageNameY = pauseY;
     m_StageName->Place({stageNameX, stageNameY});
     AddChild(m_StageName);
+
+    EntityManager::GetInstance().SetSceneNode(this);
+
+    const StageData* stage = LevelManager::GetInstance().GetCurrentStage();
+    if (stage != nullptr) {
+
+        EntityManager::GetInstance().SpawnCatBase(1);
+
+        EntityManager::GetInstance().SpawnEnemyBase(stage->enemyBaseHp, stage->basePath,-545.0f);
+    }
+}
+
+void Fight::Update() {
+    Phase::Update();
+
+    float realDeltaTime = Util::Time::GetDeltaTime();
+
+    if (Util::Input::IsKeyDown(Util::Keycode::D)) {
+        if (m_timeScale != 5.0f) {
+            m_timeScale = 5.0f;
+            LOG_INFO("Time Scale changed to: 5.0x Speed!");
+        }
+    }
+    else if (Util::Input::IsKeyDown(Util::Keycode::A)) {
+        if (m_timeScale != 1.0f) {
+            m_timeScale = 1.0f;
+            LOG_INFO("Time Scale changed to: Normal Speed");
+        }
+    }
+
+    float gameDeltaTime = realDeltaTime * m_timeScale;
+
+    LevelManager::GetInstance().Update(gameDeltaTime, 1.0f);
+    EntityManager::GetInstance().Update(gameDeltaTime);
+
+    if (Util::Input::IsKeyDown(Util::Keycode::X)) {
+        EntityManager::GetInstance().SpawnCat(0, 1, 0);
+    }
+
+    if (Util::Input::IsKeyDown(Util::Keycode::Z)) {
+        EntityManager::GetInstance().SpawnEnemy(0, 100);
+    }
 }
