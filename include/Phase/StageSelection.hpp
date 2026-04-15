@@ -27,6 +27,8 @@ public:
     StageSelection();
     ~StageSelection() override = default;
 
+
+
     std::shared_ptr<Phase> GetDestinationPhase() override;
 
     void ToFight();

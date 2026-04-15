@@ -34,6 +34,7 @@ struct UnitData {
     int id;
     std::string nameInternal;
     int maxLevel;
+    std::vector<std::string> catPath;
     std::vector<FormData> forms;
     std::vector<int> upgradeCosts;
 };

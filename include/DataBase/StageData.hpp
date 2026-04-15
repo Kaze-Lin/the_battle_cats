@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include <nlohmann/json.hpp>
+#include <Util/Logger.hpp>
 
 // 單一出怪規則
 struct SpawnRule {
@@ -26,6 +27,7 @@ struct StageData {
     int enemyLimit;
     int backgroundLength;
     std::string stageName;
+    std::string basePath;
     int enemyBaseHp;
     int experience;
     std::vector<SpawnRule> spawnRules;

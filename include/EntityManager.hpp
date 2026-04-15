@@ -8,13 +8,19 @@
 
 class EntityManager {
 private:
-    std::vector<std::unique_ptr<Unit>> m_playerUnits;
-    std::vector<std::unique_ptr<Unit>> m_enemyUnits;
+    std::vector<std::shared_ptr<Unit>> m_playerUnits;
+    std::vector<std::shared_ptr<Unit>> m_enemyUnits;
 
     EntityManager() = default;
     ~EntityManager() = default;
 
+    Util::GameObject* m_SceneNode = nullptr;
+
 public:
+    void SetSceneNode(Util::GameObject* node) { m_SceneNode = node; }
+    void SpawnCatBase(int level);
+    void SpawnEnemyBase(int hp, const std::string& imagePath, float positionX);
+
     EntityManager(const EntityManager&) = delete;
     EntityManager& operator=(const EntityManager&) = delete;
 

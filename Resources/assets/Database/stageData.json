@@ -4,20 +4,20 @@
       "chapter_id": 1,
       "chapter_name": "Empire_of_cats",
       "chapter_level": {"1":100,"2":150,"3":400},
-      "base_path" : "Resources/towel/koren.png",
       "stages": [
         {
           "stage_id": 1,
           "enemy_limit": 3,
           "background_length": 3000,
           "stage_name": "Korea",
+          "base_path" : "Resources/towel/koren.png",
           "enemy_base_hp": 500,
           "experience": 1000,
           "spawn_rules": [
             {
               "enemy_id": 0,
               "start_time": 0,
-              "interval": 180,
+              "interval": 6,
               "max_count": 1,
               "magnification": 100,
               "base_hp_trigger": 100,
@@ -25,8 +25,8 @@
             },
             {
               "enemy_id": 0,
-              "start_time": 600,
-              "interval": 180,
+              "start_time": 20,
+              "interval": 6,
               "max_count": -1,
               "magnification": 100,
               "base_hp_trigger": 100,

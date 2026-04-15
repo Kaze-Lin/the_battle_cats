@@ -3,6 +3,7 @@
     {
       "id": 0,
       "name": "Doge",
+      "photo_path":"Resources/enemy_materials/0.png",
       "base_hp": 90,
       "base_attack": 8,
       "range": 110,
@@ -12,7 +13,7 @@
         "postcast": 10
       },
       "time_between_attacks": 47,
-      "move_speed": 5.0,
+      "move_speed": 50.0,
       "Knockback": 3,
       "money_drop": 15,
       "traits": [
@@ -22,6 +23,7 @@
     {
       "id": 1,
       "name": "Snache",
+      "photo_path":"Resources/enemy_materials/1.png",
       "base_hp": 100,
       "base_attack": 15,
       "range": 110,
@@ -41,6 +43,7 @@
     {
       "id": 2,
       "name": "Those_Guys",
+      "photo_path":"Resources/enemy_materials/2.png",
       "base_hp": 200,
       "base_attack": 20,
       "range": 110,
@@ -60,6 +63,7 @@
     {
       "id": 3,
       "name": "Hippoe",
+      "photo_path":"Resources/enemy_materials/3.png",
       "base_hp": 1000,
       "base_attack": 100,
       "range": 160,
@@ -79,6 +83,7 @@
     {
       "id": 4,
       "name": "Pigge",
+      "photo_path":"Resources/enemy_materials/4.png",
       "base_hp": 1500,
       "base_attack": 120,
       "range": 150,
@@ -98,6 +103,7 @@
     {
       "id": 5,
       "name": "Jackie_Peng",
+      "photo_path":"Resources/enemy_materials/5.png",
       "base_hp": 1300,
       "base_attack": 80,
       "range": 150,
@@ -117,6 +123,7 @@
     {
       "id": 6,
       "name": "Gory",
+      "photo_path":"Resources/enemy_materials/6.png",
       "base_hp": 1200,
       "base_attack": 140,
       "range": 150,
@@ -136,6 +143,7 @@
     {
       "id": 7,
       "name": "Baa_Baa",
+      "photo_path":"Resources/enemy_materials/7.png",
       "base_hp": 500,
       "base_attack": 20,
       "range": 130,
@@ -155,6 +163,7 @@
     {
       "id": 8,
       "name": "Sir_Seal",
+      "photo_path":"Resources/enemy_materials/8.png",
       "base_hp": 3000,
       "base_attack": 200,
       "range": 140,
@@ -174,6 +183,7 @@
     {
       "id": 9,
       "name": "Le_boin",
+      "photo_path":"Resources/enemy_materials/9.png",
       "base_hp": 10000,
       "base_attack": 300,
       "range": 350,
@@ -193,6 +203,7 @@
     {
       "id": 10,
       "name": "Croco",
+      "photo_path":"Resources/enemy_materials/10.png",
       "base_hp": 150,
       "base_attack": 20,
       "range": 110,
@@ -212,6 +223,7 @@
     {
       "id": 11,
       "name": "Mooth",
+      "photo_path":"Resources/enemy_materials/11.png",
       "base_hp": 7000,
       "base_attack": 400,
       "range": 250,
@@ -231,6 +243,7 @@
     {
       "id": 12,
       "name": "Teacher_Bear",
+      "photo_path":"Resources/enemy_materials/12.png",
       "base_hp": 3000,
       "base_attack": 400,
       "range": 350,
@@ -250,6 +263,7 @@
     {
       "id": 13,
       "name": "One_Horn",
+      "photo_path":"Resources/enemy_materials/13.png",
       "base_hp": 8000,
       "base_attack": 150,
       "range": 130,
@@ -269,6 +283,7 @@
     {
       "id": 14,
       "name": "Teacher_Bun_Bun",
+      "photo_path":"Resources/enemy_materials/14.png",
       "base_hp": 99999,
       "base_attack": 2000,
       "range": 200,
@@ -288,6 +303,7 @@
     {
       "id": 15,
       "name": "Shy_Boy",
+      "photo_path":"Resources/enemy_materials/15.png",
       "base_hp": 4000,
       "base_attack": 250,
       "range": 130,
@@ -308,6 +324,7 @@
     {
       "id": 16,
       "name": "Assassin_Bear",
+      "photo_path":"Resources/enemy_materials/16.png",
       "base_hp": 400,
       "base_attack": 3000,
       "range": 400,
@@ -327,6 +344,7 @@
     {
       "id": 17,
       "name": "Kang_Roo",
+      "photo_path":"Resources/enemy_materials/17.png",
       "base_hp": 4000,
       "base_attack": 120,
       "range": 160,
@@ -346,6 +364,7 @@
     {
       "id": 18,
       "name": "B_B_Bunny",
+      "photo_path":"Resources/enemy_materials/18.png",
       "base_hp": 500,
       "base_attack": 40,
       "range": 140,

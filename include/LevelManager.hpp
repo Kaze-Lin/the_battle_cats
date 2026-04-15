@@ -25,6 +25,10 @@ public:
         return instance;
     }
 
+    const StageData* GetCurrentStage() const {
+        return m_isStageLoaded ? &m_currentStage : nullptr;
+    }
+
     bool LoadStage(int chapterId, int stageId);
 
     void Update(float deltaTime, float enemyBaseHpPercent);

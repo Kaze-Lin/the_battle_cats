@@ -6,7 +6,7 @@ bool LevelManager::LoadStage(int chapterId, int stageId) {
     const StageData* stageTemplate = DatabaseManager::GetInstance().GetStageData(chapterId, stageId);
     
     if (stageTemplate == nullptr) {
-        std::cerr << "[LevelManager] 載入失敗：找不到 Chapter " << chapterId << " Stage " << stageId << "\n";
+        LOG_INFO("[levelManager] loading failed!" + std::to_string(chapterId) + "." + std::to_string(stageId));
         m_isStageLoaded = false;
         return false;
     }
@@ -23,7 +23,7 @@ bool LevelManager::LoadStage(int chapterId, int stageId) {
         rule.isUnlocked = false;
     }
 
-    std::cout << "[LevelManager] 成功載入關卡: " << m_currentStage.stageName << "\n";
+    LOG_INFO("[levelManager] loading successfully" + std::to_string(chapterId) + "." + std::to_string(stageId));
     return true;
 }
 
@@ -32,7 +32,6 @@ void LevelManager::Update(float deltaTime, float enemyBaseHpPercent) {
 
     m_stageTime += deltaTime;
 
-    // 向 EntityManager 查詢目前場上有幾隻敵人
     int currentEnemyCount = EntityManager::GetInstance().GetEnemyCount();
 
     // 巡視每一條出怪規則
@@ -91,6 +90,6 @@ void LevelManager::TriggerBossShockwave() {
     for (auto* unit : playerUnits) {
         // 強制切換為擊退狀態
         // unit->ChangeState(std::make_unique<KnockbackState>(unit));
-        std::cout << "貓咪被震退了！\n";
+        LOG_INFO("[levelManager] cats being knockback!");
     }
 }
