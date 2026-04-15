@@ -29,7 +29,8 @@ struct UnitStats {
     bool isAreaAttack;
     float moveSpeed;
     int knockbackLimit;
-
+    float dropGold = 0;
+    
     float precastTime;
     float postcastTime;
     float cooldownTime;
