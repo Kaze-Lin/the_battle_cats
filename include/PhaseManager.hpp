@@ -19,6 +19,8 @@ private:
     > m_Map;
 
 public:
+    PhaseManager() = delete;
+
     static size_t m_PathSize;
 
     static std::vector<std::string> m_Path;

@@ -62,13 +62,7 @@ Fight::Fight(): Phase() {
     m_b_CannonCharge->Place({cannonChargeX, cannonChargeY});
     AddChild(m_b_CannonCharge);
 
-    // stage name
-    const auto pauseSize = m_b_Pause->GetSize();
-    const auto stageNameX = pauseX + pauseSize.x / 2 + 50.0F;
-    const auto stageNameY = pauseY;
-    m_StageName->Place({stageNameX, stageNameY});
-    AddChild(m_StageName);
-
+    // Load stage
     EntityManager::GetInstance().SetSceneNode(this);
 
     const StageData* stage = LevelManager::GetInstance().GetCurrentStage();
@@ -77,7 +71,17 @@ Fight::Fight(): Phase() {
         EntityManager::GetInstance().SpawnCatBase(1);
 
         EntityManager::GetInstance().SpawnEnemyBase(stage->enemyBaseHp, stage->basePath,-545.0f);
+
+        m_StageName->SetText(stage->stageName);
     }
+
+    // stage name layout
+    const auto pauseSize = m_b_Pause->GetSize();
+    auto textSize = m_StageName->GetSize();
+    const auto stageNameX = pauseX + pauseSize.x / 2 + textSize.x / 2.0F + 15.0F;
+    const auto stageNameY = pauseY;
+    m_StageName->Place({stageNameX, stageNameY});
+    AddChild(m_StageName);
 }
 
 void Fight::Update() {
