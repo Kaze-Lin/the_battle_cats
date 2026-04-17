@@ -31,6 +31,14 @@ Text::Text(
 
 };
 
+bool Text::GetVisible() {
+    return m_Visible;
+}
+
+glm::vec2 Text::GetCoordinate() {
+    return m_Transform.translation;
+}
+
 glm::vec2 Text::GetSize() {
     glm::vec2 maxSize = {0.0F, 0.0F};
     for (const auto &it: GetChildren()) {
@@ -52,4 +60,10 @@ void Text::SetText(const std::string& text) {
         auto item = std::dynamic_pointer_cast<Util::Text>(it->GetDrawable());
         item->SetText(text);
     }
+}
+
+void Text::SetColor(Util::Color color) {
+    auto it = GetChildren();
+    auto item = std::dynamic_pointer_cast<Util::Text>(it[1]->GetDrawable());
+    item->SetColor(color);
 }
