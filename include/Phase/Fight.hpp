@@ -31,6 +31,8 @@ private:
     // IDs are in the team build
     void DeployCat(std::vector<int> IDs);
 
+    bool m_isGameOver = false;
+
 public:
 
     Fight();

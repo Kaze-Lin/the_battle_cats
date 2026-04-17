@@ -93,6 +93,7 @@ void EntityManager::SpawnCatBase(int level) {
     stats.range = 0.0f; stats.isAreaAttack = false; stats.precastTime = 0.0f; stats.postcastTime = 0.0f; stats.cooldownTime = 999.0f;
 
     auto base = std::make_shared<Unit>(Faction::Player, stats, 521.0f);
+    m_catBase = base;
     m_playerUnits.push_back(base);
     if (m_SceneNode) m_SceneNode->AddChild(base);
 }
@@ -106,6 +107,7 @@ void EntityManager::SpawnEnemyBase(int hp, const std::string& imagePath, float p
     stats.range = 0.0f; stats.isAreaAttack = false; stats.precastTime = 0.0f; stats.postcastTime = 0.0f; stats.cooldownTime = 999.0f;
 
     auto base = std::make_shared<Unit>(Faction::Enemy, stats, -545.0f);
+    m_enemyBase = base;
     m_enemyUnits.push_back(base);
     if (m_SceneNode) m_SceneNode->AddChild(base);
 }
@@ -191,4 +193,33 @@ std::vector<Unit*> EntityManager::GetEntitiesInRange(Faction targetFaction, floa
     }
 
     return result;
+}
+void EntityManager::ClearFactionUnitsExceptBase(Faction faction) {
+    if (faction == Faction::Enemy) {
+        for (auto it = m_enemyUnits.begin(); it != m_enemyUnits.end(); ) {
+            if (*it != m_enemyBase) {
+                if (m_SceneNode) {
+                    m_SceneNode->RemoveChild(*it); // 從畫面上拔除
+                }
+                it = m_enemyUnits.erase(it);       // 從陣列中解構
+            } else {
+                ++it;
+            }
+        }
+        LOG_INFO("All enemy units have been eliminated from the field!");
+    }
+    else if (faction == Faction::Player) {
+        // 清理貓咪
+        for (auto it = m_playerUnits.begin(); it != m_playerUnits.end(); ) {
+            if (*it != m_catBase) {
+                if (m_SceneNode) {
+                    m_SceneNode->RemoveChild(*it);
+                }
+                it = m_playerUnits.erase(it);
+            } else {
+                ++it;
+            }
+        }
+        LOG_INFO("All player units have been eliminated from the field!");
+    }
 }

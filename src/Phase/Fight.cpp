@@ -63,7 +63,13 @@ Fight::Fight(): Phase() {
     m_b_CannonCharge->Place({cannonChargeX, cannonChargeY});
     AddChild(m_b_CannonCharge);
 
-    // Load stage
+    // stage name
+    const auto pauseSize = m_b_Pause->GetSize();
+    const auto stageNameX = pauseX + pauseSize.x / 2 + 50.0F;
+    const auto stageNameY = pauseY;
+    m_StageName->Place({stageNameX, stageNameY});
+    AddChild(m_StageName);
+
     EntityManager::GetInstance().SetSceneNode(this);
 
     const StageData* stage = LevelManager::GetInstance().GetCurrentStage();
@@ -90,6 +96,10 @@ Fight::Fight(): Phase() {
 void Fight::Update() {
     Phase::Update();
 
+    if (m_isGameOver) {
+        return;
+    }
+
     float realDeltaTime = Util::Time::GetDeltaTime();
 
     if (Util::Input::IsKeyDown(Util::Keycode::D)) {
@@ -109,6 +119,16 @@ void Fight::Update() {
 
     LevelManager::GetInstance().Update(gameDeltaTime, 1.0f);
     EntityManager::GetInstance().Update(gameDeltaTime);
+
+    if (EntityManager::GetInstance().IsPlayerWin()) {
+        LOG_INFO("VICTORY! The Player has destroyed the Enemy Base!");
+        m_isGameOver = true;
+    }
+    else if (EntityManager::GetInstance().IsEnemyWin()) {
+        LOG_INFO("DEFEAT! The Enemy has destroyed the Cat Base!");
+        m_isGameOver = true;
+
+    }
 
     if (Util::Input::IsKeyDown(Util::Keycode::X)) {
         EntityManager::GetInstance().SpawnCat(0, 1, 0);

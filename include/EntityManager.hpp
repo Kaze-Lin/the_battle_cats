@@ -16,6 +16,9 @@ private:
 
     Util::GameObject* m_SceneNode = nullptr;
 
+    std::shared_ptr<Unit> m_catBase = nullptr;
+    std::shared_ptr<Unit> m_enemyBase = nullptr;
+
 public:
     void SetSceneNode(Util::GameObject* node) { m_SceneNode = node; }
     void SpawnCatBase(int level);
@@ -42,6 +45,12 @@ public:
 
     // 取得在特定 X 座標範圍內的敵人 (供單體/範圍攻擊判定)
     std::vector<Unit*> GetEntitiesInRange(Faction targetFaction, float startX, float endX);
+
+    bool IsPlayerWin() const { return m_enemyBase != nullptr && m_enemyBase->IsDead(); }
+
+    bool IsEnemyWin() const { return m_catBase != nullptr && m_catBase->IsDead(); }
+
+    void ClearFactionUnitsExceptBase(Faction faction);
 };
 
 #endif

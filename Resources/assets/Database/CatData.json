@@ -7,6 +7,9 @@
       "cat_path": ["Resources/cat_materials/normal/cat/form/1.png",
                    "Resources/cat_materials/normal/cat/form/2.png",
                    "Resources/cat_materials/normal/cat/form/3.png"],
+      "generate_cat_button": ["Resources/cat_materials/normal/cat/generate_cat_button/1.png",
+                               "Resources/cat_materials/normal/cat/generate_cat_button/2.png",
+                               "Resources/cat_materials/normal/cat/generate_cat_button/3.png"],
       "forms": [
         {
           "form_index": 0, "name": "Cat", "cost": 50, "base_hp": 100, "hp_growth": 20, "base_attack": 8, "attack_growth": 2, "range": 140, "is_area_attack": false, "animation": { "precast": 8, "postcast": 14 }, "time_between_attacks": 37, "move_speed": 100.0, "Knockback": 3, "ability": "none", "talent": "none", "Recharge_Time": 2
@@ -27,6 +30,9 @@
       "cat_path": ["Resources/cat_materials/normal/tank_cat/form/1",
                    "Resources/cat_materials/normal/tank_cat/form/2",
                    "Resources/cat_materials/normal/tank_cat/form/3"],
+      "generate_cat_button": ["Resources/cat_materials/normal/tank_cat/generate_cat_button/1.png",
+                              "Resources/cat_materials/normal/tank_cat/generate_cat_button/2.png",
+                              "Resources/cat_materials/normal/tank_cat/generate_cat_button/3.png"],
       "forms": [
         {
           "form_index": 0, "name": "Tank_Cat", "cost": 100, "base_hp": 400, "hp_growth": 100, "base_attack": 2, "attack_growth": 1, "range": 110, "is_area_attack": false, "animation": { "precast": 8, "postcast": 15 }, "time_between_attacks": 67, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 5
@@ -47,6 +53,9 @@
       "cat_path": ["Resources/cat_materials/normal/axe_cat/form/1",
         "Resources/cat_materials/normal/axe_cat/form/2",
         "Resources/cat_materials/normal/axe_cat/form/3"],
+      "generate_cat_button": ["Resources/cat_materials/normal/axe_cat/generate_cat_button/1.png",
+        "Resources/cat_materials/normal/axe_cat/generate_cat_button/2.png",
+        "Resources/cat_materials/normal/axe_cat/generate_cat_button/3.png"],
       "forms": [
         {
           "form_index": 0, "name": "Axe_Cat", "cost": 200, "base_hp": 200, "hp_growth": 50, "base_attack": 25, "attack_growth": 10, "range": 150, "is_area_attack": false, "animation": { "precast": 10, "postcast": 10 }, "time_between_attacks": 23, "move_speed": 12.0, "Knockback": 3, "ability": "Strong against Red", "talent": "none", "Recharge_Time": 5
@@ -67,6 +76,9 @@
       "cat_path": ["Resources/cat_materials/normal/gross_cat/form/1",
         "Resources/cat_materials/normal/gross_cat/form/2",
         "Resources/cat_materials/normal/gross_cat/form/3"],
+      "generate_cat_button": ["Resources/cat_materials/normal/gross_cat/generate_cat_button/1.png",
+        "Resources/cat_materials/normal/gross_cat/generate_cat_button/2.png",
+        "Resources/cat_materials/normal/gross_cat/generate_cat_button/3.png"],
       "forms": [
         {
           "form_index": 0, "name": "Gross_Cat", "cost": 400, "base_hp": 400, "hp_growth": 100, "base_attack": 100, "attack_growth": 25, "range": 350, "is_area_attack": false, "animation": { "precast": 12, "postcast": 20 }, "time_between_attacks": 116, "move_speed": 8.0, "Knockback": 3, "ability": "none", "talent": "none", "Recharge_Time": 10
@@ -87,6 +99,9 @@
       "cat_path": ["Resources/cat_materials/normal/cow_cat/form/1",
         "Resources/cat_materials/normal/cow_cat/form/2",
         "Resources/cat_materials/normal/cow_cat/form/3"],
+      "generate_cat_button": ["Resources/cat_materials/normal/cow_cat/generate_cat_button/1.png",
+        "Resources/cat_materials/normal/cow_cat/generate_cat_button/2.png",
+        "Resources/cat_materials/normal/cow_cat/generate_cat_button/3.png"],
       "forms": [
         {
           "form_index": 0, "name": "Cow_Cat", "cost": 500, "base_hp": 400, "hp_growth": 100, "base_attack": 30, "attack_growth": 10, "range": 140, "is_area_attack": false, "animation": { "precast": 4, "postcast": 6 }, "time_between_attacks": 10, "move_speed": 30.0, "Knockback": 5, "ability": "none", "talent": "none", "Recharge_Time": 8
@@ -107,6 +122,9 @@
       "cat_path": ["Resources/cat_materials/normal/bird_cat/form/1",
         "Resources/cat_materials/normal/bird_cat/form/2",
         "Resources/cat_materials/normal/bird_cat/form/3"],
+      "generate_cat_button": ["Resources/cat_materials/normal/bird_cat/generate_cat_button/1.png",
+        "Resources/cat_materials/normal/bird_cat/generate_cat_button/2.png",
+        "Resources/cat_materials/normal/bird_cat/generate_cat_button/3.png"],
       "forms": [
         {
           "form_index": 0, "name": "Bird_Cat", "cost": 650, "base_hp": 400, "hp_growth": 100, "base_attack": 120, "attack_growth": 30, "range": 170, "is_area_attack": true, "animation": { "precast": 15, "postcast": 15 }, "time_between_attacks": 50, "move_speed": 10.0, "Knockback": 4, "ability": "none", "talent": "none", "Recharge_Time": 10
@@ -127,6 +145,9 @@
       "cat_path": ["Resources/cat_materials/normal/fish_cat/form/1",
         "Resources/cat_materials/normal/fish_cat/form/2",
         "Resources/cat_materials/normal/fish_cat/form/3"],
+      "generate_cat_button": ["Resources/cat_materials/normal/fish_cat/generate_cat_button/1.png",
+        "Resources/cat_materials/normal/fish_cat/generate_cat_button/2.png",
+        "Resources/cat_materials/normal/fish_cat/generate_cat_button/3.png"],
       "forms": [
         {
           "form_index": 0, "name": "Fish_Cat", "cost": 800, "base_hp": 800, "hp_growth": 200, "base_attack": 130, "attack_growth": 30, "range": 150, "is_area_attack": false, "animation": { "precast": 12, "postcast": 10 }, "time_between_attacks": 65, "move_speed": 10.0, "Knockback": 3, "ability": "Strong against Red", "talent": "none", "Recharge_Time": 12
@@ -147,6 +168,9 @@
       "cat_path": ["Resources/cat_materials/normal/lizard_cat/form/1",
         "Resources/cat_materials/normal/lizard_cat/form/2",
         "Resources/cat_materials/normal/lizard_cat/form/3"],
+      "generate_cat_button": ["Resources/cat_materials/normal/lizard_cat/generate_cat_button/1.png",
+        "Resources/cat_materials/normal/lizard_cat/generate_cat_button/2.png",
+        "Resources/cat_materials/normal/lizard_cat/generate_cat_button/3.png"],
       "forms": [
         {
           "form_index": 0, "name": "Lizard_Cat", "cost": 1000, "base_hp": 800, "hp_growth": 200, "base_attack": 150, "attack_growth": 40, "range": 400, "is_area_attack": false, "animation": { "precast": 15, "postcast": 20 }, "time_between_attacks": 120, "move_speed": 10.0, "Knockback": 3, "ability": "none", "talent": "none", "Recharge_Time": 15
@@ -167,6 +191,9 @@
       "cat_path": ["Resources/cat_materials/normal/titan_cat/form/1",
         "Resources/cat_materials/normal/cat/titan_form/2",
         "Resources/cat_materials/normal/cat/titan_form/3"],
+      "generate_cat_button": ["Resources/cat_materials/normal/titan_cat/generate_cat_button/1.png",
+        "Resources/cat_materials/normal/titan_cat/generate_cat_button/2.png",
+        "Resources/cat_materials/normal/titan_cat/generate_cat_button/3.png"],
       "forms": [
         {
           "form_index": 0, "name": "Titan_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 25

@@ -35,6 +35,7 @@ void from_json(const json& j, UnitData& u) {
     j.at("name_internal").get_to(u.nameInternal);
     j.at("max_level").get_to(u.maxLevel);
     j.at("cat_path").get_to(u.catPath);
+    j.at("generate_cat_button").get_to(u.catGenButton);
 
     j.at("forms").get_to(u.forms);
     j.at("upgrade_costs").get_to(u.upgradeCosts);
