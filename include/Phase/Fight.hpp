@@ -29,7 +29,7 @@ private:
     std::vector<std::shared_ptr<Button>> m_gen_b_cats;
 
     // IDs are in the team build
-    void DeployCat(std::vector<int> IDs);
+    void DeployCatButton(std::vector<int> IDs);
 
     bool m_isGameOver = false;
 

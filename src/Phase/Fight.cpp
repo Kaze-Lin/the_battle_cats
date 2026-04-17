@@ -90,6 +90,9 @@ Fight::Fight(): Phase() {
         AddChild(m_StageName);
 
         // TODO: deploy cats
+        // Deploy Cats
+        std::vector<int> ids = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+        DeployCatButton(ids);
     }
 }
 
@@ -139,7 +142,7 @@ void Fight::Update() {
     }
 }
 
-void Fight::DeployCat(std::vector<int> IDs) {
+void Fight::DeployCatButton(std::vector<int> IDs) {
     // ID, cat
     std::unordered_map<int, const UnitData*> cats;
 
@@ -148,13 +151,41 @@ void Fight::DeployCat(std::vector<int> IDs) {
 
     if (!cats.empty() || (cats.size() > 0 && cats.size() < 10)) {
         for (auto cat: cats) {
-            if (cat.second == nullptr)
+            if (cat.second == nullptr) {
                 LOG_WARN("cannot find cat with ID " + std::to_string(cat.first));
-            // m_gen_b_cats.push_back(
-            //     std::make_shared<Button>(
-            //             cat.second->
-            //         )
-            //     )
+                continue;
+            }
+            m_gen_b_cats.push_back(
+                std::make_shared<Button>(
+                        cat.second->catGenButton[0], // the '0'0 should be changed
+                        [cat](){ EntityManager::GetInstance().SpawnCat(
+                            cat.first,
+                            cat.second->maxLevel,
+                            cat.second->forms[0].formIndex); }, // the '0' should be changed
+                        99
+                    )
+                );
+
+        }
+        //layout
+        const auto X = -245.0F;
+        const auto Y = -250.0F;
+        m_gen_b_cats[0]->Place({X, Y});
+        AddChild(m_gen_b_cats[0]);
+
+        auto catButtonX = X;
+        auto catButtonY = Y;
+
+        for (int i = 1; i < m_gen_b_cats.size(); i++) {
+            auto photoSize = m_gen_b_cats[i]->GetSize();
+            if (i <= 4 || (i > 5 && i <= 10)) {
+                catButtonX += m_gen_b_cats[i - 1]->GetSize().x / 2.0F + m_gen_b_cats[i]->GetSize().x / 2.0F + 15.0F;
+            } else if (i == 5) {
+                catButtonX = X;
+                catButtonY = catButtonY - m_gen_b_cats[i - 5]->GetSize().y / 2.0F - m_gen_b_cats[i]->GetSize().y / 2.0F - 15.0F;
+            }
+            m_gen_b_cats[i]->Place({catButtonX, catButtonY});
+            AddChild(m_gen_b_cats[i]);
         }
     }
 }
