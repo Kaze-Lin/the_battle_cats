@@ -1,0 +1,108 @@
+{
+  "admin": {
+    "xp": -1,
+    "cat_can": -1,
+    "cat": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "work": [
+      [
+        20,
+        10
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        20,
+        10
+      ],
+      [
+        20,
+        10
+      ]
+    ],
+    "stage": {
+      "stage1": 1,
+      "stage2": 1,
+      "stage3": 1,
+      "stage4": 1,
+      "stage5": 1,
+      "stage6": 1,
+      "stage7": 1,
+      "stage8": 1,
+      "stage9": 1,
+      "stage10": 1
+    },
+    "treasure": {
+      "Empire_of_Cats_Treasures": {
+        "chaper_1": {
+          "Energy_Drink": {
+            "Korea": [
+              "Kimchi",
+              "gold"
+            ],
+            "Mongolia": [
+              "Portable_Tent",
+              "gold"
+            ],
+            "China": [
+              "Shark_Fin",
+              "gold"
+            ],
+            "Thailand": [
+              "Collar_of_the_Gilded",
+              "gold"
+            ],
+            "Cambodia": [
+              "Smiles_of_Children",
+              "gold"
+            ],
+            "Philippines": [
+              "Banana",
+              "gold"
+            ],
+            "Japan": [
+              "Topknot",
+              "gold"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
