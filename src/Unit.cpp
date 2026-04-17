@@ -117,8 +117,8 @@ void Unit::Update(float deltaTime) {
             break;
         }
     }
-
-    m_Transform.translation.x = m_positionX;
+    float visualOffset = 30.0f * m_direction;
+    m_Transform.translation.x = m_positionX + visualOffset;
 }
 
 void Unit::TakeDamage(int damage) {

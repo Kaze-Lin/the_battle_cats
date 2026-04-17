@@ -25,6 +25,8 @@ private:
 
     float m_timeScale = 1.0f;
 
+    bool m_isGameOver = false;
+
 public:
 
     Fight();
