@@ -3,6 +3,7 @@
 
 #include <pch.hpp>
 #include "Phase/Phase.hpp"
+#include "Phase/Login.hpp"
 #include "Phase/CatBase.hpp"
 #include "Phase/StageSelection.hpp"
 #include "Phase/Upgrade.hpp"
@@ -19,6 +20,8 @@ private:
     > m_Map;
 
 public:
+    PhaseManager() = delete;
+
     static size_t m_PathSize;
 
     static std::vector<std::string> m_Path;

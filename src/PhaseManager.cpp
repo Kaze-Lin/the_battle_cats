@@ -16,6 +16,8 @@ void PhaseManager::MapInitialize() {
 
     m_PathSize = 0;
 
+    m_Map["Login"] = [](){return std::make_shared<Login>();};
+
     m_Map["CatBase"] = [](){ return std::make_shared<CatBase>(); };
 
     m_Map["PropsStore"] = [](){ return std::make_shared<PropsStore>(); };
@@ -29,7 +31,7 @@ void PhaseManager::MapInitialize() {
 
 
 std::shared_ptr<Phase> PhaseManager::GetFirstPhase() {
-    return m_Map.find("CatBase")->second();
+    return m_Map.find("Login")->second();
 }
 
 std::shared_ptr<Phase> PhaseManager::GetNextPhase(const std::string& source, const std::string& destination) {

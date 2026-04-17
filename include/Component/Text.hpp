@@ -15,6 +15,10 @@ namespace TextThemeDetail{
 }
 
 class Text: public Util::GameObject {
+private:
+    int size;
+    std::string text;
+    float zIndex;
 
 public:
     Text(
@@ -24,7 +28,14 @@ public:
 
     ~Text() override = default;
 
+    bool GetVisible();
+
+    glm::vec2 GetSize();
+    glm::vec2 GetCoordinate();
+
     void Place(glm::vec2 p);
+    void SetText(const std::string& text);
+    void SetColor(Util::Color color);
 };
 
 #endif //TEXT_HPP
