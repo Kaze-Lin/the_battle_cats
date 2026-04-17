@@ -1,4 +1,5 @@
 #include "Phase/Fight.hpp"
+#include "DatabaseManager.hpp"
 #include "LevelManager.hpp"
 #include "EntityManager.hpp"
 #include "Util/Time.hpp"
@@ -73,15 +74,17 @@ Fight::Fight(): Phase() {
         EntityManager::GetInstance().SpawnEnemyBase(stage->enemyBaseHp, stage->basePath,-545.0f);
 
         m_StageName->SetText(stage->stageName);
-    }
 
-    // stage name layout
-    const auto pauseSize = m_b_Pause->GetSize();
-    auto textSize = m_StageName->GetSize();
-    const auto stageNameX = pauseX + pauseSize.x / 2 + textSize.x / 2.0F + 15.0F;
-    const auto stageNameY = pauseY;
-    m_StageName->Place({stageNameX, stageNameY});
-    AddChild(m_StageName);
+        // stage name layout
+        const auto pauseSize = m_b_Pause->GetSize();
+        auto textSize = m_StageName->GetSize();
+        const auto stageNameX = pauseX + pauseSize.x / 2 + textSize.x / 2.0F + 15.0F;
+        const auto stageNameY = pauseY;
+        m_StageName->Place({stageNameX, stageNameY});
+        AddChild(m_StageName);
+
+        // TODO: deploy cats
+    }
 }
 
 void Fight::Update() {
@@ -113,5 +116,25 @@ void Fight::Update() {
 
     if (Util::Input::IsKeyDown(Util::Keycode::Z)) {
         EntityManager::GetInstance().SpawnEnemy(0, 100);
+    }
+}
+
+void Fight::DeployCat(std::vector<int> IDs) {
+    // ID, cat
+    std::unordered_map<int, const UnitData*> cats;
+
+    for (auto i: IDs)
+        cats[i] = DatabaseManager::GetInstance().GetCatData(i);
+
+    if (!cats.empty() || (cats.size() > 0 && cats.size() < 10)) {
+        for (auto cat: cats) {
+            if (cat.second == nullptr)
+                LOG_WARN("cannot find cat with ID " + std::to_string(cat.first));
+            // m_gen_b_cats.push_back(
+            //     std::make_shared<Button>(
+            //             cat.second->
+            //         )
+            //     )
+        }
     }
 }

@@ -3,6 +3,7 @@
 
 #include <pch.hpp>
 #include "Phase/Phase.hpp"
+#include "Phase/Login.hpp"
 #include "Phase/CatBase.hpp"
 #include "Phase/StageSelection.hpp"
 #include "Phase/Upgrade.hpp"

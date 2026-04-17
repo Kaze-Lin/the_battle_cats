@@ -6,8 +6,10 @@ set(SRC_FILES
     Component/BackgroundImage.cpp
     Component/Button.cpp
     Component/Text.cpp
+    Component/TextButton.cpp
 
     Phase/Phase.cpp
+    Phase/Login.cpp
     Phase/CatBase.cpp
     Phase/Upgrade.cpp
     Phase/StageSelection.cpp
@@ -31,11 +33,13 @@ set(INCLUDE_FILES
     Component/BackgroundImage.hpp
     Component/Button.hpp
     Component/Text.hpp
+    Component/TextButton.hpp
 
     ImageScaling.hpp
     SystemInfo.hpp
 
     Phase/Phase.hpp
+    Phase/Login.hpp
     Phase/CatBase.hpp
     Phase/StageSelection.hpp
     Phase/Upgrade.hpp
