@@ -1,4 +1,5 @@
 #include "Phase/Fight.hpp"
+#include "DatabaseManager.hpp"
 #include "LevelManager.hpp"
 #include "EntityManager.hpp"
 #include "Util/Time.hpp"
@@ -68,7 +69,7 @@ Fight::Fight(): Phase() {
     const auto stageNameY = pauseY;
     m_StageName->Place({stageNameX, stageNameY});
     AddChild(m_StageName);
-    // To do:
+
     EntityManager::GetInstance().SetSceneNode(this);
 
     const StageData* stage = LevelManager::GetInstance().GetCurrentStage();
@@ -77,6 +78,21 @@ Fight::Fight(): Phase() {
         EntityManager::GetInstance().SpawnCatBase(1);
 
         EntityManager::GetInstance().SpawnEnemyBase(stage->enemyBaseHp, stage->basePath,-545.0f);
+
+        m_StageName->SetText(stage->stageName);
+
+        // stage name layout
+        const auto pauseSize = m_b_Pause->GetSize();
+        auto textSize = m_StageName->GetSize();
+        const auto stageNameX = pauseX + pauseSize.x / 2 + textSize.x / 2.0F + 15.0F;
+        const auto stageNameY = pauseY;
+        m_StageName->Place({stageNameX, stageNameY});
+        AddChild(m_StageName);
+
+        // TODO: deploy cats
+        // Deploy Cats
+        std::vector<int> ids = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+        DeployCatButton(ids);
     }
 }
 
@@ -123,5 +139,53 @@ void Fight::Update() {
 
     if (Util::Input::IsKeyDown(Util::Keycode::Z)) {
         EntityManager::GetInstance().SpawnEnemy(0, 100);
+    }
+}
+
+void Fight::DeployCatButton(std::vector<int> IDs) {
+    // ID, cat
+    std::unordered_map<int, const UnitData*> cats;
+
+    for (auto i: IDs)
+        cats[i] = DatabaseManager::GetInstance().GetCatData(i);
+
+    if (!cats.empty() || (cats.size() > 0 && cats.size() < 10)) {
+        for (auto cat: cats) {
+            if (cat.second == nullptr) {
+                LOG_WARN("cannot find cat with ID " + std::to_string(cat.first));
+                continue;
+            }
+            m_gen_b_cats.push_back(
+                std::make_shared<Button>(
+                        cat.second->catGenButton[0], // the '0'0 should be changed
+                        [cat](){ EntityManager::GetInstance().SpawnCat(
+                            cat.first,
+                            cat.second->maxLevel,
+                            cat.second->forms[0].formIndex); }, // the '0' should be changed
+                        99
+                    )
+                );
+
+        }
+        //layout
+        const auto X = -245.0F;
+        const auto Y = -250.0F;
+        m_gen_b_cats[0]->Place({X, Y});
+        AddChild(m_gen_b_cats[0]);
+
+        auto catButtonX = X;
+        auto catButtonY = Y;
+
+        for (int i = 1; i < m_gen_b_cats.size(); i++) {
+            auto photoSize = m_gen_b_cats[i]->GetSize();
+            if (i <= 4 || (i > 5 && i <= 10)) {
+                catButtonX += m_gen_b_cats[i - 1]->GetSize().x / 2.0F + m_gen_b_cats[i]->GetSize().x / 2.0F + 15.0F;
+            } else if (i == 5) {
+                catButtonX = X;
+                catButtonY = catButtonY - m_gen_b_cats[i - 5]->GetSize().y / 2.0F - m_gen_b_cats[i]->GetSize().y / 2.0F - 15.0F;
+            }
+            m_gen_b_cats[i]->Place({catButtonX, catButtonY});
+            AddChild(m_gen_b_cats[i]);
+        }
     }
 }

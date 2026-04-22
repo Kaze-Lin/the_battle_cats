@@ -25,6 +25,12 @@ private:
 
     float m_timeScale = 1.0f;
 
+    // generate cat button
+    std::vector<std::shared_ptr<Button>> m_gen_b_cats;
+
+    // IDs are in the team build
+    void DeployCatButton(std::vector<int> IDs);
+
     bool m_isGameOver = false;
 
 public:
