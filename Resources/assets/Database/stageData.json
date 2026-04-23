@@ -10,7 +10,7 @@
           "enemy_limit": 3,
           "background_length": 3000,
           "stage_name": "Korea",
-          "base_path" : "Resources/towel/koren.png",
+          "base_path" : "/towel/koren.png",
           "enemy_base_hp": 500,
           "experience": 1000,
           "spawn_rules": [

@@ -21,7 +21,7 @@ void EntityManager::SpawnCat(int catId, int level, int form) {
     stats.name = formData.name;
 
     if (form < catData->catPath.size()) {
-        stats.photoPath = catData->catPath[form];
+        stats.photoPath = RESOURCE_DIR + catData->catPath[form];
     } else {
         stats.photoPath = "";
     }
@@ -57,7 +57,7 @@ void EntityManager::SpawnEnemy(int enemyId, int magnification) {
 
     UnitStats stats;
     stats.name = enemyData->name;
-    stats.photoPath = enemyData->photoPath;
+    stats.photoPath = RESOURCE_DIR + enemyData->photoPath;;
     stats.maxHp = StatCalculator::CalculateEnemyHp(*enemyData, magnification);
     stats.attackPower = StatCalculator::CalculateEnemyAttack(*enemyData, magnification);
     stats.range = enemyData->range;
@@ -87,7 +87,7 @@ void EntityManager::SpawnEnemy(int enemyId, int magnification) {
 void EntityManager::SpawnCatBase(int level) {
     UnitStats stats;
     stats.name = "Cat_Base";
-    stats.photoPath = "Resources/cat_base/0.png" ;
+    stats.photoPath = RESOURCE_DIR "/cat_base/0.png" ;
     stats.maxHp = 1000 + (level * 1000);
     stats.attackPower = 0; stats.moveSpeed = 0.0f; stats.knockbackLimit = 1;
     stats.range = 0.0f; stats.isAreaAttack = false; stats.precastTime = 0.0f; stats.postcastTime = 0.0f; stats.cooldownTime = 999.0f;
@@ -101,7 +101,7 @@ void EntityManager::SpawnCatBase(int level) {
 void EntityManager::SpawnEnemyBase(int hp, const std::string& imagePath, float positionX) {
     UnitStats stats;
     stats.name = "Enemy_Base";
-    stats.photoPath = imagePath;
+    stats.photoPath = RESOURCE_DIR + imagePath;
     stats.maxHp = hp;
     stats.attackPower = 0; stats.moveSpeed = 0.0f; stats.knockbackLimit = 1;
     stats.range = 0.0f; stats.isAreaAttack = false; stats.precastTime = 0.0f; stats.postcastTime = 0.0f; stats.cooldownTime = 999.0f;

@@ -157,7 +157,7 @@ void Fight::DeployCatButton(std::vector<int> IDs) {
             }
             m_gen_b_cats.push_back(
                 std::make_shared<Button>(
-                        cat.second->catGenButton[0], // the '0'0 should be changed
+                        RESOURCE_DIR + cat.second->catGenButton[0], // the '0' should be changed
                         [cat](){ EntityManager::GetInstance().SpawnCat(
                             cat.first,
                             cat.second->maxLevel,
