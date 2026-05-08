@@ -14,6 +14,17 @@ void Button::ScaleSize(glm::vec2 s) {
 
 void Button::Place(glm::vec2 p) {
     m_Transform.translation = p;
+    if (GetChildren().empty()) return;
+
+    for (auto &item: GetChildren()) {
+        if (auto it = std::dynamic_pointer_cast<Button>(item)) {
+            it->Place(p);
+        } else if (auto it = std::dynamic_pointer_cast<BackgroundImage>(item)) {
+            it->Place(p);
+        } else if (auto it = std::dynamic_pointer_cast<Text>(item)) {
+            it->Place(p);
+        }
+    }
 }
 
 void Button::Update() {

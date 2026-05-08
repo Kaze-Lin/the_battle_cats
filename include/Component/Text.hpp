@@ -25,6 +25,11 @@ public:
         int size,
         const std::string &text,
         float zIndex);
+    Text(
+        int size,
+        const std::string &text,
+        float zIndex,
+        Util::Color color);
 
     ~Text() override = default;
 
