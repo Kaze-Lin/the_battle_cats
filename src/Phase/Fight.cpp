@@ -1,4 +1,4 @@
-#include "Phase/Fight.hpp"
+    #include "Phase/Fight.hpp"
 #include "DatabaseManager.hpp"
 #include "LevelManager.hpp"
 #include "EntityManager.hpp"
@@ -78,6 +78,61 @@ Fight::Fight(): Phase() {
         EntityManager::GetInstance().SpawnCatBase(1);
 
         EntityManager::GetInstance().SpawnEnemyBase(stage->enemyBaseHp, stage->basePath,-545.0f);
+
+         auto catBase = EntityManager::GetInstance().GetCatBase();
+         auto enemyBase = EntityManager::GetInstance().GetEnemyBase();
+
+            // [貓咪塔血量顯示]
+            if (catBase) {
+               auto catHpText = std::make_shared<Util::GameObject>(
+               std::make_shared<Util::Text>(
+                    TextThemeDetail::DefaultBackgroundFont,
+                    16,
+                    std::to_string(catBase->GetCurrentHp()) + "/" + std::to_string(catBase->GetMaxHp()),
+                    Util::Color::FromName(Util::Colors::BLACK)
+                ),
+                10
+               );
+               // 放置在塔的上方
+               catHpText->m_Transform.translation = {catBase->GetPositionX() + 0.0f, 100.0f};
+               AddChild(catHpText);
+
+                std::weak_ptr<Util::GameObject> weakCatHpText = catHpText;
+                             catBase->SetOnHealthChanged([weakCatHpText](int current, int max) {
+                                 if (auto text = weakCatHpText.lock()) {
+                                     // 將基礎的 Drawable 轉型為 Text 來呼叫 SetText
+                                     if (auto textComp = std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())) {
+                                         textComp->SetText(std::to_string(current) + "/" + std::to_string(max));
+                                     }
+                                 }
+                             });
+            }
+
+            // [敵方塔血量顯示]
+            if (enemyBase) {
+                auto enemyHpText = std::make_shared<Util::GameObject>(
+                std::make_shared<Util::Text>(
+                TextThemeDetail::DefaultBackgroundFont,
+                16,
+                std::to_string(enemyBase->GetCurrentHp()) + "/" + std::to_string(enemyBase->GetMaxHp()),
+                Util::Color::FromName(Util::Colors::BLACK)
+            ),
+            10
+           );
+                // 放置在塔的上方
+                enemyHpText->m_Transform.translation = {enemyBase->GetPositionX() + 20.0f, 50.0f};               // 採用單一層 PTSD 內建的紅色
+               AddChild(enemyHpText);
+
+               std::weak_ptr<Util::GameObject> weakEnemyHpText = enemyHpText;
+               enemyBase->SetOnHealthChanged([weakEnemyHpText](int current, int max) {
+                   if (auto text = weakEnemyHpText.lock()) {
+                       // 將基礎的 Drawable 轉型為 Text 來呼叫 SetText
+                       if (auto textComp = std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())) {
+                           textComp->SetText(std::to_string(current) + "/" + std::to_string(max));
+                       }
+                   }
+               });
+            }
 
         m_StageName->SetText(stage->stageName);
 
