@@ -60,6 +60,8 @@ set(INCLUDE_FILES
     Unit.hpp
 
     nlohmann/json.hpp
+    UserData.hpp
+    UserManager.hpp
 )
 
 set(TEST_FILES

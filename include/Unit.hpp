@@ -2,6 +2,7 @@
 #define UNIT_HPP
 
 #include <string>
+#include <functional>
 
 #include "Util/GameObject.hpp"
 #include "Util/Image.hpp"
@@ -51,6 +52,8 @@ private:
     UnitState m_currentState;
     float m_stateTimer;
 
+    std::function<void(int, int)> m_onHealthChanged = nullptr;
+
     void ChangeState(UnitState newState);
 
 public:
@@ -70,6 +73,10 @@ public:
     float GetPositionX() const { return m_positionX; }
     float GetRange() const { return m_stats.range; }
     bool IsDead() const { return m_currentHp <= 0; }
+    int GetMaxHp() const { return m_stats.maxHp; }
+    int GetCurrentHp() const { return m_currentHp; }
+
+    void SetOnHealthChanged(std::function<void(int, int)> callback) { m_onHealthChanged = callback; }
 };
 
 #endif

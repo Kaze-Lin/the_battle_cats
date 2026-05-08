@@ -23,7 +23,7 @@ namespace Util {
  * It includes properties such as texture and surface.
  * It also includes behaviors such as drawing the text.
  */
-class Text : public Core::Drawable {
+class Text : public Core::Drawable{
 public:
     Text(const std::string &font, int size, const std::string &text,
          const Util::Color &color = Color(127, 127, 127));

@@ -19,7 +19,12 @@ private:
     std::shared_ptr<Unit> m_catBase = nullptr;
     std::shared_ptr<Unit> m_enemyBase = nullptr;
 
+
+
 public:
+    std::shared_ptr<Unit> GetCatBase() const { return m_catBase; }
+    std::shared_ptr<Unit> GetEnemyBase() const { return m_enemyBase; }
+
     void SetSceneNode(Util::GameObject* node) { m_SceneNode = node; }
     void SpawnCatBase(int level);
     void SpawnEnemyBase(int hp, const std::string& imagePath, float positionX);

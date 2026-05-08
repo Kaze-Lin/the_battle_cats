@@ -128,9 +128,12 @@ void Unit::TakeDamage(int damage) {
     
     if (m_currentHp <= 0) {
         m_currentHp = 0;
+        if (m_onHealthChanged) m_onHealthChanged(m_currentHp, m_stats.maxHp);
         ChangeState(UnitState::Knockback); // 死亡前強制擊退一次
         return;
     }
+
+    if (m_onHealthChanged) m_onHealthChanged(m_currentHp, m_stats.maxHp);
 
     // KB (Knockback) 判定邏輯
     int lostHp = m_stats.maxHp - m_currentHp;
