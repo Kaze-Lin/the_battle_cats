@@ -28,7 +28,37 @@ Text::Text(
         zIndex
         );
     AddChild(highlightText);
+};
 
+Text::Text(
+    int size,
+    const std::string &text,
+    float zIndex,
+    Util::Color color
+    ): Util::GameObject(nullptr, zIndex),
+    size(size), text(text), zIndex(zIndex) {
+
+    auto backgroundText = std::make_shared<Util::GameObject>(
+        std::make_shared<Util::Text>(
+            TextThemeDetail::DefaultBackgroundFont,
+            size,
+            text,
+            TextThemeDetail::DefaultBackgroundColor
+        ),
+        zIndex - 1
+        );
+    AddChild(backgroundText);
+
+    auto highlightText = std::make_shared<Util::GameObject>(
+        std::make_shared<Util::Text>(
+            TextThemeDetail::DefaultHighlightFont,
+            size,
+            text,
+            color
+        ),
+        zIndex
+        );
+    AddChild(highlightText);
 };
 
 bool Text::GetVisible() {

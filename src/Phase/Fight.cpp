@@ -234,10 +234,10 @@ void Fight::DeployCatButton(std::vector<int> IDs) {
         for (int i = 1; i < m_gen_b_cats.size(); i++) {
             auto photoSize = m_gen_b_cats[i]->GetSize();
             if (i <= 4 || (i > 5 && i <= 10)) {
-                catButtonX += m_gen_b_cats[i - 1]->GetSize().x / 2.0F + m_gen_b_cats[i]->GetSize().x / 2.0F + 15.0F;
+                catButtonX += m_gen_b_cats[i - 1]->GetSize().x / 2.0F + photoSize.x / 2.0F + 15.0F;
             } else if (i == 5) {
                 catButtonX = X;
-                catButtonY = catButtonY - m_gen_b_cats[i - 5]->GetSize().y / 2.0F - m_gen_b_cats[i]->GetSize().y / 2.0F - 15.0F;
+                catButtonY = catButtonY - m_gen_b_cats[i - 5]->GetSize().y / 2.0F - photoSize.y / 2.0F - 15.0F;
             }
             m_gen_b_cats[i]->Place({catButtonX, catButtonY});
             AddChild(m_gen_b_cats[i]);

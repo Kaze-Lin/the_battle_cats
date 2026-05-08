@@ -13,6 +13,7 @@ private:
     std::shared_ptr<BackgroundImage> m_BackgroundImage;
     std::shared_ptr<BackgroundImage> m_UpgradeBanner;
     std::shared_ptr<BackgroundImage> m_BottomBanner;
+    std::shared_ptr<BackgroundImage> m_TopLeftBanner;
 
 
     // button image (with interaction image)
@@ -29,6 +30,7 @@ public:
 
     void GoBack(); // this is for go back
     void ToPropsStore();
+    void Update() override;
 };
 
 #endif //UPGRADE_HPP

@@ -23,6 +23,20 @@ Upgrade::Upgrade(): Phase() {
             -7.0F);
     AddChild(m_BottomBanner);
 
+    m_TopLeftBanner =
+        std::make_shared<BackgroundImage>(
+            RESOURCE_DIR "/phase/upgrade/top_left_banner.png",
+            -7.0F);
+    m_TopLeftBanner->AddChild(
+        std::make_shared<Text>(
+            30,
+            "角色",
+            -5.0F,
+            Util::Color::FromName(Util::Colors::WHITE)
+            )
+        );
+    AddChild(m_TopLeftBanner);
+
     // button image (with interaction image)
     m_b_Back =
         std::make_shared<Button>(
@@ -55,9 +69,16 @@ Upgrade::Upgrade(): Phase() {
     const auto bottomBannerY = -1 * System::GetWindowHeight() / 2.0 + m_BottomBanner->GetSize().y / 2.0;
     m_BottomBanner->Place({0.0F, bottomBannerY});
 
-    const auto propsStroeButtonX = m_BottomBanner->GetCoordinate().x + 60.0F;
-    const auto propsStroeButtonY = m_BottomBanner->GetCoordinate().y + 3.0F;
-    m_b_PropsStore->Place({propsStroeButtonX, propsStroeButtonY});
+    m_TopLeftBanner->ScaleSize({ORIGINAL_SCALING, ORIGINAL_SCALING});
+    const auto topLeftBannerSize = m_TopLeftBanner->GetSize();
+    const auto topLeftBannerX = -1 * System::GetWindowWidth() / 2.0 + topLeftBannerSize.x / 2.0;
+    const auto topLeftBannerY = System::GetWindowHeight() / 2.0 - m_UpgradeBanner->GetSize().y - topLeftBannerSize.y / 2.0 - 10.0F;
+    m_TopLeftBanner->Place({topLeftBannerX, topLeftBannerY});
+
+    // button image
+    const auto propsStoreButtonX = m_BottomBanner->GetCoordinate().x + 60.0F;
+    const auto propsStoreButtonY = m_BottomBanner->GetCoordinate().y + 3.0F;
+    m_b_PropsStore->Place({propsStoreButtonX, propsStoreButtonY});
     AddChild(m_b_PropsStore);
 
     const auto backButtonX = -1.0F * System::GetWindowWidth() / 2.0F + m_b_Back->GetSize().x / 2.0F + 5.0F;
@@ -86,3 +107,8 @@ void Upgrade::ToPropsStore() {
     this->m_DestinationPhase = "PropsStore";
 }
 
+void Upgrade::Update() {
+    Phase::Update();
+
+
+}
