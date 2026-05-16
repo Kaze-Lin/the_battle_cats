@@ -13,16 +13,18 @@ void Button::ScaleSize(glm::vec2 s) {
 }
 
 void Button::Place(glm::vec2 p) {
+    glm::vec2 temp = p - m_Transform.translation;
     m_Transform.translation = p;
     if (GetChildren().empty()) return;
+    LOG_DEBUG("X: " + std::to_string(GetCoordinate().x) + ", Y: " + std::to_string(GetCoordinate().y));
 
     for (auto &item: GetChildren()) {
-        if (auto it = std::dynamic_pointer_cast<Button>(item)) {
-            it->Place(p);
-        } else if (auto it = std::dynamic_pointer_cast<BackgroundImage>(item)) {
-            it->Place(p);
-        } else if (auto it = std::dynamic_pointer_cast<Text>(item)) {
-            it->Place(p);
+        if (auto bt = std::dynamic_pointer_cast<Button>(item)) {
+            bt->Place(bt->GetCoordinate() + temp);
+        } else if (auto bg = std::dynamic_pointer_cast<BackgroundImage>(item)) {
+            bg->Place(bg->GetCoordinate() + temp);
+        } else if (auto text = std::dynamic_pointer_cast<Text>(item)) {
+            text->Place(text->GetCoordinate() + temp);
         }
     }
 }

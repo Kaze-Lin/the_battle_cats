@@ -200,27 +200,33 @@ void Fight::Update() {
 void Fight::DeployCatButton(std::vector<int> IDs) {
     // ID, cat
     std::unordered_map<int, const UnitData*> cats;
-
-    for (auto i: IDs)
+    for (auto i: IDs) {
         cats[i] = DatabaseManager::GetInstance().GetCatData(i);
+    }
 
     if (!cats.empty() || (cats.size() > 0 && cats.size() < 10)) {
-        for (auto cat: cats) {
-            if (cat.second == nullptr) {
-                LOG_WARN("cannot find cat with ID " + std::to_string(cat.first));
-                continue;
-            }
-            m_gen_b_cats.push_back(
-                std::make_shared<Button>(
-                        RESOURCE_DIR + cat.second->catGenButton[0], // the '0' should be changed
-                        [cat](){ EntityManager::GetInstance().SpawnCat(
-                            cat.first,
-                            cat.second->maxLevel,
-                            cat.second->forms[0].formIndex); }, // the '0' should be changed
-                        99
-                    )
-                );
+        for (auto i: IDs) {
+            auto cat = cats.find(i);
+             if (cat != cats.end()){
+                 if (cat->second == nullptr) {
+                     LOG_WARN("cannot find cat with ID " + std::to_string(cat->first));
+                     continue;
+                 }
 
+                 std::string deploySort = std::to_string(cat->second->id) + ": " + cat->second->nameInternal;
+                 LOG_DEBUG(deploySort);
+
+                 m_gen_b_cats.push_back(
+                     std::make_shared<Button>(
+                             RESOURCE_DIR + cat->second->catGenButton[0], // the '0' should be changed
+                             [cat](){ EntityManager::GetInstance().SpawnCat(
+                                 cat->first,
+                                 cat->second->maxLevel,
+                                 cat->second->forms[0].formIndex); }, // the '0' should be changed
+                             99
+                         )
+                     );
+            }
         }
         //layout
         const auto X = -245.0F;

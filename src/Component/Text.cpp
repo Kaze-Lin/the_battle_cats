@@ -81,6 +81,7 @@ glm::vec2 Text::GetSize() {
 }
 
 void Text::Place(glm::vec2 p) {
+    m_Transform.translation = p;
     for (auto &it: m_Children)
         it->m_Transform.translation = p;
 }

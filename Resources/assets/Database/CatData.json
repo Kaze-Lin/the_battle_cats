@@ -25,7 +25,7 @@
     },
     {
       "id": 1,
-      "name_internal": "Tank_Cat",
+      "name_internal": "Tank Cat",
       "max_level": 20,
       "cat_path": ["/cat_materials/normal/tank_cat/form/1.png",
                    "/cat_materials/normal/tank_cat/form/2.png",

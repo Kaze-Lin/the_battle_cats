@@ -70,12 +70,12 @@
                 {
                     "cat_id": 0,
                     "current_form": 1,
-                    "level": 10
+                    "level": 5
                 },
                 {
                     "cat_id": 1,
                     "current_form": 1,
-                    "level": 5
+                    "level": 10
                 }
             ],
             "username": "admin"

@@ -24,20 +24,23 @@ void BackgroundImage::AlignWithWindowWidth() {
 }
 
 void BackgroundImage::ScaleSize(glm::vec2 s) {
+    m_BaseScale = s;
     m_Transform.scale = s;
 }
 
 void BackgroundImage::Place(glm::vec2 p) {
+    glm::vec2 temp = p - m_Transform.translation;
     m_Transform.translation = p;
     if (GetChildren().empty()) return;
-    
+
     for (auto &item: GetChildren()) {
-        if (auto it = std::dynamic_pointer_cast<Button>(item)) {
-            it->Place(p);
-        } else if (auto it = std::dynamic_pointer_cast<BackgroundImage>(item)) {
-            it->Place(p);
-        } else if (auto it = std::dynamic_pointer_cast<Text>(item)) {
-            it->Place(p);
+        if (auto bt = std::dynamic_pointer_cast<Button>(item)) {
+            bt->Place(bt->GetCoordinate() + temp);
+        } else if (auto bgImage = std::dynamic_pointer_cast<BackgroundImage>(item)) {
+            bgImage->Place(bgImage->GetCoordinate() + temp);
+        } else if (auto text = std::dynamic_pointer_cast<Text>(item)) {
+            LOG_DEBUG("X: " + std::to_string(text->GetCoordinate().x) + ", Y: " + std::to_string(text->GetCoordinate().y));
+            text->Place(text->GetCoordinate() + temp);
         }
     }
 }

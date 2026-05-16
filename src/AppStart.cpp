@@ -4,6 +4,7 @@
 #include "Util/Input.hpp"
 #include "Util/Logger.hpp"
 #include "DatabaseManager.hpp"
+#include "UserManager.hpp"
 #include "LevelManager.hpp"
 #include "EntityManager.hpp"
 #include "Unit.hpp"
