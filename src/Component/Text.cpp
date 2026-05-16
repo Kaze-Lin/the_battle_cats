@@ -97,3 +97,10 @@ void Text::SetColor(Util::Color color) {
     auto item = std::dynamic_pointer_cast<Util::Text>(it[1]->GetDrawable());
     item->SetColor(color);
 }
+
+void Text::SetVisible(bool visible) {
+    m_Visible = visible;
+    for (auto& child : m_Children) {
+        child->SetVisible(visible);
+    }
+}

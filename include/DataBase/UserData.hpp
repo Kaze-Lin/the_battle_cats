@@ -84,7 +84,6 @@ inline void from_json(const nlohmann::json& j, CatSaveData& c) {
 struct UserProfile {
     std::string username;
     std::string password;
-
     Resources resources;
     Progress progress;
     BaseUpgrades baseUpgrades;

@@ -37,7 +37,6 @@ void Login::Update() {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             LOG_WARN("Invalid input! Please enter number 1 or 2!");
-
             return;
         }
         if (LoginSelector == 1) {
