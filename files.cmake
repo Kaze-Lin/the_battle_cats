@@ -8,6 +8,8 @@ set(SRC_FILES
     Component/Text.cpp
     Component/TextButton.cpp
     Component/OptionBlock.cpp
+    Component/Wallet.cpp
+    Component/Cannon.cpp
 
     Phase/Phase.cpp
     Phase/Login.cpp
@@ -36,6 +38,8 @@ set(INCLUDE_FILES
     Component/Text.hpp
     Component/TextButton.hpp
     Component/OptionBlock.hpp
+    Component/Wallet.hpp
+    Component/Cannon.hpp
 
     ImageScaling.hpp
     SystemInfo.hpp

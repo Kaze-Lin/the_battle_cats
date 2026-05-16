@@ -1,7 +1,8 @@
-    #include "Phase/Fight.hpp"
+#include "Phase/Fight.hpp"
 #include "DatabaseManager.hpp"
 #include "LevelManager.hpp"
 #include "EntityManager.hpp"
+#include "UserManager.hpp"
 #include "Util/Time.hpp"
 
 Fight::Fight(): Phase() {
@@ -12,6 +13,141 @@ Fight::Fight(): Phase() {
             -10.0F);
     AddChild(m_BackgroundImage);
 
+    // Wallet 初始化
+    m_Wallet = std::make_shared<Wallet>();
+    int workerCatEfficiency = 1;
+    int walletCapacity = 1;
+    if (auto user = UserManager::GetInstance().GetCurrentUser()) {
+        workerCatEfficiency = user->baseUpgrades.workerCatEfficiency;
+        walletCapacity = user->baseUpgrades.walletCapacity;
+    }
+    m_Wallet->Initialize(workerCatEfficiency, walletCapacity);
+
+    // Wallet UI - Money Text
+    m_WalletMoneyText = std::make_shared<Text>(
+        TextThemeDetail::DefaultFontSize,
+        "Money: 0 / 0",
+        50
+    );
+    AddChild(m_WalletMoneyText);
+
+    // Wallet UI - Upgrade Cost Text
+    m_WalletLevelText = std::make_shared<Text>(
+        TextThemeDetail::DefaultFontSize,
+        "$ 0",
+        100
+    );
+    AddChild(m_WalletLevelText);
+
+    // Cannon 參數讀取
+    int cannonAttack = 1, cannonRange = 1, cannonCharge = 1;
+    if (auto user = UserManager::GetInstance().GetCurrentUser()) {
+        cannonAttack = user->baseUpgrades.cannonAttack;
+        cannonRange = user->baseUpgrades.cannonRange;
+        cannonCharge = user->baseUpgrades.cannonCharge;
+    }
+    m_Cannon = std::make_shared<Cannon>();
+
+    // Laser Effect UI
+    m_LaserEffectText = std::make_shared<Text>(
+        TextThemeDetail::DefaultFontSize * 2,
+        "============ LASER ============",
+        100,
+        Util::Color::FromName(Util::Colors::YELLOW)
+    );
+    // 預設不加入場景，開砲時再 AddChild
+
+    std::weak_ptr<Wallet> weakWallet = m_Wallet;
+    m_b_RickUpgrade =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/phase/fight/Richupgrade_1.png",
+            [weakWallet]() {
+                if (auto w = weakWallet.lock()) {
+                    w->Upgrade();
+                }
+            },
+            50.0F);
+
+    m_b_RickUpgrade->ScaleSize({ORIGINAL_SCALING + 0.5F, ORIGINAL_SCALING + 0.5F});
+
+    std::weak_ptr<Cannon> weakCannon = m_Cannon;
+    m_b_CannonCharge =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/phase/fight/Cannoncharge_0.png",
+            [weakCannon, this]() {
+                if (auto c = weakCannon.lock()) {
+                    if (c->Fire()) {
+                        LOG_INFO("Cannon Fired!");
+                        m_laserTimer = 1.0f;
+                        if (m_LaserEffectText) {
+                            // 將雷射特效加到畫面上
+                            this->AddChild(m_LaserEffectText);
+                        }
+
+                        // 對範圍內的敵人造成傷害並擊退
+                        auto catBase = EntityManager::GetInstance().GetCatBase();
+                        if (catBase) {
+                            float cannonRange = c->GetRange();
+                            float damage = c->GetDamage();
+                            float baseX = catBase->GetPositionX();
+
+                            auto targets = EntityManager::GetInstance().GetEntitiesInRange(Faction::Enemy, baseX - cannonRange, baseX + cannonRange);
+                            for (auto target : targets) {
+                                target->TakeDamage(static_cast<int>(damage));
+                                target->ForceKnockback();
+                            }
+                        }
+                    }
+                }
+            },
+            50.0F);
+    m_b_CannonCharge->ScaleSize({ORIGINAL_SCALING + 0.5F, ORIGINAL_SCALING + 0.5F});
+
+    // 連接 Cannon 的事件來更新 UI
+    std::weak_ptr<Button> weakCannonBtn = m_b_CannonCharge;
+    m_Cannon->SetOnChargeChanged([weakCannonBtn](int chargeState) {
+        if (auto btn = weakCannonBtn.lock()) {
+            std::string imagePath;
+            if (chargeState >= 10) {
+                imagePath = RESOURCE_DIR "/phase/fight/Cannoncharge_full.png";
+            } else {
+                imagePath = RESOURCE_DIR "/phase/fight/Cannoncharge_" + std::to_string(chargeState) + ".png";
+            }
+            btn->SetImage(imagePath);
+            LOG_INFO("Cannon image updated to: %s", imagePath.c_str());
+        }
+    });
+
+    // 初始化 Cannon 以觸發第一次 Callback
+    m_Cannon->Initialize(cannonAttack, cannonRange, cannonCharge);
+
+    // 連接 Wallet 的事件來更新 UI
+    std::weak_ptr<Text> weakMoneyText = m_WalletMoneyText;
+    std::weak_ptr<Text> weakLevelText = m_WalletLevelText;
+    std::weak_ptr<Button> weakUpgradeBtn = m_b_RickUpgrade;
+    m_Wallet->SetOnWalletChanged([weakMoneyText, weakLevelText, weakUpgradeBtn](int current, int max, int level, int upgradeCost) {
+        if (auto mText = weakMoneyText.lock()) {
+            mText->SetText("Money: " + std::to_string(current) + " / " + std::to_string(max));
+        }
+        if (auto lText = weakLevelText.lock()) {
+            if (level >= 8) {
+                lText->SetText("MAX");
+            } else {
+                lText->SetText("$ " + std::to_string(upgradeCost));
+            }
+        }
+        if (auto btn = weakUpgradeBtn.lock()) {
+            std::string imagePath;
+            if (level >= 8) {
+                imagePath = RESOURCE_DIR "/phase/fight/Richupgrade_Max.png";
+            } else {
+                std::string suffix = (current >= upgradeCost) ? "_enable.png" : ".png";
+                imagePath = RESOURCE_DIR "/phase/fight/Richupgrade_" + std::to_string(level) + suffix;
+            }
+            btn->SetImage(imagePath);
+        }
+    });
+
     // button image (with interaction image)
     m_b_Pause =
         std::make_shared<Button>(
@@ -19,21 +155,6 @@ Fight::Fight(): Phase() {
             []() { LOG_INFO("Pause Button Clicked!"); });
     m_b_Pause->SetZIndex(50.0F);
     m_b_Pause->ScaleSize({ORIGINAL_SCALING + 0.1F, ORIGINAL_SCALING + 0.1F});
-
-    m_b_RickUpgrade =
-        std::make_shared<Button>(
-            RESOURCE_DIR "/phase/fight/Richupgrade_1.png",
-            []() { LOG_INFO("Wallet Upgrade Clicked!"); },
-            50.0F);
-
-    m_b_RickUpgrade->ScaleSize({ORIGINAL_SCALING + 0.5F, ORIGINAL_SCALING + 0.5F});
-
-    m_b_CannonCharge =
-        std::make_shared<Button>(
-            RESOURCE_DIR "/phase/fight/Cannoncharge_0.png",
-            []() { LOG_INFO("Cat Cannon Clicked!"); },
-            50.0F);
-    m_b_CannonCharge->ScaleSize({ORIGINAL_SCALING + 0.5F, ORIGINAL_SCALING + 0.5F});
 
     // stage name
     m_StageName = std::make_shared<Text>(
@@ -58,6 +179,10 @@ Fight::Fight(): Phase() {
     m_b_RickUpgrade->Place({rickUpgradeX, rickUpgradeY});
     AddChild(m_b_RickUpgrade);
 
+    // Wallet Texts Layout
+    m_WalletLevelText->Place({rickUpgradeX, rickUpgradeY - 40.0f});
+    m_WalletMoneyText->Place({459.0f,375.0f});
+
     const auto cannonChargeX = System::GetWindowWidth() / 2.0F - 75.0F;
     const auto cannonChargeY = -1 * System::GetWindowHeight() / 2.0F + m_b_CannonCharge->GetSize().y / 2.0F - 5.0F;
     m_b_CannonCharge->Place({cannonChargeX, cannonChargeY});
@@ -71,6 +196,16 @@ Fight::Fight(): Phase() {
     AddChild(m_StageName);
 
     EntityManager::GetInstance().SetSceneNode(this);
+
+    // 設定敵人死亡時掉落金錢
+    EntityManager::GetInstance().SetOnEnemyDied([weakWallet](Unit* enemy) {
+        if (auto w = weakWallet.lock()) {
+            if (enemy && enemy->GetFaction() == Faction::Enemy) {
+                w->AddMoney(enemy->GetDropGold());
+                LOG_INFO("Enemy died. Wallet received %.1f money.", enemy->GetDropGold());
+            }
+        }
+    });
 
     const StageData* stage = LevelManager::GetInstance().GetCurrentStage();
     if (stage != nullptr) {
@@ -93,14 +228,12 @@ Fight::Fight(): Phase() {
                 ),
                 10
                );
-               // 放置在塔的上方
                catHpText->m_Transform.translation = {catBase->GetPositionX() + 0.0f, 100.0f};
                AddChild(catHpText);
 
                 std::weak_ptr<Util::GameObject> weakCatHpText = catHpText;
                              catBase->SetOnHealthChanged([weakCatHpText](int current, int max) {
                                  if (auto text = weakCatHpText.lock()) {
-                                     // 將基礎的 Drawable 轉型為 Text 來呼叫 SetText
                                      if (auto textComp = std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())) {
                                          textComp->SetText(std::to_string(current) + "/" + std::to_string(max));
                                      }
@@ -119,14 +252,12 @@ Fight::Fight(): Phase() {
             ),
             10
            );
-                // 放置在塔的上方
-                enemyHpText->m_Transform.translation = {enemyBase->GetPositionX() + 20.0f, 50.0f};               // 採用單一層 PTSD 內建的紅色
+                enemyHpText->m_Transform.translation = {enemyBase->GetPositionX() + 20.0f, 50.0f};
                AddChild(enemyHpText);
 
                std::weak_ptr<Util::GameObject> weakEnemyHpText = enemyHpText;
                enemyBase->SetOnHealthChanged([weakEnemyHpText](int current, int max) {
                    if (auto text = weakEnemyHpText.lock()) {
-                       // 將基礎的 Drawable 轉型為 Text 來呼叫 SetText
                        if (auto textComp = std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())) {
                            textComp->SetText(std::to_string(current) + "/" + std::to_string(max));
                        }
@@ -136,13 +267,9 @@ Fight::Fight(): Phase() {
 
         m_StageName->SetText(stage->stageName);
 
-        // stage name layout
-        const auto pauseSize = m_b_Pause->GetSize();
         auto textSize = m_StageName->GetSize();
-        const auto stageNameX = pauseX + pauseSize.x / 2 + textSize.x / 2.0F + 15.0F;
-        const auto stageNameY = pauseY;
-        m_StageName->Place({stageNameX, stageNameY});
-        AddChild(m_StageName);
+        const auto stageNameXNew = pauseX + pauseSize.x / 2 + textSize.x / 2.0F + 15.0F;
+        m_StageName->Place({stageNameXNew, stageNameY});
 
         // TODO: deploy cats
         // Deploy Cats
@@ -174,6 +301,27 @@ void Fight::Update() {
     }
 
     float gameDeltaTime = realDeltaTime * m_timeScale;
+
+    // Wallet Passive Money Generation
+    if (m_Wallet) {
+        m_Wallet->Update(gameDeltaTime);
+    }
+
+    // Cannon Charge Generation
+    if (m_Cannon) {
+        m_Cannon->Update(gameDeltaTime);
+    }
+
+    // Laser Effect Timer
+    if (m_laserTimer > 0.0f) {
+        m_laserTimer -= gameDeltaTime;
+        if (m_laserTimer <= 0.0f) {
+            m_laserTimer = 0.0f;
+            if (m_LaserEffectText) {
+                this->RemoveChild(m_LaserEffectText);
+            }
+        }
+    }
 
     LevelManager::GetInstance().Update(gameDeltaTime, 1.0f);
     EntityManager::GetInstance().Update(gameDeltaTime);

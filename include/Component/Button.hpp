@@ -34,6 +34,7 @@ public:
 
     void ScaleSize(glm::vec2 s);
     void Place(glm::vec2 p);
+    void SetImage(const std::string& imagePath);
     void Update() override;
 
     glm::vec2 GetCoordinate();

@@ -5,6 +5,8 @@
 
 #include "Component/BackgroundImage.hpp"
 #include "Component/Button.hpp"
+#include "Component/Wallet.hpp"
+#include "Component/Cannon.hpp"
 
 #include "ImageScaling.hpp"
 #include "SystemInfo.hpp"
@@ -22,6 +24,16 @@ private:
 
     // stage name
     std::shared_ptr<Text> m_StageName;
+    
+    // wallet and its UI
+    std::shared_ptr<Wallet> m_Wallet;
+    std::shared_ptr<Text> m_WalletMoneyText;
+    std::shared_ptr<Text> m_WalletLevelText;
+
+    // cannon and its UI
+    std::shared_ptr<Cannon> m_Cannon;
+    std::shared_ptr<Text> m_LaserEffectText;
+    float m_laserTimer = 0.0f;
 
     float m_timeScale = 1.0f;
 

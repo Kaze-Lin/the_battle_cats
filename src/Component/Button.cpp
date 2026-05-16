@@ -12,19 +12,24 @@ void Button::ScaleSize(glm::vec2 s) {
     m_Transform.scale = s;
 }
 
+void Button::SetImage(const std::string& imagePath) {
+    m_Drawable = std::make_shared<Util::Image>(imagePath);
+    m_OriginalSize = m_Drawable->GetSize();
+}
+
 void Button::Place(glm::vec2 p) {
-    glm::vec2 temp = p - m_Transform.translation;
+    glm::vec2 delta = p - m_Transform.translation;
     m_Transform.translation = p;
     if (GetChildren().empty()) return;
     LOG_DEBUG("X: " + std::to_string(GetCoordinate().x) + ", Y: " + std::to_string(GetCoordinate().y));
 
     for (auto &item: GetChildren()) {
         if (auto bt = std::dynamic_pointer_cast<Button>(item)) {
-            bt->Place(bt->GetCoordinate() + temp);
+            bt->Place(bt->GetCoordinate() + delta);
         } else if (auto bg = std::dynamic_pointer_cast<BackgroundImage>(item)) {
-            bg->Place(bg->GetCoordinate() + temp);
+            bg->Place(bg->GetCoordinate() + delta);
         } else if (auto text = std::dynamic_pointer_cast<Text>(item)) {
-            text->Place(text->GetCoordinate() + temp);
+            text->Place(text->GetCoordinate() + delta);
         }
     }
 }

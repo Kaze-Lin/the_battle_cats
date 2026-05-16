@@ -75,6 +75,7 @@ public:
     bool IsDead() const { return m_currentHp <= 0; }
     int GetMaxHp() const { return m_stats.maxHp; }
     int GetCurrentHp() const { return m_currentHp; }
+    float GetDropGold() const { return m_stats.dropGold; }
 
     void SetOnHealthChanged(std::function<void(int, int)> callback) { m_onHealthChanged = callback; }
 };
