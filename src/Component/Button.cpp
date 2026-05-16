@@ -12,6 +12,11 @@ void Button::ScaleSize(glm::vec2 s) {
     m_Transform.scale = s;
 }
 
+void Button::SetImage(const std::string& imagePath) {
+    m_Drawable = std::make_shared<Util::Image>(imagePath);
+    m_OriginalSize = m_Drawable->GetSize();
+}
+
 void Button::Place(glm::vec2 p) {
     m_Transform.translation = p;
     if (GetChildren().empty()) return;

@@ -64,6 +64,7 @@ void EntityManager::SpawnEnemy(int enemyId, int magnification) {
     stats.isAreaAttack = enemyData->isAreaAttack;
     stats.moveSpeed = enemyData->moveSpeed;
     stats.knockbackLimit = enemyData->knockback;
+    stats.dropGold = enemyData->moneyDrop;
 
     // 將幀數轉換為秒數
     const float FPS = 100.0f;
@@ -136,6 +137,9 @@ void EntityManager::Update(float deltaTime) {
 
     for (auto it = m_enemyUnits.begin(); it != m_enemyUnits.end(); ) {
         if ((*it)->IsDeadAndAnimationFinished()) {
+            if (m_onEnemyDied) {
+                m_onEnemyDied(it->get());
+            }
             if (m_SceneNode) {
                 m_SceneNode->RemoveChild(*it);
             }

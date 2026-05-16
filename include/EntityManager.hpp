@@ -19,7 +19,7 @@ private:
     std::shared_ptr<Unit> m_catBase = nullptr;
     std::shared_ptr<Unit> m_enemyBase = nullptr;
 
-
+    std::function<void(Unit*)> m_onEnemyDied = nullptr;
 
 public:
     std::shared_ptr<Unit> GetCatBase() const { return m_catBase; }
@@ -36,6 +36,8 @@ public:
         static EntityManager instance;
         return instance;
     }
+
+    void SetOnEnemyDied(std::function<void(Unit*)> callback) { m_onEnemyDied = callback; }
 
     void SpawnCat(int catId, int level, int form);
     void SpawnEnemy(int enemyId, int magnification);

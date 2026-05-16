@@ -41,6 +41,7 @@ public:
     void Place(glm::vec2 p);
     void SetText(const std::string& text);
     void SetColor(Util::Color color);
+    void SetVisible(bool visible);
 };
 
 #endif //TEXT_HPP
