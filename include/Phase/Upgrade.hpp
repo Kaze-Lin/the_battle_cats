@@ -6,6 +6,7 @@
 #include "Component/Button.hpp"
 #include "Component/OptionBlock.hpp"
 #include "ImageScaling.hpp"
+#include "Component/Text.hpp"
 #include "Phase/CatBase.hpp"
 
 class Upgrade: public Phase {
@@ -15,6 +16,8 @@ private:
     std::shared_ptr<BackgroundImage> m_UpgradeBanner;
     std::shared_ptr<BackgroundImage> m_BottomBanner;
     std::shared_ptr<BackgroundImage> m_SubTitleBanner;
+
+    std::shared_ptr<Text> m_SubTitleText;
 
 
     // button image (with interaction image)

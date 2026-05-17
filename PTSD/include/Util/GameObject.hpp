@@ -125,14 +125,14 @@ public:
         m_Drawable = drawable;
     }
 
-    std::shared_ptr<Core::Drawable> GetDrawable() {return m_Drawable; }
+    std::shared_ptr<Core::Drawable> GetDrawable() { return m_Drawable; }
 
     /**
      * @brief Set the visibility of the game object.
      *
      * @param visible The new visibility of the game object.
      */
-    void SetVisible(const bool visible) { m_Visible = visible; }
+    virtual void SetVisible(const bool visible) { m_Visible = visible; }
 
     /**
      * @brief Add a child to the game object.
@@ -153,6 +153,19 @@ public:
             std::remove(m_Children.begin(), m_Children.end(), child),
             m_Children.end());
     }
+    /**
+          * @brief Set the absolute position of the game object.
+          *
+          * @param p The new position.
+          */
+    virtual void Place(const glm::vec2 &p) { m_Transform.translation = p; }
+
+    /**
+     * @brief Get the absolute position of the game object.
+     *
+     * @return The position of the game object.
+     */
+    virtual glm::vec2 GetCoordinate() const { return m_Transform.translation; }
 
     void Draw();
 

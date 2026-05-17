@@ -4,9 +4,8 @@
 #include "DatabaseManager.hpp"
 #include "Component/Text.hpp"
 
-namespace Chooser {
-    size_t GetMiddleIndex(const std::vector<std::shared_ptr<OptionBlock>> &v)
-    {
+namespace Selector {
+    size_t GetMiddleIndex(const std::vector<std::shared_ptr<OptionBlock>> &v) {
         for (size_t i = 0; i < v.size(); i++) {
             if (std::abs(v[i]->GetCoordinate().x) < 0.01F) {
                 return i;
@@ -22,9 +21,15 @@ namespace Chooser {
     }
 
     std::string GetBlockTitle(const std::vector<std::shared_ptr<OptionBlock>> &v) {
-        auto block = v[GetMiddleIndex(v)];
+        size_t middleIndex = GetMiddleIndex(v);
 
-        std::string title = "";
+        std::string title = " ";
+
+        if (v.empty() || middleIndex >= v.size()) {
+            return title;
+        }
+
+        auto block = v[middleIndex];
 
         switch (block->GetBlockType()) {
         case BlockType::CHARACTER:
@@ -43,6 +48,7 @@ namespace Chooser {
             title = "特殊能力";
             break;
         default:
+            title = " ";
             break;
         }
 
@@ -74,14 +80,12 @@ Upgrade::Upgrade(): Phase() {
         std::make_shared<BackgroundImage>(
             RESOURCE_DIR "/phase/upgrade/top_left_banner.png",
             -7.0F);
-    m_SubTitleBanner->AddChild(
-        std::make_shared<Text>(
-            30,
-            "角色",
-            -5.0F,
-            Util::Color::FromName(Util::Colors::WHITE)
-            )
-        );
+    m_SubTitleText = std::make_shared<Text>(
+        30,
+        " ",
+        -5.0F,
+        Util::Color::FromName(Util::Colors::WHITE));
+    m_SubTitleBanner->AddChild(m_SubTitleText);
     AddChild(m_SubTitleBanner);
 
     // button image (with interaction image)
@@ -165,25 +169,27 @@ void Upgrade::Update() {
     // LOG_DEBUG("middle index is = " + std::to_string(GetMiddleIndex(m_UpgradeSelectionBar)));
     // LOG_DEBUG("vector size is = " + std::to_string(m_UpgradeSelectionBar.size()));
 
-    if (Util::Input::IsKeyDown(Util::Keycode::RIGHT)) {
-        size_t midIndex = Chooser::GetMiddleIndex(m_UpgradeSelectionBar);
+    if (!m_UpgradeSelectionBar.empty()) {
+        if (Util::Input::IsKeyDown(Util::Keycode::RIGHT)) {
+            size_t midIndex = Selector::GetMiddleIndex(m_UpgradeSelectionBar);
 
-        if (midIndex + 1 < m_UpgradeSelectionBar.size()) {
-            size_t rightIndex = midIndex + 1;
-            Chooser::HorizontalMovement(m_UpgradeSelectionBar, m_UpgradeSelectionBar[rightIndex]->GetCoordinate().x);
-        }
-    } else if (Util::Input::IsKeyDown(Util::Keycode::LEFT)) {
-        size_t midIndex = Chooser::GetMiddleIndex(m_UpgradeSelectionBar);
+            if (midIndex + 1 < m_UpgradeSelectionBar.size()) {
+                size_t rightIndex = midIndex + 1;
+                Selector::HorizontalMovement(m_UpgradeSelectionBar, m_UpgradeSelectionBar[rightIndex]->GetCoordinate().x);
+            }
+        } else if (Util::Input::IsKeyDown(Util::Keycode::LEFT)) {
+            size_t midIndex = Selector::GetMiddleIndex(m_UpgradeSelectionBar);
 
-        if (midIndex > 0) {
-            size_t leftIndex = midIndex - 1;
-            Chooser::HorizontalMovement(m_UpgradeSelectionBar, m_UpgradeSelectionBar[leftIndex]->GetCoordinate().x);
+            if (midIndex > 0) {
+                size_t leftIndex = midIndex - 1;
+                Selector::HorizontalMovement(m_UpgradeSelectionBar, m_UpgradeSelectionBar[leftIndex]->GetCoordinate().x);
+            }
         }
     }
 
-    if (auto text = std::dynamic_pointer_cast<Text>(m_SubTitleBanner->GetChildren()[0])) {
-        std::string title = Chooser::GetBlockTitle(m_UpgradeSelectionBar);
-        text->SetText(title);
+    if (m_SubTitleText) {
+        std::string title = Selector::GetBlockTitle(m_UpgradeSelectionBar);
+        m_SubTitleText->SetText(title);
     }
 
 }

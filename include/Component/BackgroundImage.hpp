@@ -21,10 +21,10 @@ public:
     void ScaleSize(glm::vec2 s = {1.0F, 1.0F});
     void SetImage(const std::string& ImagePath);
 
-    virtual void Place(glm::vec2 p);
+    virtual void Place(const glm::vec2 &p) override;
 
     glm::vec2 GetSize();
-    glm::vec2 GetCoordinate();
+    glm::vec2 GetCoordinate() const override;
 };
 
 

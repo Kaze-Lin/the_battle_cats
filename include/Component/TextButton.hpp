@@ -25,7 +25,7 @@ public:
     TextButton(int size, const std::string& text, float zIndex, std::function<void()> Move);
     ~TextButton() override = default;
 
-    glm::vec2 GetCoordinate();
+    glm::vec2 GetCoordinate() const override;
     glm::vec2 GetSize();
 
     bool IsHovered();

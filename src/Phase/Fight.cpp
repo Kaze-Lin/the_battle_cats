@@ -274,6 +274,7 @@ Fight::Fight(): Phase() {
         // TODO: deploy cats
         // Deploy Cats
         std::vector<int> ids = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+        std::reverse(ids.begin(), ids.end());
         DeployCatButton(ids);
     }
 }
@@ -353,28 +354,33 @@ void Fight::DeployCatButton(std::vector<int> IDs) {
     }
 
     if (!cats.empty() || (cats.size() > 0 && cats.size() < 10)) {
-        for (auto i: IDs) {
-            auto cat = cats.find(i);
-             if (cat != cats.end()){
-                 if (cat->second == nullptr) {
-                     LOG_WARN("cannot find cat with ID " + std::to_string(cat->first));
-                     continue;
-                 }
-
-                 std::string deploySort = std::to_string(cat->second->id) + ": " + cat->second->nameInternal;
-                 LOG_DEBUG(deploySort);
-
-                 m_gen_b_cats.push_back(
-                     std::make_shared<Button>(
-                             RESOURCE_DIR + cat->second->catGenButton[0], // the '0' should be changed
-                             [cat](){ EntityManager::GetInstance().SpawnCat(
-                                 cat->first,
-                                 cat->second->maxLevel,
-                                 cat->second->forms[0].formIndex); }, // the '0' should be changed
-                             99
-                         )
-                     );
+        for (auto cat: cats)
+        {
+            if (cat.second == nullptr) {
+                LOG_WARN("cannot find cat with ID " + std::to_string(cat.first));
+                continue;
             }
+
+            std::weak_ptr<Wallet> weakWallet = m_Wallet;
+            m_gen_b_cats.push_back(
+                std::make_shared<Button>(
+                        RESOURCE_DIR + cat.second->catGenButton[0], // the '0' should be changed
+                        [cat, weakWallet](){
+                            if (auto w = weakWallet.lock()) {
+                                int cost = cat.second->forms[0].cost; // the '0' should be changed
+                                if (w->SpendMoney(cost)) {
+                                    EntityManager::GetInstance().SpawnCat(
+                                        cat.first,
+                                        cat.second->maxLevel,
+                                        cat.second->forms[0].formIndex); // the '0' should be changed
+                                } else {
+                                    LOG_INFO("Not enough money to spawn %s! Cost: %d", cat.second->nameInternal.c_str(), cost);
+                                }
+                            }
+                        },
+                        99
+                    )
+                );
         }
         //layout
         const auto X = -245.0F;
