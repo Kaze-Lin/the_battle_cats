@@ -1,7 +1,60 @@
 #include "Phase/Upgrade.hpp"
 
 #include "PhaseManager.hpp"
-#include "Phase/PropsStore.hpp"
+#include "DatabaseManager.hpp"
+#include "Component/Text.hpp"
+
+namespace Selector {
+    size_t GetMiddleIndex(const std::vector<std::shared_ptr<OptionBlock>> &v) {
+        for (size_t i = 0; i < v.size(); i++) {
+            if (std::abs(v[i]->GetCoordinate().x) < 0.01F) {
+                return i;
+            }
+        }
+        return v.size();
+    }
+
+    void HorizontalMovement(const std::vector<std::shared_ptr<OptionBlock>> &v, float offset) {
+        for (auto &item: v) {
+            item->Place({item->GetCoordinate().x - offset, item->GetCoordinate().y});
+        }
+    }
+
+    std::string GetBlockTitle(const std::vector<std::shared_ptr<OptionBlock>> &v) {
+        size_t middleIndex = GetMiddleIndex(v);
+
+        std::string title = " ";
+
+        if (v.empty() || middleIndex >= v.size()) {
+            return title;
+        }
+
+        auto block = v[middleIndex];
+
+        switch (block->GetBlockType()) {
+        case BlockType::CHARACTER:
+            title = "角色";
+            break;
+        case BlockType::CANNON:
+            title = "貓咪砲";
+            break;
+        case BlockType::WORKER_CAT:
+            title = "工作狂貓";
+            break;
+        case BlockType::CASTLE:
+            title = "城堡";
+            break;
+        case BlockType::SPECIAL_ABILITIES:
+            title = "特殊能力";
+            break;
+        default:
+            title = " ";
+            break;
+        }
+
+        return title;
+    }
+}
 
 Upgrade::Upgrade(): Phase() {
     // background image (without interaction image)
@@ -23,19 +76,17 @@ Upgrade::Upgrade(): Phase() {
             -7.0F);
     AddChild(m_BottomBanner);
 
-    m_TopLeftBanner =
+    m_SubTitleBanner =
         std::make_shared<BackgroundImage>(
             RESOURCE_DIR "/phase/upgrade/top_left_banner.png",
             -7.0F);
-    m_TopLeftBanner->AddChild(
-        std::make_shared<Text>(
-            30,
-            "角色",
-            -5.0F,
-            Util::Color::FromName(Util::Colors::WHITE)
-            )
-        );
-    AddChild(m_TopLeftBanner);
+    m_SubTitleText = std::make_shared<Text>(
+        30,
+        " ",
+        -5.0F,
+        Util::Color::FromName(Util::Colors::WHITE));
+    m_SubTitleBanner->AddChild(m_SubTitleText);
+    AddChild(m_SubTitleBanner);
 
     // button image (with interaction image)
     m_b_Back =
@@ -69,11 +120,11 @@ Upgrade::Upgrade(): Phase() {
     const auto bottomBannerY = -1 * System::GetWindowHeight() / 2.0 + m_BottomBanner->GetSize().y / 2.0;
     m_BottomBanner->Place({0.0F, bottomBannerY});
 
-    m_TopLeftBanner->ScaleSize({ORIGINAL_SCALING, ORIGINAL_SCALING});
-    const auto topLeftBannerSize = m_TopLeftBanner->GetSize();
+    m_SubTitleBanner->ScaleSize({ORIGINAL_SCALING, ORIGINAL_SCALING});
+    const auto topLeftBannerSize = m_SubTitleBanner->GetSize();
     const auto topLeftBannerX = -1 * System::GetWindowWidth() / 2.0 + topLeftBannerSize.x / 2.0;
     const auto topLeftBannerY = System::GetWindowHeight() / 2.0 - m_UpgradeBanner->GetSize().y - topLeftBannerSize.y / 2.0 - 10.0F;
-    m_TopLeftBanner->Place({topLeftBannerX, topLeftBannerY});
+    m_SubTitleBanner->Place({topLeftBannerX, topLeftBannerY});
 
     // button image
     const auto propsStoreButtonX = m_BottomBanner->GetCoordinate().x + 60.0F;
@@ -86,15 +137,19 @@ Upgrade::Upgrade(): Phase() {
     m_b_Back->Place({backButtonX, backButtonY});
     AddChild(m_b_Back);
 
-    const auto catcanX = 320.0F;
-    const auto catcanY = -353.0F;
-    m_b_CatCan->Place({catcanX, catcanY});
+    constexpr auto catCanX = 320.0F;
+    constexpr auto catCanY = -353.0F;
+    m_b_CatCan->Place({catCanX, catCanY});
     AddChild(m_b_CatCan);
 
+
+    // ================
+
+    BuildSelectionBar();
 }
 
 std::shared_ptr<Phase> Upgrade::GetDestinationPhase() {
-    if (this->m_DestinationPhase == "")
+    if (this->m_DestinationPhase.empty())
         return PhaseManager::GetNextPhase();
     return PhaseManager::GetNextPhase("Upgrade", this->m_DestinationPhase);
 }
@@ -108,7 +163,88 @@ void Upgrade::ToPropsStore() {
 }
 
 void Upgrade::Update() {
+
     Phase::Update();
 
+    // LOG_DEBUG("middle index is = " + std::to_string(GetMiddleIndex(m_UpgradeSelectionBar)));
+    // LOG_DEBUG("vector size is = " + std::to_string(m_UpgradeSelectionBar.size()));
 
+    if (!m_UpgradeSelectionBar.empty()) {
+        if (Util::Input::IsKeyDown(Util::Keycode::RIGHT)) {
+            size_t midIndex = Selector::GetMiddleIndex(m_UpgradeSelectionBar);
+
+            if (midIndex + 1 < m_UpgradeSelectionBar.size()) {
+                size_t rightIndex = midIndex + 1;
+                Selector::HorizontalMovement(m_UpgradeSelectionBar, m_UpgradeSelectionBar[rightIndex]->GetCoordinate().x);
+            }
+        } else if (Util::Input::IsKeyDown(Util::Keycode::LEFT)) {
+            size_t midIndex = Selector::GetMiddleIndex(m_UpgradeSelectionBar);
+
+            if (midIndex > 0) {
+                size_t leftIndex = midIndex - 1;
+                Selector::HorizontalMovement(m_UpgradeSelectionBar, m_UpgradeSelectionBar[leftIndex]->GetCoordinate().x);
+            }
+        }
+    }
+
+    if (m_SubTitleText) {
+        std::string title = Selector::GetBlockTitle(m_UpgradeSelectionBar);
+        m_SubTitleText->SetText(title);
+    }
+
+}
+
+
+void Upgrade::BuildSelectionBar() {
+    UserProfile* user = UserManager::GetInstance().GetCurrentUser();
+
+    // Middle Position
+    glm::vec2 selectedPos = {0.0F, 105.0F};
+
+    for (size_t i = 0; i < user->unlockedCats.size(); i++) {
+        int catId = user->unlockedCats[i].catId;
+
+        const UnitData* catData = DatabaseManager::GetInstance().GetCatData(catId);
+
+        if (catData == nullptr) {
+            LOG_WARN("cannot find cat with ID " + std::to_string(catId));
+            continue;
+        }
+
+        std::string deploySort = std::to_string(catId) + ": " + catData->nameInternal;
+        LOG_DEBUG(deploySort);
+
+        auto bg = std::make_shared<OptionBlock>(
+            BlockType::CHARACTER,
+            RESOURCE_DIR "/phase/upgrade/cat_background_xp.png"
+            );
+
+        // layout
+        bg->ScaleSize({0.39F, 0.39F});
+        bg->Place({selectedPos.x + (bg->GetSize().x + 20.0F) * i, selectedPos.y});
+
+        // max level
+        // it should be "if (user->unlockedCats[i].level == catData->maxLevel)"
+        if (user->unlockedCats[i].level == 10) {
+            bg->SetImage(RESOURCE_DIR "/phase/upgrade/cat_background.png");
+
+            auto text = std::make_shared<Text>(28, "MAX", 15.0F);
+
+            text->SetColor(Util::Color::FromName(Util::Colors::GREEN));
+            text->Place({bg->GetCoordinate().x + 52.0F, bg->GetCoordinate().y + 15.0F});
+
+            bg->AddChild(text);
+        }
+
+        auto catName = std::make_shared<Text>(24, catData->nameInternal, 15.0F);
+
+        catName->Place({bg->GetCoordinate().x, bg->GetCoordinate().y + 128.0F});
+        catName->SetColor(Util::Color::FromName(Util::Colors::WHITE));
+
+        bg->AddChild(catName);
+
+        m_UpgradeSelectionBar.push_back(bg);
+    }
+
+    for (auto &item: m_UpgradeSelectionBar) AddChild(item);
 }

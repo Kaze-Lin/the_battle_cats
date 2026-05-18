@@ -65,10 +65,6 @@ bool Text::GetVisible() {
     return m_Visible;
 }
 
-glm::vec2 Text::GetCoordinate() {
-    return m_Transform.translation;
-}
-
 glm::vec2 Text::GetSize() {
     glm::vec2 maxSize = {0.0F, 0.0F};
     for (const auto &it: GetChildren()) {
@@ -80,7 +76,8 @@ glm::vec2 Text::GetSize() {
     return maxSize;
 }
 
-void Text::Place(glm::vec2 p) {
+void Text::Place(const glm::vec2 &p) {
+    m_Transform.translation = p;
     for (auto &it: m_Children)
         it->m_Transform.translation = p;
 }

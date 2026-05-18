@@ -24,21 +24,18 @@ void BackgroundImage::AlignWithWindowWidth() {
 }
 
 void BackgroundImage::ScaleSize(glm::vec2 s) {
+    m_BaseScale = s;
     m_Transform.scale = s;
 }
 
-void BackgroundImage::Place(glm::vec2 p) {
-    m_Transform.translation = p;
+void BackgroundImage::Place(const glm::vec2 &p) {
+    glm::vec2 delta = p - GetCoordinate();
+    GameObject::Place(p);
+
     if (GetChildren().empty()) return;
-    
+
     for (auto &item: GetChildren()) {
-        if (auto it = std::dynamic_pointer_cast<Button>(item)) {
-            it->Place(p);
-        } else if (auto it = std::dynamic_pointer_cast<BackgroundImage>(item)) {
-            it->Place(p);
-        } else if (auto it = std::dynamic_pointer_cast<Text>(item)) {
-            it->Place(p);
-        }
+        item->Place(item->GetCoordinate() + delta);
     }
 }
 
@@ -50,6 +47,6 @@ glm::vec2 BackgroundImage::GetSize() {
     return m_OriginalSize * m_BaseScale;
 }
 
-glm::vec2 BackgroundImage::GetCoordinate() {
+glm::vec2 BackgroundImage::GetCoordinate() const {
     return m_Transform.translation;
 }

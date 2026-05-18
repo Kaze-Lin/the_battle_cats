@@ -17,18 +17,15 @@ void Button::SetImage(const std::string& imagePath) {
     m_OriginalSize = m_Drawable->GetSize();
 }
 
-void Button::Place(glm::vec2 p) {
-    m_Transform.translation = p;
+void Button::Place(const glm::vec2 &p) {
+    glm::vec2 delta = p - GetCoordinate();
+    GameObject::Place(p);
+
     if (GetChildren().empty()) return;
+    LOG_DEBUG("X: " + std::to_string(GetCoordinate().x) + ", Y: " + std::to_string(GetCoordinate().y));
 
     for (auto &item: GetChildren()) {
-        if (auto it = std::dynamic_pointer_cast<Button>(item)) {
-            it->Place(p);
-        } else if (auto it = std::dynamic_pointer_cast<BackgroundImage>(item)) {
-            it->Place(p);
-        } else if (auto it = std::dynamic_pointer_cast<Text>(item)) {
-            it->Place(p);
-        }
+        item->Place(item->GetCoordinate() + delta);
     }
 }
 
@@ -88,7 +85,7 @@ void Button::Update() {
 }
 
 
-glm::vec2 Button::GetCoordinate() { return  m_Transform.translation; }
+glm::vec2 Button::GetCoordinate() const { return  m_Transform.translation; }
 
 glm::vec2 Button::GetSize() { return m_OriginalSize * m_Transform.scale; }
 

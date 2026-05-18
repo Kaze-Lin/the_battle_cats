@@ -105,12 +105,12 @@ CatBase::CatBase(): Phase() {
 
     m_PlayerLevel->ScaleSize({0.45F, 0.45F});
     const auto playerLevelX = -1.0F *  System::GetWindowWidth() / 2.0F + 140.0F;
-    const auto playerLevelY = lobbyBannerY - m_LobbyBanner->GetSize().y / 2.0F - m_PlayerLevel->GetSize().y / 2.0F + 20.0F;
+    const auto playerLevelY = lobbyBannerY - m_LobbyBanner->GetSize().y / 2.0F - m_PlayerLevel->GetSize().y / 2.0F -20.0F;
     m_PlayerLevel->Place({playerLevelX, playerLevelY});
 
     m_CatBaseCatFace->ScaleSize({2.0F, 2.0F});
-    const auto catBaseCatFaceX = System::GetWindowWidth() / 2.0F - m_CatBaseCatFace->GetSize().x / 2.0F - 45.0F;
-    const auto catBaseCatFaceY = -1.0F * System::GetWindowHeight() / 2.0F + m_CatBaseCatFace->GetSize().y / 2.0F + 100.0F;
+    const auto catBaseCatFaceX = System::GetWindowWidth() / 2.0F - m_CatBaseCatFace->GetSize().x / 2.0F + 60.0F;
+    const auto catBaseCatFaceY = -1.0F * System::GetWindowHeight() / 2.0F + m_CatBaseCatFace->GetSize().y / 2.0F - 20.0F;
     m_CatBaseCatFace->Place({catBaseCatFaceX, catBaseCatFaceY});
 
     // button image (with interaction image)

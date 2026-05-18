@@ -61,7 +61,7 @@ Fight::Fight(): Phase() {
     m_b_RickUpgrade =
         std::make_shared<Button>(
             RESOURCE_DIR "/phase/fight/Richupgrade_1.png",
-            [weakWallet]() { 
+            [weakWallet]() {
                 if (auto w = weakWallet.lock()) {
                     w->Upgrade();
                 }
@@ -74,7 +74,7 @@ Fight::Fight(): Phase() {
     m_b_CannonCharge =
         std::make_shared<Button>(
             RESOURCE_DIR "/phase/fight/Cannoncharge_0.png",
-            [weakCannon, this]() { 
+            [weakCannon, this]() {
                 if (auto c = weakCannon.lock()) {
                     if (c->Fire()) {
                         LOG_INFO("Cannon Fired!");
@@ -83,14 +83,14 @@ Fight::Fight(): Phase() {
                             // 將雷射特效加到畫面上
                             this->AddChild(m_LaserEffectText);
                         }
-                        
+
                         // 對範圍內的敵人造成傷害並擊退
                         auto catBase = EntityManager::GetInstance().GetCatBase();
                         if (catBase) {
                             float cannonRange = c->GetRange();
                             float damage = c->GetDamage();
                             float baseX = catBase->GetPositionX();
-                            
+
                             auto targets = EntityManager::GetInstance().GetEntitiesInRange(Faction::Enemy, baseX - cannonRange, baseX + cannonRange);
                             for (auto target : targets) {
                                 target->TakeDamage(static_cast<int>(damage));
@@ -165,8 +165,10 @@ Fight::Fight(): Phase() {
     AddChild(m_StageName);
 
     // --- Layout settings ---
+    // background image (without interaction image)
     m_BackgroundImage->AlignWithWindow();
 
+    // button image (with interaction image)
     const auto pauseX = -1 * System::GetWindowWidth() / 2.0F + m_b_Pause->GetSize().x / 2.0F + 5.0F;
     const auto pauseY = System::GetWindowHeight() / 2.0F - m_b_Pause->GetSize().y / 2.0F - 5.0F;
     m_b_Pause->Place({pauseX, pauseY});
@@ -186,6 +188,7 @@ Fight::Fight(): Phase() {
     m_b_CannonCharge->Place({cannonChargeX, cannonChargeY});
     AddChild(m_b_CannonCharge);
 
+    // stage name
     const auto pauseSize = m_b_Pause->GetSize();
     const auto stageNameX = pauseX + pauseSize.x / 2 + 50.0F;
     const auto stageNameY = pauseY;
@@ -249,7 +252,7 @@ Fight::Fight(): Phase() {
             ),
             10
            );
-                enemyHpText->m_Transform.translation = {enemyBase->GetPositionX() + 20.0f, 50.0f};               
+                enemyHpText->m_Transform.translation = {enemyBase->GetPositionX() + 20.0f, 50.0f};
                AddChild(enemyHpText);
 
                std::weak_ptr<Util::GameObject> weakEnemyHpText = enemyHpText;
@@ -268,7 +271,10 @@ Fight::Fight(): Phase() {
         const auto stageNameXNew = pauseX + pauseSize.x / 2 + textSize.x / 2.0F + 15.0F;
         m_StageName->Place({stageNameXNew, stageNameY});
 
+        // TODO: deploy cats
+        // Deploy Cats
         std::vector<int> ids = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+        std::reverse(ids.begin(), ids.end());
         DeployCatButton(ids);
     }
 }
@@ -341,23 +347,25 @@ void Fight::Update() {
 }
 
 void Fight::DeployCatButton(std::vector<int> IDs) {
+    // ID, cat
     std::unordered_map<int, const UnitData*> cats;
-
-    for (auto i: IDs)
+    for (auto i: IDs) {
         cats[i] = DatabaseManager::GetInstance().GetCatData(i);
+    }
 
     if (!cats.empty() || (cats.size() > 0 && cats.size() < 10)) {
-        for (auto cat: cats) {
+        for (auto cat: cats)
+        {
             if (cat.second == nullptr) {
                 LOG_WARN("cannot find cat with ID " + std::to_string(cat.first));
                 continue;
             }
-            
+
             std::weak_ptr<Wallet> weakWallet = m_Wallet;
             m_gen_b_cats.push_back(
                 std::make_shared<Button>(
                         RESOURCE_DIR + cat.second->catGenButton[0], // the '0' should be changed
-                        [cat, weakWallet](){ 
+                        [cat, weakWallet](){
                             if (auto w = weakWallet.lock()) {
                                 int cost = cat.second->forms[0].cost; // the '0' should be changed
                                 if (w->SpendMoney(cost)) {
@@ -369,11 +377,10 @@ void Fight::DeployCatButton(std::vector<int> IDs) {
                                     LOG_INFO("Not enough money to spawn %s! Cost: %d", cat.second->nameInternal.c_str(), cost);
                                 }
                             }
-                        }, 
+                        },
                         99
                     )
                 );
-
         }
         //layout
         const auto X = -245.0F;

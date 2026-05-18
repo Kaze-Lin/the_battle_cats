@@ -7,6 +7,7 @@ set(SRC_FILES
     Component/Button.cpp
     Component/Text.cpp
     Component/TextButton.cpp
+    Component/OptionBlock.cpp
     Component/Wallet.cpp
     Component/Cannon.cpp
 
@@ -36,6 +37,7 @@ set(INCLUDE_FILES
     Component/Button.hpp
     Component/Text.hpp
     Component/TextButton.hpp
+    Component/OptionBlock.hpp
     Component/Wallet.hpp
     Component/Cannon.hpp
 

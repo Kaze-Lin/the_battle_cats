@@ -6,7 +6,7 @@
 #include "SystemInfo.hpp"
 
 class BackgroundImage: public Util::GameObject {
-private:
+protected:
     glm::vec2 m_OriginalSize = { };
     glm::vec2 m_BaseScale = {1.0F, 1.0F};
 
@@ -21,10 +21,10 @@ public:
     void ScaleSize(glm::vec2 s = {1.0F, 1.0F});
     void SetImage(const std::string& ImagePath);
 
-    void Place(glm::vec2 p);
+    virtual void Place(const glm::vec2 &p) override;
 
     glm::vec2 GetSize();
-    glm::vec2 GetCoordinate();
+    glm::vec2 GetCoordinate() const override;
 };
 
 

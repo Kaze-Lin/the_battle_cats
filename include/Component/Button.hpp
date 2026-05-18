@@ -33,11 +33,11 @@ public:
     ~Button() override = default;
 
     void ScaleSize(glm::vec2 s);
-    void Place(glm::vec2 p);
+    void Place(const glm::vec2 &p) override;
     void SetImage(const std::string& imagePath);
     void Update() override;
 
-    glm::vec2 GetCoordinate();
+    glm::vec2 GetCoordinate()const  override;
     glm::vec2 GetSize();
 
     bool IsHovered();

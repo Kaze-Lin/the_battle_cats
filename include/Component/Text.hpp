@@ -36,12 +36,11 @@ public:
     bool GetVisible();
 
     glm::vec2 GetSize();
-    glm::vec2 GetCoordinate();
 
-    void Place(glm::vec2 p);
+    void Place(const glm::vec2 &p) override;
     void SetText(const std::string& text);
     void SetColor(Util::Color color);
-    void SetVisible(bool visible);
+    void SetVisible(bool visible) override;
 };
 
 #endif //TEXT_HPP

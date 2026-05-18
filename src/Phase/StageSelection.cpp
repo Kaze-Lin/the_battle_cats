@@ -84,7 +84,7 @@ StageSelection::StageSelection(): Phase() {
 }
 
 std::shared_ptr<Phase> StageSelection::GetDestinationPhase() {
-    if (this->m_DestinationPhase == "")
+    if (this->m_DestinationPhase.empty())
         return PhaseManager::GetNextPhase();
     return PhaseManager::GetNextPhase("StageSelection", this->m_DestinationPhase);
 }
