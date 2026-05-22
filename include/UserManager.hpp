@@ -6,13 +6,14 @@
 #include <fstream>
 #include <vector>
 #include <cstdio>
+#include <memory>
 #include "DataBase/UserData.hpp"
 #include "Util/Logger.hpp"
 
 class UserManager {
 private:
-    std::unordered_map<std::string, UserProfile> m_database;
-    UserProfile* m_currentUser = nullptr;
+    std::unordered_map<std::string, std::shared_ptr<UserProfile>> m_database;
+    std::shared_ptr<UserProfile> m_currentUser = nullptr;
 
     const std::string SAVE_FILE_PATH = RESOURCE_DIR "/assets/Database/UserData.json";
 
@@ -43,8 +44,8 @@ public:
             m_database.clear();
 
             for (const auto& item : j["users"]) {
-                UserProfile profile = item.get<UserProfile>();
-                m_database[profile.username] = profile;
+                auto profile = std::make_shared<UserProfile>(item.get<UserProfile>());
+                m_database[profile->username] = profile;
             }
             m_isLoaded = true;
             LOG_INFO("User database loaded safely. Total users: %zu", m_database.size());
@@ -64,7 +65,7 @@ public:
 
         std::vector<UserProfile> users;
         for (const auto& pair : m_database) {
-            users.push_back(pair.second);
+            users.push_back(*(pair.second));
         }
         j["users"] = users;
 
@@ -93,13 +94,13 @@ public:
             return false;
         }
 
-        UserProfile newUser;
-        newUser.username = username;
-        newUser.password = password;
+        auto newUser = std::make_shared<UserProfile>();
+        newUser->username = username;
+        newUser->password = password;
 
-        newUser.resources.catFood = 100;
-        newUser.progress.currentChapter = 1;
-        newUser.baseUpgrades.walletCapacity = 1;
+        newUser->resources.catFood = 100;
+        newUser->progress.currentChapter = 1;
+        newUser->baseUpgrades.walletCapacity = 1;
 
         m_database[username] = newUser;
         std::string temp = username.c_str();
@@ -118,8 +119,8 @@ public:
             return false;
         }
 
-        if (it->second.password == password) {
-            m_currentUser = &(it->second);
+        if (it->second->password == password) {
+            m_currentUser = it->second;
             LOG_INFO("User '%s' logged in successfully.", username.c_str());
             return true;
         } else {
@@ -136,7 +137,37 @@ public:
         }
     }
 
-    UserProfile* GetCurrentUser() { return m_currentUser; }
+    std::shared_ptr<UserProfile> GetCurrentUser() { return m_currentUser; }
+
+    // --- Encapsulated API for Cat Data Access & Modification ---
+
+    std::vector<CatSaveData> GetUnlockedCats() const {
+        if (m_currentUser) {
+            return m_currentUser->unlockedCats;
+        }
+        return {};
+    }
+
+    // Returns true if upgrade was successful. Outputs the updated cat data.
+    bool TryUpgradeCat(int catId, CatSaveData& outUpdatedCat) {
+        if (!m_currentUser) return false;
+
+        for (auto& cat : m_currentUser->unlockedCats) {
+            if (cat.catId == catId) {
+                if (cat.level < 10) {
+                    cat.level += 1;
+                    if (cat.level == 10) {
+                        cat.currentForm = 2; // Unlock next form at level 10
+                    }
+                    outUpdatedCat = cat;
+                    SaveDatabase(); // Ensure the upgrade is immediately persisted to disk
+                    return true;
+                }
+                break; // Cat found but already max level
+            }
+        }
+        return false;
+    }
 };
 
 #endif
