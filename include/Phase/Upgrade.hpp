@@ -4,7 +4,7 @@
 #include "Phase.hpp"
 #include "Component/BackgroundImage.hpp"
 #include "Component/Button.hpp"
-#include "Component/OptionBlock.hpp"
+#include "Component/UpgradeBlock.hpp"
 #include "ImageScaling.hpp"
 #include "Component/Text.hpp"
 #include "Phase/CatBase.hpp"
@@ -24,10 +24,11 @@ private:
     std::shared_ptr<Button> m_b_PropsStore;
     std::shared_ptr<Button> m_b_Back;
     std::shared_ptr<Button> m_b_CatCan;
+    std::shared_ptr<Button> m_b_Upgrade;
 
 
     // upgrade selections
-    std::vector<std::shared_ptr<OptionBlock>> m_UpgradeSelectionBar;
+    std::vector<std::shared_ptr<UpgradeBlock>> m_UpgradeSelectionBar;
     void BuildSelectionBar();
 
 
@@ -41,6 +42,8 @@ public:
     void GoBack(); // this is for go back
     void ToPropsStore();
     void Update() override;
+
+    void UpgradeLevel();
 
 };
 

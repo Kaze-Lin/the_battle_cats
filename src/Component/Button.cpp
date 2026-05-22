@@ -84,9 +84,6 @@ void Button::Update() {
     m_Transform.scale += (targetScale - m_Transform.scale) * animationSpeed;
 }
 
-
-glm::vec2 Button::GetCoordinate() const { return  m_Transform.translation; }
-
 glm::vec2 Button::GetSize() { return m_OriginalSize * m_Transform.scale; }
 
 bool Button::IsHovered() {

@@ -56,7 +56,7 @@ public:
     GameObject(const GameObject &other) = default;
 
     /**
-     * @brief Default move constructor..
+     * @brief Default move constructor.
      */
     GameObject(GameObject &&other) = default;
 
@@ -154,10 +154,10 @@ public:
             m_Children.end());
     }
     /**
-          * @brief Set the absolute position of the game object.
-          *
-          * @param p The new position.
-          */
+     * @brief Set the absolute position of the game object.
+     *
+     * @param p The new position.
+     */
     virtual void Place(const glm::vec2 &p) { m_Transform.translation = p; }
 
     /**
@@ -165,7 +165,7 @@ public:
      *
      * @return The position of the game object.
      */
-    virtual glm::vec2 GetCoordinate() const { return m_Transform.translation; }
+    glm::vec2 GetCoordinate() const { return m_Transform.translation; }
 
     void Draw();
 

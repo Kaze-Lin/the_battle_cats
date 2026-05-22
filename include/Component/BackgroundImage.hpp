@@ -24,7 +24,6 @@ public:
     virtual void Place(const glm::vec2 &p) override;
 
     glm::vec2 GetSize();
-    glm::vec2 GetCoordinate() const override;
 };
 
 
