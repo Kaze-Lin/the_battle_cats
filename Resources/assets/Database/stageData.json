@@ -33,6 +33,392 @@
               "is_boss": false
             }
           ]
+        },
+
+        {
+          "stage_id": 2,
+          "enemy_limit": 4,
+          "background_length": 3600,
+          "stage_name": "Mongolia",
+          "base_path" : "/towel/mongolia.png",
+          "enemy_base_hp": 500,
+          "experience": 1300,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 20,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 3,
+          "enemy_limit": 5,
+          "background_length": 4200,
+          "stage_name": "China",
+          "base_path" : "/towel/china.png",
+          "enemy_base_hp": 500,
+          "experience": 1600,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 4,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 20,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 4,
+          "enemy_limit": 5,
+          "background_length": 4200,
+          "stage_name": "Thailand",
+          "base_path" : "/towel/thailand.png",
+          "enemy_base_hp": 500,
+          "experience": 1900,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 0,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 20,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 5,
+          "enemy_limit": 6,
+          "background_length": 3600,
+          "stage_name": "Cambodia",
+          "base_path" : "/towel/cambodia.png",
+          "enemy_base_hp": 750,
+          "experience": 2200,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 0,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 40,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 6,
+          "enemy_limit": 7,
+          "background_length": 4600,
+          "stage_name": "Philippines",
+          "base_path" : "/towel/philippines.png",
+          "enemy_base_hp": 750,
+          "experience": 2500,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 0,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 40,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 7,
+          "enemy_limit": 6,
+          "background_length": 4800,
+          "stage_name": "Japan",
+          "base_path" : "/towel/japan.png",
+          "enemy_base_hp": 2400,
+          "experience": 2800,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 0,
+              "interval": 20,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 20,
+              "interval": 20,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 2,
+              "max_count": 6,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 0,
+              "interval": 6,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": true
+            }
+          ]
+        },
+
+        {
+          "stage_id": 8,
+          "enemy_limit": 5,
+          "background_length": 3600,
+          "stage_name": "Australia",
+          "base_path" : "/towel/australia.png",
+          "enemy_base_hp": 1500,
+          "experience": 3100,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 10,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 20,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },{
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 1,
+              "max_count": 20,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 9,
+          "enemy_limit": 10,
+          "background_length": 6000,
+          "stage_name": "Singapore",
+          "base_path" : "/towel/singapore.png",
+          "enemy_base_hp": 3000,
+          "experience": 3400,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 4,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 0,
+              "start_time": 30,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 60,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 90,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 0.02,
+              "max_count": 20,
+              "magnification": 100,
+              "base_hp_trigger": 60,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 10,
+          "enemy_limit": 5,
+          "background_length": 3800,
+          "stage_name": "Maldives",
+          "base_path" : "/towel/maldives.png",
+          "enemy_base_hp": 2500,
+          "experience": 3700,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 8,
+              "interval": 20,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 40,
+              "interval": 2,
+              "max_count": 6,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": true
+            }
+          ]
         }
       ]
     }
