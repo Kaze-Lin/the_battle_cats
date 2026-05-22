@@ -243,13 +243,13 @@ void Upgrade::Update() {
 
 
 void Upgrade::BuildSelectionBar() {
-    UserProfile* user = UserManager::GetInstance().GetCurrentUser();
+    auto unlockedCats = UserManager::GetInstance().GetUnlockedCats();
 
     // Middle Position
     glm::vec2 selectedPos = {0.0F, 105.0F};
 
-    for (size_t i = 0; i < user->unlockedCats.size(); i++) {
-        int catId = user->unlockedCats[i].catId;
+    for (size_t i = 0; i < unlockedCats.size(); i++) {
+        int catId = unlockedCats[i].catId;
 
         const UnitData* catData = DatabaseManager::GetInstance().GetCatData(catId);
 
@@ -274,7 +274,7 @@ void Upgrade::BuildSelectionBar() {
 
         // cat block image
         bg->m_CatBlockImage = std::make_shared<BackgroundImage>(
-            RESOURCE_DIR + GetIconPath(user->unlockedCats[i]),
+            RESOURCE_DIR + GetIconPath(unlockedCats[i]),
             11.0F
             );
         glm::vec2 catBlockImageT = {0.0F, 40.0F};
@@ -293,12 +293,12 @@ void Upgrade::BuildSelectionBar() {
         bg->AddChild(bg->m_Max);
 
         bg->m_Max->SetVisible(false);
-        if (user->unlockedCats[i].level == 10) {
+        if (unlockedCats[i].level == 10) {
             bg->m_Max->SetVisible(true);
         }
 
         // cat name
-        std::string name = catData->forms[user->unlockedCats[i].currentForm - 1].name;
+        std::string name = catData->forms[unlockedCats[i].currentForm - 1].name;
         std::replace(name.begin(), name.end(), '_', ' ');
         bg->m_CatName = std::make_shared<Text>(24, name, 15.0F);
 
@@ -309,7 +309,7 @@ void Upgrade::BuildSelectionBar() {
         bg->AddChild(bg->m_CatName);
 
         // cat level
-        std::string level = std::to_string(user->unlockedCats[i].level);
+        std::string level = std::to_string(unlockedCats[i].level);
         bg->m_CatLevel = std::make_shared<Text>(32, level, 15.0F);
 
         glm::vec2 catLevelPos = {135.0F, -8.0F};
@@ -325,33 +325,31 @@ void Upgrade::BuildSelectionBar() {
 }
 
 void Upgrade::UpgradeLevel() {
+    if (m_UpgradeSelectionBar.empty()) return;
+
     size_t midIndex = GetMiddleIndex(m_UpgradeSelectionBar);
+    int targetCatId = m_UpgradeSelectionBar[midIndex]->ID;
 
-    UserProfile* user = UserManager::GetInstance().GetCurrentUser();
+    CatSaveData updatedCatData;
+    
+    // Delegate the update logic to the data layer to maintain loose coupling
+    bool isUpgraded = UserManager::GetInstance().TryUpgradeCat(targetCatId, updatedCatData);
 
-    for (auto &cat: user->unlockedCats) {
-        if (cat.catId == m_UpgradeSelectionBar[midIndex]->ID && cat.level < 10) {
-            LOG_DEBUG("before upgrade cat level: " + std::to_string(cat.level));
+    if (isUpgraded) {
+        LOG_DEBUG("Upgraded cat ID: " + std::to_string(targetCatId) + " to level: " + std::to_string(updatedCatData.level));
+        
+        // Update visual components
+        m_UpgradeSelectionBar[midIndex]->m_CatLevel->SetText(std::to_string(updatedCatData.level));
+        
+        if (updatedCatData.level == 10) {
+            m_UpgradeSelectionBar[midIndex]->m_CatBlockImage->SetImage(RESOURCE_DIR + GetIconPath(updatedCatData));
 
-            cat.level += 1;
-            m_UpgradeSelectionBar[midIndex]->m_CatLevel->SetText(std::to_string(cat.level));
-            if (cat.level == 10) {
-                cat.currentForm = 2;
+            std::string newName = DatabaseManager::GetInstance().GetCatData(targetCatId)->forms[updatedCatData.currentForm - 1].name;
+            std::replace(newName.begin(), newName.end(), '_', ' ');
+            m_UpgradeSelectionBar[midIndex]->m_CatName->SetText(newName);
 
-                m_UpgradeSelectionBar[midIndex]->m_CatBlockImage->SetImage(RESOURCE_DIR + GetIconPath(cat));
-
-                std::string newName = DatabaseManager::GetInstance().GetCatData(cat.catId)->forms[cat.currentForm - 1].name;
-                std::replace(newName.begin(), newName.end(), '_', ' ');
-                m_UpgradeSelectionBar[midIndex]->m_CatName->SetText(newName);
-
-                m_UpgradeSelectionBar[midIndex]->m_Max->SetVisible(true);
-
-                m_b_Upgrade->SetVisible(false);
-            }
-
-            LOG_DEBUG("after upgrade cat level: " + std::to_string(cat.level));
-            break;
+            m_UpgradeSelectionBar[midIndex]->m_Max->SetVisible(true);
+            m_b_Upgrade->SetVisible(false);
         }
     }
-
 }
