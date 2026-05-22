@@ -494,6 +494,4 @@ lib/
 
 # Doxygen generated files
 docs/html/
-*.png
-*.jpg
 UserData.json

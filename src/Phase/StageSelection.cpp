@@ -76,9 +76,8 @@ StageSelection::StageSelection(): Phase() {
     m_b_Back->Place({backButtonX, backButtonY});
     AddChild(m_b_Back);
 
-    const auto catcanX = 320.0F;
-    const auto catcanY = -353.0F;
-    m_b_CatCan->Place({catcanX, catcanY});
+    const glm::vec2 catcanPos = {320.0F, -353.0F};
+    m_b_CatCan->Place(catcanPos);
     AddChild(m_b_CatCan);
 
 }
@@ -100,4 +99,8 @@ void StageSelection::ToPropsStore() {
 
 void StageSelection::GoBack() {
     this->m_DestinationPhase = "";
+}
+
+void StageSelection::BuildSelectionBar() {
+
 }

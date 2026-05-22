@@ -3,6 +3,7 @@
 
 #include "Component/BackgroundImage.hpp"
 #include "Component/Button.hpp"
+#include "Component/OptionBlock.hpp"
 
 #include "ImageScaling.hpp"
 
@@ -22,12 +23,13 @@ private:
     std::shared_ptr<Button> m_b_Back;
     std::shared_ptr<Button> m_b_CatCan;
 
+    std::vector<std::shared_ptr<OptionBlock>> m_StageSelectionBar;
+    void BuildSelectionBar();
+
 public:
 
     StageSelection();
     ~StageSelection() override = default;
-
-
 
     std::shared_ptr<Phase> GetDestinationPhase() override;
 
