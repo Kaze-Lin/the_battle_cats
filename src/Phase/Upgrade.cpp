@@ -186,7 +186,7 @@ Upgrade::Upgrade(): Phase() {
     constexpr auto upgradeX = -400.0F;
     constexpr auto upgradeY = -120.0F;
     m_b_Upgrade->Place({upgradeX, upgradeY});
-    // m_b_Upgrade->SetVisible(false);
+    m_b_Upgrade->SetVisible(false);
     AddChild(m_b_Upgrade);
 
 
@@ -217,20 +217,33 @@ void Upgrade::Update() {
     // LOG_DEBUG("vector size is = " + std::to_string(m_UpgradeSelectionBar.size()));
 
     if (!m_UpgradeSelectionBar.empty()) {
+        size_t midIndex = GetMiddleIndex(m_UpgradeSelectionBar);
         if (Util::Input::IsKeyDown(Util::Keycode::RIGHT)) {
-            size_t midIndex = GetMiddleIndex(m_UpgradeSelectionBar);
 
             if (midIndex + 1 < m_UpgradeSelectionBar.size()) {
                 size_t rightIndex = midIndex + 1;
                 HorizontalMovement(m_UpgradeSelectionBar, m_UpgradeSelectionBar[rightIndex]->GetCoordinate().x);
             }
         } else if (Util::Input::IsKeyDown(Util::Keycode::LEFT)) {
-            size_t midIndex = GetMiddleIndex(m_UpgradeSelectionBar);
-
             if (midIndex > 0) {
                 size_t leftIndex = midIndex - 1;
                 HorizontalMovement(m_UpgradeSelectionBar, m_UpgradeSelectionBar[leftIndex]->GetCoordinate().x);
             }
+        }
+
+        if (midIndex < m_UpgradeSelectionBar.size()) {
+            // determine m_b_Upgrade is visible or not
+
+            for (auto &cat: UserManager::GetInstance().GetCurrentUser()->unlockedCats) {
+                if (cat.catId == m_UpgradeSelectionBar[midIndex]->ID) {
+                    if (cat.level == 10) {
+                        m_b_Upgrade->SetVisible(false);
+                    } else {
+                        m_b_Upgrade->SetVisible(true);
+                    }
+                }
+            }
+
         }
     }
 
@@ -349,7 +362,6 @@ void Upgrade::UpgradeLevel() {
             m_UpgradeSelectionBar[midIndex]->m_CatName->SetText(newName);
 
             m_UpgradeSelectionBar[midIndex]->m_Max->SetVisible(true);
-            m_b_Upgrade->SetVisible(false);
         }
     }
 }
