@@ -46,7 +46,3 @@ void BackgroundImage::SetImage(const std::string& ImagePath){
 glm::vec2 BackgroundImage::GetSize() {
     return m_OriginalSize * m_BaseScale;
 }
-
-glm::vec2 BackgroundImage::GetCoordinate() const {
-    return m_Transform.translation;
-}

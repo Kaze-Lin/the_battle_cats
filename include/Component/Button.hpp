@@ -37,7 +37,6 @@ public:
     void SetImage(const std::string& imagePath);
     void Update() override;
 
-    glm::vec2 GetCoordinate()const  override;
     glm::vec2 GetSize();
 
     bool IsHovered();

@@ -55,10 +55,6 @@ glm::vec2 TextButton::GetSize() {
     return Text::GetSize();
 }
 
-glm::vec2 TextButton::GetCoordinate() const {
-    return Text::GetCoordinate();
-}
-
 bool TextButton::IsHovered() {
     const auto mousePos = Util::Input::GetCursorPosition();
 
