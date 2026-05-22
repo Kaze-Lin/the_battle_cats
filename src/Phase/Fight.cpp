@@ -330,6 +330,15 @@ void Fight::Update() {
     if (EntityManager::GetInstance().IsPlayerWin()) {
         LOG_INFO("VICTORY! The Player has destroyed the Enemy Base!");
         m_isGameOver = true;
+
+        // 更新關卡進度
+        if (auto user = UserManager::GetInstance().GetCurrentUser()) {
+            const StageData* currentStage = LevelManager::GetInstance().GetCurrentStage();
+            if (currentStage && currentStage->stageId > user->progress.highestStageCleared) {
+                user->progress.highestStageCleared = currentStage->stageId;
+                LOG_INFO("User progress updated! Highest stage cleared: %d", currentStage->stageId);
+            }
+        }
     }
     else if (EntityManager::GetInstance().IsEnemyWin()) {
         LOG_INFO("DEFEAT! The Enemy has destroyed the Cat Base!");
