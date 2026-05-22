@@ -381,9 +381,9 @@ void Fight::DeployCatButton(std::vector<int> IDs) {
                                     EntityManager::GetInstance().SpawnCat(
                                         cat.first,
                                         cat.second->maxLevel,
-                                        cat.second->forms[0].formIndex); // the '0' should be changed
+                                        cat.second->forms[0].formIndex - 1); // the '0' should be changed
                                 } else {
-                                    LOG_INFO("Not enough money to spawn %s! Cost: %d", cat.second->nameInternal.c_str(), cost);
+                                    LOG_INFO("Not enough money to spawn " + cat.second->nameInternal + "! Cost: " + std::to_string(cost));
                                 }
                             }
                         },
