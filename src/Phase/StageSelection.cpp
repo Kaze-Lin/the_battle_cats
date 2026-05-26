@@ -1,6 +1,7 @@
 #include "Phase/StageSelection.hpp"
 #include "LevelManager.hpp"
 #include "PhaseManager.hpp"
+#include "UserManager.hpp"
 
 StageSelection::StageSelection(): Phase() {
     // background image (without interaction image)
@@ -89,7 +90,17 @@ std::shared_ptr<Phase> StageSelection::GetDestinationPhase() {
 }
 
 void StageSelection::ToFight() {
-    LevelManager::GetInstance().LoadStage(1, 1);
+    auto user = UserManager::GetInstance().GetCurrentUser();
+    if (user) {
+        // [0] is stage, [1] is chapter (or vice versa depending on LevelManager::LoadStage)
+        // Actually, let's use [0] for stage and [1] for chapter as requested: "第0項放當前關卡"
+        // Wait, LoadStage takes (chapterId, stageId). So chapterId is currentStage[1], stageId is currentStage[0]
+        int stageId = user->progress.currentStage[0];
+        int chapterId = user->progress.currentStage[1];
+        LevelManager::GetInstance().LoadStage(chapterId, stageId);
+    } else {
+        LevelManager::GetInstance().LoadStage(1, 1);
+    }
     this->m_DestinationPhase = "Fight";
 }
 
