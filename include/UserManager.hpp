@@ -99,7 +99,7 @@ public:
         newUser->password = password;
 
         newUser->resources.catFood = 100;
-        newUser->progress.currentChapter = 1;
+        newUser->progress.currentStage = {1, 1};
         newUser->baseUpgrades.walletCapacity = 1;
 
         m_database[username] = newUser;
