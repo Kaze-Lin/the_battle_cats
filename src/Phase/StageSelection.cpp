@@ -165,7 +165,8 @@ void StageSelection::BuildSelectionBar() {
     std::string str = "stage: " + std::to_string(user->progress.currentStage[1]);
     LOG_DEBUG(str);
 
-    for (int i = 1; i <= user->progress.currentStage[1]; i++) {
+
+    for (int i = 1; i <= user->progress.highestStageCleared + 1; i++) {
 
         auto bg = std::make_shared<StageBlock>(RESOURCE_DIR "/phase/stage_selection/stage_block_background.png");
 
@@ -192,11 +193,19 @@ void StageSelection::BuildSelectionBar() {
         bg->m_Clear->SetColor(Util::Color::FromName(Util::Colors::PINK));
         bg->AddChild(bg->m_Clear);
 
-        if (i == user->progress.currentStage[1]) {
+        if (i == user->progress.highestStageCleared + 1) {
             bg->m_Clear->SetVisible(false);
         }
 
         m_StageSelectionBar.push_back(bg);
+    }
+
+    for (int i = 0; i < user->progress.currentStage[1] - 1; i++) {
+        size_t midIndex = GetMiddleIndex(m_StageSelectionBar);
+        if (midIndex + 1 < m_StageSelectionBar.size()) {
+            size_t rightIndex = midIndex + 1;
+            HorizontalMovement(m_StageSelectionBar, m_StageSelectionBar[rightIndex]->GetCoordinate().x);
+        }
     }
 
     for (auto &item: m_StageSelectionBar) AddChild(item);
