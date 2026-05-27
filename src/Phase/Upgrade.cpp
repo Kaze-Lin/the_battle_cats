@@ -315,8 +315,8 @@ void Upgrade::BuildSelectionBar() {
         std::replace(name.begin(), name.end(), '_', ' ');
         bg->m_CatName = std::make_shared<Text>(24, name, 15.0F);
 
-        glm::vec2 catNamePos = {0.0F, 125.0F};
-        bg->m_CatName->Place({bg->GetCoordinate() + catNamePos});
+        glm::vec2 catNameOffset = {0.0F, 125.0F};
+        bg->m_CatName->Place({bg->GetCoordinate() + catNameOffset});
         bg->m_CatName->SetColor(Util::Color::FromName(Util::Colors::WHITE));
 
         bg->AddChild(bg->m_CatName);

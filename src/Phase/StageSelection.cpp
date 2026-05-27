@@ -1,10 +1,12 @@
 #include "Phase/StageSelection.hpp"
+
+#include "DatabaseManager.hpp"
 #include "LevelManager.hpp"
 #include "PhaseManager.hpp"
 #include "UserManager.hpp"
 
 namespace {
-    size_t GetMiddleIndex(const std::vector<std::shared_ptr<UpgradeBlock>> &v) {
+    size_t GetMiddleIndex(const std::vector<std::shared_ptr<StageBlock>> &v) {
         for (size_t i = 0; i < v.size(); i++) {
             if (std::abs(v[i]->GetCoordinate().x) < 0.01F) {
                 return i;
@@ -13,45 +15,10 @@ namespace {
         return v.size();
     }
 
-    void HorizontalMovement(const std::vector<std::shared_ptr<UpgradeBlock>> &v, float offset) {
+    void HorizontalMovement(const std::vector<std::shared_ptr<StageBlock>> &v, float offset) {
         for (auto &item: v) {
             item->Place({item->GetCoordinate().x - offset, item->GetCoordinate().y});
         }
-    }
-
-    std::string GetBlockTitle(const std::vector<std::shared_ptr<UpgradeBlock>> &v) {
-        size_t middleIndex = GetMiddleIndex(v);
-
-        std::string title = " ";
-
-        if (v.empty() || middleIndex >= v.size()) {
-            return title;
-        }
-
-        auto block = v[middleIndex];
-
-        switch (block->GetBlockType()) {
-        case UpgradeType::CHARACTER:
-            title = "角色";
-            break;
-        case UpgradeType::CANNON:
-            title = "貓咪砲";
-            break;
-        case UpgradeType::WORKER_CAT:
-            title = "工作狂貓";
-            break;
-        case UpgradeType::CASTLE:
-            title = "城堡";
-            break;
-        case UpgradeType::SPECIAL_ABILITIES:
-            title = "特殊能力";
-            break;
-        default:
-            title = " ";
-            break;
-        }
-
-        return title;
     }
 }
 
@@ -133,6 +100,31 @@ StageSelection::StageSelection(): Phase() {
     m_b_CatCan->Place(catcanPos);
     AddChild(m_b_CatCan);
 
+    BuildSelectionBar();
+}
+
+void StageSelection::Update() {
+    Phase::Update();
+
+    if (!m_StageSelectionBar.empty()) {
+        size_t midIndex = GetMiddleIndex(m_StageSelectionBar);
+        if (Util::Input::IsKeyDown(Util::Keycode::RIGHT)) {
+
+            if (midIndex + 1 < m_StageSelectionBar.size()) {
+                size_t rightIndex = midIndex + 1;
+                HorizontalMovement(m_StageSelectionBar, m_StageSelectionBar[rightIndex]->GetCoordinate().x);
+            }
+        } else if (Util::Input::IsKeyDown(Util::Keycode::LEFT)) {
+            if (midIndex > 0) {
+                size_t leftIndex = midIndex - 1;
+                HorizontalMovement(m_StageSelectionBar, m_StageSelectionBar[leftIndex]->GetCoordinate().x);
+            }
+        }
+    }
+
+    auto midStage = m_StageSelectionBar[GetMiddleIndex(m_StageSelectionBar)];
+    m_CurrentChapter = midStage->m_StageID[0];
+    m_CurrentStage = midStage->m_StageID[1];
 }
 
 std::shared_ptr<Phase> StageSelection::GetDestinationPhase() {
@@ -149,7 +141,7 @@ void StageSelection::ToFight() {
         // Wait, LoadStage takes (chapterId, stageId). So chapterId is currentStage[1], stageId is currentStage[0]
         int stageId = user->progress.currentStage[0];
         int chapterId = user->progress.currentStage[1];
-        LevelManager::GetInstance().LoadStage(chapterId, stageId);
+        LevelManager::GetInstance().LoadStage(m_CurrentChapter, m_CurrentStage);
     } else {
         LevelManager::GetInstance().LoadStage(1, 1);
     }
@@ -165,5 +157,47 @@ void StageSelection::GoBack() {
 }
 
 void StageSelection::BuildSelectionBar() {
+    auto user = UserManager::GetInstance().GetCurrentUser();
 
+    // Middle Position
+    glm::vec2 selectedPos = {0.0F, 256.0F};\
+
+    std::string str = "stage: " + std::to_string(user->progress.currentStage[1]);
+    LOG_DEBUG(str);
+
+    for (int i = 1; i <= user->progress.currentStage[1]; i++) {
+
+        auto bg = std::make_shared<StageBlock>(RESOURCE_DIR "/phase/stage_selection/stage_block_background.png");
+
+        bg->m_StageID = {user->progress.currentStage[0], i};
+
+        std::string debug = "chapter: " + std::to_string(bg->m_StageID[0]) + ", stage: " + std::to_string(bg->m_StageID[1]);
+        LOG_DEBUG(debug);
+
+        auto stage = DatabaseManager::GetInstance().GetStageData(bg->m_StageID[0], bg->m_StageID[1]);
+        bg->Place({selectedPos.x + (bg->GetSize().x + 20.0F) * (i - 1), selectedPos.y});
+
+        bg->m_StageName = std::make_shared<Text>(
+            42,
+            stage->stageName,
+            15.0F
+            );
+        bg->m_StageName->Place(bg->GetCoordinate());
+        bg->AddChild(bg->m_StageName);
+
+        bg->m_Clear = std::make_shared<Text>(24, "Clear!!", 15.0F);
+        glm::vec2 clearOffset = {100.0F, -20.0F};
+        bg->m_Clear->Place(bg->GetCoordinate() + clearOffset);
+        bg->m_Clear->Rotate(45);
+        bg->m_Clear->SetColor(Util::Color::FromName(Util::Colors::PINK));
+        bg->AddChild(bg->m_Clear);
+
+        if (i == user->progress.currentStage[1]) {
+            bg->m_Clear->SetVisible(false);
+        }
+
+        m_StageSelectionBar.push_back(bg);
+    }
+
+    for (auto &item: m_StageSelectionBar) AddChild(item);
 }
