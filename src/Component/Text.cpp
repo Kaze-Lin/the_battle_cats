@@ -101,3 +101,9 @@ void Text::SetVisible(bool visible) {
         child->SetVisible(visible);
     }
 }
+
+void Text::Rotate(float degree) {
+    for (auto& child : m_Children) {
+        child->m_Transform.rotation = degree * M_PI / 180.0F;
+    }
+}

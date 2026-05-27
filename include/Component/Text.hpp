@@ -41,6 +41,7 @@ public:
     void SetText(const std::string& text);
     void SetColor(Util::Color color);
     void SetVisible(bool visible) override;
+    void Rotate(float degree);
 };
 
 #endif //TEXT_HPP

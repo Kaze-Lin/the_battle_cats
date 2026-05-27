@@ -8,9 +8,14 @@
 #include "ImageScaling.hpp"
 
 #include "Phase.hpp"
+#include "Component/StageBlock.hpp"
 
 class StageSelection: public Phase {
 private:
+
+    int m_CurrentChapter = 1;
+    int m_CurrentStage = 1;
+
     // background image (without interaction image)
     std::shared_ptr<BackgroundImage> m_BackgroundImage;
     std::shared_ptr<BackgroundImage> m_StageSelectionBanner;
@@ -23,7 +28,7 @@ private:
     std::shared_ptr<Button> m_b_Back;
     std::shared_ptr<Button> m_b_CatCan;
 
-    std::vector<std::shared_ptr<OptionBlock>> m_StageSelectionBar;
+    std::vector<std::shared_ptr<StageBlock>> m_StageSelectionBar;
     void BuildSelectionBar();
 
 public:
@@ -32,6 +37,8 @@ public:
     ~StageSelection() override = default;
 
     std::shared_ptr<Phase> GetDestinationPhase() override;
+
+    void Update() override;
 
     void ToFight();
     void ToPropsStore();
