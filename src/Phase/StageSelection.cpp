@@ -2,6 +2,58 @@
 #include "LevelManager.hpp"
 #include "PhaseManager.hpp"
 
+namespace {
+    size_t GetMiddleIndex(const std::vector<std::shared_ptr<UpgradeBlock>> &v) {
+        for (size_t i = 0; i < v.size(); i++) {
+            if (std::abs(v[i]->GetCoordinate().x) < 0.01F) {
+                return i;
+            }
+        }
+        return v.size();
+    }
+
+    void HorizontalMovement(const std::vector<std::shared_ptr<UpgradeBlock>> &v, float offset) {
+        for (auto &item: v) {
+            item->Place({item->GetCoordinate().x - offset, item->GetCoordinate().y});
+        }
+    }
+
+    std::string GetBlockTitle(const std::vector<std::shared_ptr<UpgradeBlock>> &v) {
+        size_t middleIndex = GetMiddleIndex(v);
+
+        std::string title = " ";
+
+        if (v.empty() || middleIndex >= v.size()) {
+            return title;
+        }
+
+        auto block = v[middleIndex];
+
+        switch (block->GetBlockType()) {
+        case UpgradeType::CHARACTER:
+            title = "角色";
+            break;
+        case UpgradeType::CANNON:
+            title = "貓咪砲";
+            break;
+        case UpgradeType::WORKER_CAT:
+            title = "工作狂貓";
+            break;
+        case UpgradeType::CASTLE:
+            title = "城堡";
+            break;
+        case UpgradeType::SPECIAL_ABILITIES:
+            title = "特殊能力";
+            break;
+        default:
+            title = " ";
+            break;
+        }
+
+        return title;
+    }
+}
+
 StageSelection::StageSelection(): Phase() {
     // background image (without interaction image)
     m_BackgroundImage =
