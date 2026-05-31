@@ -58,6 +58,20 @@ public:
     bool IsEnemyWin() const { return m_catBase != nullptr && m_catBase->IsDead(); }
 
     void ClearFactionUnitsExceptBase(Faction faction);
+    
+    // 清空所有實體 (包含主堡與雙方單位)，用於結算畫面
+    void ClearAllEntities();
+
+    // 設定全域的角色與敵人移動速度乘數
+    static void SetGlobalMovementSpeedScale(float scale) {
+        m_GlobalMovementSpeedScale = scale;
+    }
+    static float GetGlobalMovementSpeedScale() {
+        return m_GlobalMovementSpeedScale;
+    }
+
+private:
+    static float m_GlobalMovementSpeedScale;
 };
 
 #endif

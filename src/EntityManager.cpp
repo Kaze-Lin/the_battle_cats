@@ -5,6 +5,8 @@
 #include "StatCalculator.hpp"
 #include "LevelManager.hpp"
 
+float EntityManager::m_GlobalMovementSpeedScale = 5.0f;
+
 void EntityManager::SpawnCat(int catId, int level, int form) {
     const UnitData* catData = DatabaseManager::GetInstance().GetCatData(catId);
     if (catData == nullptr) {
@@ -226,4 +228,20 @@ void EntityManager::ClearFactionUnitsExceptBase(Faction faction) {
         }
         LOG_INFO("All player units have been eliminated from the field!");
     }
+}
+
+void EntityManager::ClearAllEntities() {
+    if (m_SceneNode) {
+        for (auto& unit : m_playerUnits) {
+            m_SceneNode->RemoveChild(unit);
+        }
+        for (auto& unit : m_enemyUnits) {
+            m_SceneNode->RemoveChild(unit);
+        }
+    }
+    m_playerUnits.clear();
+    m_enemyUnits.clear();
+    m_catBase = nullptr;
+    m_enemyBase = nullptr;
+    LOG_INFO("All entities cleared for settlement screen.");
 }

@@ -5,23 +5,6 @@
 #include "PhaseManager.hpp"
 #include "UserManager.hpp"
 
-namespace {
-    size_t GetMiddleIndex(const std::vector<std::shared_ptr<StageBlock>> &v) {
-        for (size_t i = 0; i < v.size(); i++) {
-            if (std::abs(v[i]->GetCoordinate().x) < 0.01F) {
-                return i;
-            }
-        }
-        return v.size();
-    }
-
-    void HorizontalMovement(const std::vector<std::shared_ptr<StageBlock>> &v, float offset) {
-        for (auto &item: v) {
-            item->Place({item->GetCoordinate().x - offset, item->GetCoordinate().y});
-        }
-    }
-}
-
 StageSelection::StageSelection(): Phase() {
     // background image (without interaction image)
     m_BackgroundImage =
@@ -106,25 +89,13 @@ StageSelection::StageSelection(): Phase() {
 void StageSelection::Update() {
     Phase::Update();
 
+    m_ScrollManager.Update(m_StageSelectionBar);
+
     if (!m_StageSelectionBar.empty()) {
-        size_t midIndex = GetMiddleIndex(m_StageSelectionBar);
-        if (Util::Input::IsKeyDown(Util::Keycode::RIGHT)) {
-
-            if (midIndex + 1 < m_StageSelectionBar.size()) {
-                size_t rightIndex = midIndex + 1;
-                HorizontalMovement(m_StageSelectionBar, m_StageSelectionBar[rightIndex]->GetCoordinate().x);
-            }
-        } else if (Util::Input::IsKeyDown(Util::Keycode::LEFT)) {
-            if (midIndex > 0) {
-                size_t leftIndex = midIndex - 1;
-                HorizontalMovement(m_StageSelectionBar, m_StageSelectionBar[leftIndex]->GetCoordinate().x);
-            }
-        }
+        auto midStage = m_StageSelectionBar[m_ScrollManager.GetMiddleIndex(m_StageSelectionBar)];
+        m_CurrentChapter = midStage->m_StageID[0];
+        m_CurrentStage = midStage->m_StageID[1];
     }
-
-    auto midStage = m_StageSelectionBar[GetMiddleIndex(m_StageSelectionBar)];
-    m_CurrentChapter = midStage->m_StageID[0];
-    m_CurrentStage = midStage->m_StageID[1];
 }
 
 std::shared_ptr<Phase> StageSelection::GetDestinationPhase() {
@@ -136,9 +107,8 @@ std::shared_ptr<Phase> StageSelection::GetDestinationPhase() {
 void StageSelection::ToFight() {
     auto user = UserManager::GetInstance().GetCurrentUser();
     if (user) {
-        // [0] is stage, [1] is chapter (or vice versa depending on LevelManager::LoadStage)
-        // Actually, let's use [0] for stage and [1] for chapter as requested: "第0項放當前關卡"
-        // Wait, LoadStage takes (chapterId, stageId). So chapterId is currentStage[1], stageId is currentStage[0]
+        user->progress.currentStage[0] = m_CurrentChapter;
+        user->progress.currentStage[1] = m_CurrentStage;
         LevelManager::GetInstance().LoadStage(m_CurrentChapter, m_CurrentStage);
     } else {
         LevelManager::GetInstance().LoadStage(1, 1);
@@ -199,10 +169,10 @@ void StageSelection::BuildSelectionBar() {
     }
 
     for (int i = 0; i < user->progress.currentStage[1] - 1; i++) {
-        size_t midIndex = GetMiddleIndex(m_StageSelectionBar);
+        size_t midIndex = m_ScrollManager.GetMiddleIndex(m_StageSelectionBar);
         if (midIndex + 1 < m_StageSelectionBar.size()) {
             size_t rightIndex = midIndex + 1;
-            HorizontalMovement(m_StageSelectionBar, m_StageSelectionBar[rightIndex]->GetCoordinate().x);
+            m_ScrollManager.HorizontalMovement(m_StageSelectionBar, m_StageSelectionBar[rightIndex]->GetCoordinate().x);
         }
     }
 

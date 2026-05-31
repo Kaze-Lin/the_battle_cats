@@ -1,9 +1,75 @@
 #include "Phase/Fight.hpp"
+#include <cmath>
 #include "DatabaseManager.hpp"
 #include "LevelManager.hpp"
 #include "EntityManager.hpp"
 #include "UserManager.hpp"
 #include "Util/Time.hpp"
+#include "PhaseManager.hpp"
+
+CatSlotController::CatSlotController(int cost, float maxCd)
+    : m_Cost(cost), m_MaxCd(maxCd), m_CurrentCd(0.0f), m_LastSec(-1) {
+    m_CdText = std::make_shared<Text>(
+        TextThemeDetail::DefaultFontSize,
+        " ",
+        81.0f,
+        Util::Color::FromName(Util::Colors::RED)
+    );
+    m_CdText->SetVisible(false);
+
+    m_CostText = std::make_shared<Text>(
+        18, // 字不要太大
+        "$" + std::to_string(m_Cost),
+        85.0f,
+        Util::Color::FromName(Util::Colors::BLACK)
+    );
+}
+
+void CatSlotController::SetButton(std::shared_ptr<Button> btn) {
+    m_Button = btn;
+}
+
+void CatSlotController::Update(float gameDeltaTime) {
+    if (m_CurrentCd > 0.0f) {
+        m_CurrentCd -= gameDeltaTime;
+
+        if (m_CurrentCd <= 0.0f) {
+            m_CurrentCd = 0.0f;
+            m_CdText->SetVisible(false);
+            m_LastSec = -1; // Reset cache
+        } else {
+            // [Performance Optimization]
+            // Calculate ceiling seconds. Only update text texture if the integer changes.
+            int currentSec = static_cast<int>(std::ceil(m_CurrentCd));
+            if (currentSec != m_LastSec) {
+                m_LastSec = currentSec;
+                m_CdText->SetText(std::to_string(currentSec) + "s");
+            }
+        }
+    }
+}
+
+void CatSlotController::StartCooldown() {
+    m_CurrentCd = m_MaxCd;
+    m_LastSec = -1; // Force immediate text update
+    m_CdText->SetVisible(true);
+}
+
+bool CatSlotController::IsReady() const {
+    return m_CurrentCd <= 0.0f;
+}
+
+void CatSlotController::Place(const glm::vec2& p) {
+    if (m_Button) m_Button->Place(p);
+    if (m_CdText) m_CdText->Place(p);
+    if (m_CostText) {
+        float offsetY = -20.0f;
+        if (m_Button) {
+            offsetY = -(m_Button->GetSize().y / 2.0f) + 12.0f;
+        }
+        m_CostText->Place({p.x, p.y + offsetY});
+    }
+}
 
 Fight::Fight(): Phase() {
     // background image (without interaction image)
@@ -35,7 +101,7 @@ Fight::Fight(): Phase() {
     m_WalletLevelText = std::make_shared<Text>(
         TextThemeDetail::DefaultFontSize,
         "$ 0",
-        100
+        80
     );
     AddChild(m_WalletLevelText);
 
@@ -52,7 +118,7 @@ Fight::Fight(): Phase() {
     m_LaserEffectText = std::make_shared<Text>(
         TextThemeDetail::DefaultFontSize * 2,
         "============ LASER ============",
-        100,
+        80,
         Util::Color::FromName(Util::Colors::YELLOW)
     );
     // 預設不加入場景，開砲時再 AddChild
@@ -152,14 +218,50 @@ Fight::Fight(): Phase() {
     m_b_Pause =
         std::make_shared<Button>(
             RESOURCE_DIR "/phase/fight/pause.png",
-            []() { LOG_INFO("Pause Button Clicked!"); });
+            [this]() {
+                LOG_INFO("Pause Button Clicked!");
+                if (this->m_CurrentState == SubState::PLAYING) {
+                this->m_CurrentState = SubState::PAUSED;
+                this->SetPauseMenuVisible(true);
+        } else {
+            this->m_CurrentState = SubState::PLAYING;
+            this->SetPauseMenuVisible(false);
+        }
+            });
     m_b_Pause->SetZIndex(50.0F);
     m_b_Pause->ScaleSize({ORIGINAL_SCALING + 0.1F, ORIGINAL_SCALING + 0.1F});
+
+    m_PauseMenuBg = std::make_shared<BackgroundImage>(RESOURCE_DIR "/stage_background/Bg000.png", 90.0f);
+
+    m_ResumeBtn = std::make_shared<TextButton>(
+        32, "Resume", 99.0f,
+        [this]() {
+            this->m_CurrentState = SubState::PLAYING;
+            this->SetPauseMenuVisible(false);
+        });
+
+    m_ExitBtn = std::make_shared<TextButton>(
+        32, "Exit to Lobby", 99.0f    ,
+        [this]() {
+            this->m_DestinationPhase = "CatBase"; // 將目標階段設為大廳
+        });
+
+    // 加入為子物件，交給 Phase::Update 管理
+    AddChild(m_PauseMenuBg);
+    AddChild(m_ResumeBtn);
+    AddChild(m_ExitBtn);
+
+    m_PauseMenuBg->AlignWithWindow();
+    m_ResumeBtn->Place({0.0f, 50.0f});
+    m_ExitBtn->Place({0.0f, -50.0f});
+
+    // 預設關閉暫停選單
+    SetPauseMenuVisible(false);
 
     // stage name
     m_StageName = std::make_shared<Text>(
         TextThemeDetail::DefaultFontSize,
-        "台灣",
+        " ",
         -8
         );
     AddChild(m_StageName);
@@ -272,7 +374,6 @@ Fight::Fight(): Phase() {
         m_StageName->Place({stageNameXNew, stageNameY});
 
         // TODO: deploy cats
-        // Deploy Cats
         std::vector<int> ids = {0, 1, 2, 3, 4, 5, 6, 7, 8};
         std::reverse(ids.begin(), ids.end());
         DeployCatButton(ids);
@@ -283,6 +384,10 @@ void Fight::Update() {
     Phase::Update();
 
     if (m_isGameOver) {
+        return;
+    }
+
+    if (m_CurrentState == SubState::PAUSED) {
         return;
     }
 
@@ -302,6 +407,10 @@ void Fight::Update() {
     }
 
     float gameDeltaTime = realDeltaTime * m_timeScale;
+
+    for (auto& slot : m_CatSlots) {
+        slot->Update(gameDeltaTime);
+    }
 
     // Wallet Passive Money Generation
     if (m_Wallet) {
@@ -327,7 +436,7 @@ void Fight::Update() {
     LevelManager::GetInstance().Update(gameDeltaTime, 1.0f);
     EntityManager::GetInstance().Update(gameDeltaTime);
 
-    if (EntityManager::GetInstance().IsPlayerWin()) {
+    if (EntityManager::GetInstance().IsPlayerWin() && !m_isGameOver) {
         LOG_INFO("VICTORY! The Player has destroyed the Enemy Base!");
         m_isGameOver = true;
 
@@ -336,14 +445,16 @@ void Fight::Update() {
             const StageData* currentStage = LevelManager::GetInstance().GetCurrentStage();
             if (currentStage && currentStage->stageId > user->progress.highestStageCleared) {
                 user->progress.highestStageCleared = currentStage->stageId;
+                user->progress.currentStage[1] = currentStage->stageId + 1; // 自動將選擇標籤推進到下一關
                 LOG_INFO("User progress updated! Highest stage cleared: %d", currentStage->stageId);
             }
         }
+        ShowSettlementScreen(true);
     }
-    else if (EntityManager::GetInstance().IsEnemyWin()) {
+    else if (EntityManager::GetInstance().IsEnemyWin() && !m_isGameOver) {
         LOG_INFO("DEFEAT! The Enemy has destroyed the Cat Base!");
         m_isGameOver = true;
-
+        ShowSettlementScreen(false);
     }
 
     if (Util::Input::IsKeyDown(Util::Keycode::X)) {
@@ -356,60 +467,130 @@ void Fight::Update() {
 }
 
 void Fight::DeployCatButton(std::vector<int> IDs) {
-    // ID, cat
     std::unordered_map<int, const UnitData*> cats;
     for (auto i: IDs) {
         cats[i] = DatabaseManager::GetInstance().GetCatData(i);
     }
 
     if (!cats.empty() || (cats.size() > 0 && cats.size() < 10)) {
-        for (auto cat: cats)
-        {
+        for (auto cat: cats) {
             if (cat.second == nullptr) {
                 LOG_WARN("cannot find cat with ID " + std::to_string(cat.first));
                 continue;
             }
 
+            int cost = cat.second->forms[0].cost;
+            // 貓咪大戰爭資料庫的 rechargeTime 通常為 Frame (以 30FPS 為基準)，轉換為秒數：
+            float maxCd = cat.second->forms[0].rechargeTime / 30.0f;
+
+            // 建立這個格子的獨立控制器
+            auto slot = std::make_shared<CatSlotController>(cost, maxCd);
+            std::weak_ptr<CatSlotController> weakSlot = slot;
             std::weak_ptr<Wallet> weakWallet = m_Wallet;
-            m_gen_b_cats.push_back(
-                std::make_shared<Button>(
-                        RESOURCE_DIR + cat.second->catGenButton[0], // the '0' should be changed
-                        [cat, weakWallet](){
-                            if (auto w = weakWallet.lock()) {
-                                int cost = cat.second->forms[0].cost; // the '0' should be changed
-                                if (w->SpendMoney(cost)) {
-                                    EntityManager::GetInstance().SpawnCat(
-                                        cat.first,
-                                        cat.second->maxLevel,
-                                        cat.second->forms[0].formIndex - 1); // the '0' should be changed
-                                } else {
-                                    LOG_INFO("Not enough money to spawn " + cat.second->nameInternal + "! Cost: " + std::to_string(cost));
-                                }
+
+            auto btn = std::make_shared<Button>(
+                RESOURCE_DIR + cat.second->catGenButton[0],
+                [cat, weakWallet, weakSlot, cost]() {
+                    if (auto s = weakSlot.lock()) {
+                        // 【先判斷冷卻】
+                        if (!s->IsReady()) {
+                            LOG_INFO("Cat is cooling down!");
+                            return; // 直接擋下點擊事件
+                        }
+                        // 【再判斷金錢】
+                        if (auto w = weakWallet.lock()) {
+                            if (w->SpendMoney(cost)) {
+                                EntityManager::GetInstance().SpawnCat(
+                                    cat.first,
+                                    cat.second->maxLevel,
+                                    cat.second->forms[0].formIndex - 1);
+
+                                // 產貓成功！觸發冷卻器
+                                s->StartCooldown();
+                            } else {
+                                LOG_INFO("Not enough money!");
                             }
-                        },
-                        99
-                    )
-                );
+                        }
+                    }
+                },
+                80.0f
+            );
+
+            slot->SetButton(btn);
+            m_CatSlots.push_back(slot);
+
+            // 將按鈕與讀條文字都交給 Scene Graph 管理
+            AddChild(slot->GetButton());
+            AddChild(slot->GetCdText());
+            AddChild(slot->GetCostText());
         }
-        //layout
+
+        if (m_CatSlots.empty()) {
+            LOG_WARN("No cat slots were generated. Skip layout.");
+            return;
+        }
         const auto X = -245.0F;
         const auto Y = -250.0F;
-        m_gen_b_cats[0]->Place({X, Y});
-        AddChild(m_gen_b_cats[0]);
+        m_CatSlots[0]->Place({X, Y});
 
         auto catButtonX = X;
         auto catButtonY = Y;
 
-        for (int i = 1; i < m_gen_b_cats.size(); i++) {
-            auto photoSize = m_gen_b_cats[i]->GetSize();
+        for (int i = 1; i < m_CatSlots.size(); i++) {
+            auto photoSize = m_CatSlots[i]->GetButton()->GetSize();
             if (i <= 4 || (i > 5 && i <= 10)) {
-                catButtonX += m_gen_b_cats[i - 1]->GetSize().x / 2.0F + photoSize.x / 2.0F + 15.0F;
+                catButtonX += m_CatSlots[i - 1]->GetButton()->GetSize().x / 2.0F + photoSize.x / 2.0F + 15.0F;
             } else if (i == 5) {
                 catButtonX = X;
-                catButtonY = catButtonY - m_gen_b_cats[i - 5]->GetSize().y / 2.0F - photoSize.y / 2.0F - 15.0F;
+                catButtonY = catButtonY - m_CatSlots[i - 5]->GetButton()->GetSize().y / 2.0F - photoSize.y / 2.0F - 15.0F;
             }
-            m_gen_b_cats[i]->Place({catButtonX, catButtonY});
-            AddChild(m_gen_b_cats[i]);
+            m_CatSlots[i]->Place({catButtonX, catButtonY});
         }
     }
+}
+
+void Fight::SetPauseMenuVisible(bool visible) {
+    if (m_PauseMenuBg) m_PauseMenuBg->SetVisible(visible);
+    if (m_ResumeBtn) m_ResumeBtn->SetVisible(visible);
+    if (m_ExitBtn) m_ExitBtn->SetVisible(visible);
+}
+
+void Fight::ShowSettlementScreen(bool isVictory) {
+    // 1. 清空所有實體 (透過 EntityManager)
+    EntityManager::GetInstance().ClearAllEntities();
+
+    // 2. 移除除了背景以外的所有 UI 子物件
+    for (auto it = m_Children.begin(); it != m_Children.end(); ) {
+        if (*it != m_BackgroundImage) {
+            it = m_Children.erase(it);
+        } else {
+            ++it;
+        }
+    }
+
+    // 3. 建立並加入結算文字
+    std::string textStr = isVictory ? "VICTORY!" : "DEFEAT!";
+    auto color = isVictory ? Util::Color::FromName(Util::Colors::YELLOW) : Util::Color::FromName(Util::Colors::RED);
+    m_SettlementText = std::make_shared<Text>(
+        TextThemeDetail::DefaultFontSize * 3,
+        textStr,
+        100,
+        color
+    );
+    m_SettlementText->Place({0.0f, 100.0f});
+    AddChild(m_SettlementText);
+
+    // 4. 建立並加入離開按鈕
+    m_SettlementExitBtn = std::make_shared<TextButton>(
+        32, "Exit to Lobby", 100.0f,
+        [this]() {
+            this->m_DestinationPhase = "CatBase"; // 返回大廳
+        }
+    );
+    m_SettlementExitBtn->Place({0.0f, -50.0f});
+    AddChild(m_SettlementExitBtn);
+}
+
+std::shared_ptr<Phase> Fight::GetDestinationPhase() {
+    return PhaseManager::GetNextPhase("Fight", this->m_DestinationPhase);
 }
