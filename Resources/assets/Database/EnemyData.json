@@ -13,7 +13,7 @@
         "postcast": 10
       },
       "time_between_attacks": 47,
-      "move_speed": 50.0,
+      "move_speed": 5.0,
       "Knockback": 3,
       "money_drop": 15,
       "traits": [

@@ -52,7 +52,8 @@ void Unit::Update(float deltaTime) {
             if (!targets.empty()) {
                 ChangeState(UnitState::Precast);
             } else {
-                m_positionX += m_stats.moveSpeed * m_direction * deltaTime;
+                float currentSpeed = m_stats.moveSpeed * EntityManager::GetInstance().GetGlobalMovementSpeedScale();
+                m_positionX += currentSpeed * m_direction * deltaTime;
             }
             break;
         }
@@ -101,7 +102,8 @@ void Unit::Update(float deltaTime) {
         }
 
         case UnitState::Knockback: {
-            m_positionX -= (m_stats.moveSpeed * 2.0f) * m_direction * deltaTime;
+            float currentSpeed = m_stats.moveSpeed * EntityManager::GetInstance().GetGlobalMovementSpeedScale();
+            m_positionX -= (currentSpeed * 2.0f) * m_direction * deltaTime;
 
             if (m_stateTimer >= 0.5f) {
                 if (IsDead()) {
@@ -122,7 +124,7 @@ void Unit::Update(float deltaTime) {
 }
 
 void Unit::TakeDamage(int damage) {
-    if (IsDead() || m_currentState == UnitState::Knockback) return;
+    if (IsDead() || m_currentState == UnitState::Knockback || damage <= 0) return;
 
     m_currentHp -= damage;
     
