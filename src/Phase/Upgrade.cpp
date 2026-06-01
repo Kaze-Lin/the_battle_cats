@@ -71,21 +71,7 @@ namespace {
 
         std::string name = DatabaseManager::GetInstance().GetCatData(data.catId)->nameInternal;
 
-        path = path + to_lower(name) + "/Udi00" + std::to_string(data.catId) + "_";
-
-        switch (data.currentForm) {
-        case 1:
-            path += "f.png";
-            break;
-        case 2:
-            path += "c.png";
-            break;
-        case 3:
-            path += "s.png";
-            break;
-        default:
-            return "/cat_materials/normal/Udi_clear.png";
-        }
+        path = path + to_lower(name) + "/cat_block_image/" + std::to_string(data.currentForm) + ".png";
 
         return path;
     }
