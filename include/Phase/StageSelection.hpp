@@ -7,11 +7,13 @@
 
 #include "ImageScaling.hpp"
 
+#include "Component/ScrollManager.hpp"
 #include "Phase.hpp"
 #include "Component/StageBlock.hpp"
 
 class StageSelection: public Phase {
 private:
+    ScrollManager<StageBlock> m_ScrollManager;
 
     int m_CurrentChapter = 1;
     int m_CurrentStage = 1;

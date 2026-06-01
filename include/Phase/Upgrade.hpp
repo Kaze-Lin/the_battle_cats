@@ -6,11 +6,13 @@
 #include "Component/Button.hpp"
 #include "Component/UpgradeBlock.hpp"
 #include "ImageScaling.hpp"
+#include "Component/ScrollManager.hpp"
 #include "Component/Text.hpp"
 #include "Phase/CatBase.hpp"
 
 class Upgrade: public Phase {
 private:
+    ScrollManager<UpgradeBlock> m_ScrollManager;
     // background image (without interaction image)
     std::shared_ptr<BackgroundImage> m_BackgroundImage;
     std::shared_ptr<BackgroundImage> m_UpgradeBanner;

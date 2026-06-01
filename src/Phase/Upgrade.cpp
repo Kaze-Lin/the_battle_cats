@@ -2,58 +2,11 @@
 
 #include "PhaseManager.hpp"
 #include "DatabaseManager.hpp"
+#include "UserManager.hpp"
+#include <algorithm>
+#include <cctype>
 
 namespace {
-    size_t GetMiddleIndex(const std::vector<std::shared_ptr<UpgradeBlock>> &v) {
-        for (size_t i = 0; i < v.size(); i++) {
-            if (std::abs(v[i]->GetCoordinate().x) < 0.01F) {
-                return i;
-            }
-        }
-        return v.size();
-    }
-
-    void HorizontalMovement(const std::vector<std::shared_ptr<UpgradeBlock>> &v, float offset) {
-        for (auto &item: v) {
-            item->Place({item->GetCoordinate().x - offset, item->GetCoordinate().y});
-        }
-    }
-
-    std::string GetBlockTitle(const std::vector<std::shared_ptr<UpgradeBlock>> &v) {
-        size_t middleIndex = GetMiddleIndex(v);
-
-        std::string title = " ";
-
-        if (v.empty() || middleIndex >= v.size()) {
-            return title;
-        }
-
-        auto block = v[middleIndex];
-
-        switch (block->GetBlockType()) {
-        case UpgradeType::CHARACTER:
-            title = "角色";
-            break;
-        case UpgradeType::CANNON:
-            title = "貓咪砲";
-            break;
-        case UpgradeType::WORKER_CAT:
-            title = "工作狂貓";
-            break;
-        case UpgradeType::CASTLE:
-            title = "城堡";
-            break;
-        case UpgradeType::SPECIAL_ABILITIES:
-            title = "特殊能力";
-            break;
-        default:
-            title = " ";
-            break;
-        }
-
-        return title;
-    }
-
     std::string to_lower(std::string s) {
         std::transform(
             s.begin(),
@@ -213,23 +166,9 @@ void Upgrade::Update() {
 
     Phase::Update();
 
-    // LOG_DEBUG("middle index is = " + std::to_string(GetMiddleIndex(m_UpgradeSelectionBar)));
-    // LOG_DEBUG("vector size is = " + std::to_string(m_UpgradeSelectionBar.size()));
-
     if (!m_UpgradeSelectionBar.empty()) {
-        size_t midIndex = GetMiddleIndex(m_UpgradeSelectionBar);
-        if (Util::Input::IsKeyDown(Util::Keycode::RIGHT)) {
-
-            if (midIndex + 1 < m_UpgradeSelectionBar.size()) {
-                size_t rightIndex = midIndex + 1;
-                HorizontalMovement(m_UpgradeSelectionBar, m_UpgradeSelectionBar[rightIndex]->GetCoordinate().x);
-            }
-        } else if (Util::Input::IsKeyDown(Util::Keycode::LEFT)) {
-            if (midIndex > 0) {
-                size_t leftIndex = midIndex - 1;
-                HorizontalMovement(m_UpgradeSelectionBar, m_UpgradeSelectionBar[leftIndex]->GetCoordinate().x);
-            }
-        }
+        m_ScrollManager.Update(m_UpgradeSelectionBar);
+        size_t midIndex = m_ScrollManager.GetMiddleIndex(m_UpgradeSelectionBar);
 
         if (midIndex < m_UpgradeSelectionBar.size()) {
             // determine m_b_Upgrade is visible or not
@@ -248,7 +187,33 @@ void Upgrade::Update() {
     }
 
     if (m_SubTitleText) {
-        std::string title = GetBlockTitle(m_UpgradeSelectionBar);
+        std::string title = " ";
+        if (!m_UpgradeSelectionBar.empty()) {
+            size_t middleIndex = m_ScrollManager.GetMiddleIndex(m_UpgradeSelectionBar);
+            if (middleIndex < m_UpgradeSelectionBar.size()) {
+                auto block = m_UpgradeSelectionBar[middleIndex];
+                switch (block->GetBlockType()) {
+                case UpgradeType::CHARACTER:
+                    title = "角色";
+                    break;
+                case UpgradeType::CANNON:
+                    title = "貓咪砲";
+                    break;
+                case UpgradeType::WORKER_CAT:
+                    title = "工作狂貓";
+                    break;
+                case UpgradeType::CASTLE:
+                    title = "城堡";
+                    break;
+                case UpgradeType::SPECIAL_ABILITIES:
+                    title = "特殊能力";
+                    break;
+                default:
+                    title = " ";
+                    break;
+                }
+            }
+        }
         m_SubTitleText->SetText(title);
     }
 
@@ -340,7 +305,7 @@ void Upgrade::BuildSelectionBar() {
 void Upgrade::UpgradeLevel() {
     if (m_UpgradeSelectionBar.empty()) return;
 
-    size_t midIndex = GetMiddleIndex(m_UpgradeSelectionBar);
+    size_t midIndex = m_ScrollManager.GetMiddleIndex(m_UpgradeSelectionBar);
     int targetCatId = m_UpgradeSelectionBar[midIndex]->ID;
 
     CatSaveData updatedCatData;
