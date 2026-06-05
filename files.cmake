@@ -7,9 +7,10 @@ set(SRC_FILES
     Component/Button.cpp
     Component/Text.cpp
     Component/TextButton.cpp
-    Component/OptionBlock.cpp
-    Component/UpgradeBlock.cpp
-    Component/StageBlock.cpp
+    Component/Block/OptionBlock.cpp
+    Component/Block/UpgradeBlock.cpp
+    Component/Block/StageBlock.cpp
+    Component/Block/DeployBlock.cpp
     Component/Wallet.cpp
     Component/Cannon.cpp
     Component/HealthBar.cpp
@@ -18,6 +19,7 @@ set(SRC_FILES
     Phase/Login.cpp
     Phase/CatBase.cpp
     Phase/Upgrade.cpp
+    Phase/TeamBuild.cpp
     Phase/StageSelection.cpp
     Phase/PropsStore.cpp
     Phase/Fight.cpp
@@ -41,9 +43,10 @@ set(INCLUDE_FILES
     Component/Button.hpp
     Component/Text.hpp
     Component/TextButton.hpp
-    Component/OptionBlock.hpp
-    Component/UpgradeBlock.hpp
-    Component/StageBlock.hpp
+    Component/Block/OptionBlock.hpp
+    Component/Block/UpgradeBlock.hpp
+    Component/Block/StageBlock.hpp
+    Component/Block/DeployBlock.hpp
     Component/Wallet.hpp
     Component/Cannon.hpp
 
@@ -55,6 +58,7 @@ set(INCLUDE_FILES
     Phase/CatBase.hpp
     Phase/StageSelection.hpp
     Phase/Upgrade.hpp
+    Phase/TeamBuild.hpp
     Phase/PropsStore.hpp
     Phase/Fight.hpp
 

@@ -52,7 +52,7 @@ CatBase::CatBase(): Phase() {
     m_b_TeamBuild =
         std::make_shared<Button>(
             RESOURCE_DIR "/phase/lobby/team_buildup.png",
-            nullptr);
+            [this](){ this->ToTeamBuild(); });
     m_b_TeamBuild->ScaleSize({YELLOW_BUTTON_SCALE, YELLOW_BUTTON_SCALE});
 
     m_b_RestoreIcon =
@@ -90,6 +90,13 @@ CatBase::CatBase(): Phase() {
             RESOURCE_DIR "/phase/cat_can_button.png",
             nullptr);
     m_b_CatCan->ScaleSize({ORIGINAL_SCALING + 0.15F, ORIGINAL_SCALING + 0.15F});
+
+    m_b_XP =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/phase/xp_button.png",
+            [this](){this->ToPropsStore();});
+    m_b_XP->ScaleSize({YELLOW_BUTTON_SCALE + 0.07F, YELLOW_BUTTON_SCALE + 0.07F});
+
 
     // --- Layout settings ---
     // background image (without interaction image)
@@ -145,6 +152,10 @@ CatBase::CatBase(): Phase() {
     m_b_CatCan->Place({catcanX, catcanY});
     AddChild(m_b_CatCan);
 
+    const glm::vec2 XPPos = {260.0F, 347.0F};
+    m_b_XP->Place(XPPos);
+    AddChild(m_b_XP);
+
     // layout of wood area buttons
     const auto restoreIconX = -5.0F;
     const auto restoreIconY = m_BottomBanner->GetCoordinate().y + m_BottomBanner->GetSize().y / 2.0F + m_b_RestoreIcon->GetSize().y / 2.0F + 40.0F;
@@ -173,6 +184,10 @@ void CatBase::ToStageSelection() {
 
 void CatBase::ToUpgrade() {
     this->m_DestinationPhase = "Upgrade";
+}
+
+void CatBase::ToTeamBuild() {
+    this->m_DestinationPhase = "TeamBuild";
 }
 
 void CatBase::ToPropsStore() {

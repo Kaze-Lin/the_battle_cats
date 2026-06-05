@@ -2,7 +2,7 @@
 #define STAGE_BLOCK_HPP
 
 #include "Component/Text.hpp"
-#include "Component/OptionBlock.hpp"
+#include "Component/Block/OptionBlock.hpp"
 
 class StageBlock: public OptionBlock {
 public:

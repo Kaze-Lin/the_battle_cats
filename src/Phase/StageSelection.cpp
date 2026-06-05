@@ -51,6 +51,13 @@ StageSelection::StageSelection(): Phase() {
             nullptr);
     m_b_CatCan->ScaleSize({ORIGINAL_SCALING + 0.15F, ORIGINAL_SCALING + 0.15F});
 
+    m_b_XP =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/phase/xp_button.png",
+            [this](){this->ToPropsStore();});
+    m_b_XP->ScaleSize({YELLOW_BUTTON_SCALE + 0.07F, YELLOW_BUTTON_SCALE + 0.07F});
+
+
     // --- Layout settings ---
     // background image (without interaction image)
     m_BackgroundImage->AlignWithWindow();
@@ -82,6 +89,10 @@ StageSelection::StageSelection(): Phase() {
     const glm::vec2 catcanPos = {320.0F, -353.0F};
     m_b_CatCan->Place(catcanPos);
     AddChild(m_b_CatCan);
+
+    const glm::vec2 XPPos = {260.0F, 347.0F};
+    m_b_XP->Place(XPPos);
+    AddChild(m_b_XP);
 
     BuildSelectionBar();
 }

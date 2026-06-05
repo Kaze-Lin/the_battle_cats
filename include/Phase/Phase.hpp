@@ -11,7 +11,7 @@ protected:
 public:
     Phase() = default;
 
-    virtual ~Phase() = default;
+    ~Phase() override = default;
 
     virtual void Update();
 

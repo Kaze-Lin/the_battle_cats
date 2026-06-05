@@ -3,13 +3,13 @@
 
 #include "Component/BackgroundImage.hpp"
 #include "Component/Button.hpp"
-#include "Component/OptionBlock.hpp"
+#include "../Component/Block/OptionBlock.hpp"
 
 #include "ImageScaling.hpp"
 
 #include "Component/ScrollManager.hpp"
 #include "Phase.hpp"
-#include "Component/StageBlock.hpp"
+#include "../Component/Block/StageBlock.hpp"
 
 class StageSelection: public Phase {
 private:
@@ -29,6 +29,7 @@ private:
     std::shared_ptr<Button> m_b_PropsStore;
     std::shared_ptr<Button> m_b_Back;
     std::shared_ptr<Button> m_b_CatCan;
+    std::shared_ptr<Button> m_b_XP;
 
     std::vector<std::shared_ptr<StageBlock>> m_StageSelectionBar;
     void BuildSelectionBar();

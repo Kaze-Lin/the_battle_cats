@@ -1,16 +1,23 @@
-#ifndef UPGRADE_HPP
-#define UPGRADE_HPP
+#ifndef TEAM_BUILD_HPP
+#define TEAM_BUILD_HPP
 
 #include "Phase.hpp"
 #include "Component/BackgroundImage.hpp"
 #include "Component/Button.hpp"
-#include "../Component/Block/UpgradeBlock.hpp"
-#include "ImageScaling.hpp"
 #include "Component/ScrollManager.hpp"
-#include "Component/Text.hpp"
-#include "Phase/CatBase.hpp"
+#include "../Component/Block/UpgradeBlock.hpp"
 
-class Upgrade: public Phase {
+class TeamBuild: public Phase {
+public:
+    TeamBuild();
+
+    std::shared_ptr<Phase> GetDestinationPhase() override;
+
+    void GoBack(); // this is for go back
+    void ToPropsStore();
+    void Update() override;
+
+
 private:
     ScrollManager<UpgradeBlock> m_ScrollManager;
     // background image (without interaction image)
@@ -27,27 +34,12 @@ private:
     std::shared_ptr<Button> m_b_Back;
     std::shared_ptr<Button> m_b_CatCan;
     std::shared_ptr<Button> m_b_Upgrade;
-    std::shared_ptr<Button> m_b_XP;
 
 
     // upgrade selections
-    std::vector<std::shared_ptr<UpgradeBlock>> m_UpgradeSelectionBar;
+    std::vector<std::shared_ptr<UpgradeBlock>> m_CatSelectionBar;
     void BuildSelectionBar();
-
-
-public:
-
-    Upgrade();
-    ~Upgrade() override = default;
-
-    std::shared_ptr<Phase> GetDestinationPhase() override;
-
-    void GoBack(); // this is for go back
-    void ToPropsStore();
-    void Update() override;
-
-    void UpgradeLevel();
 
 };
 
-#endif //UPGRADE_HPP
+#endif //TEAM_BUILD_HPP

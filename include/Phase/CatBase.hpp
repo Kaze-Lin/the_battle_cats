@@ -28,6 +28,7 @@ private:
     std::shared_ptr<Button> m_b_PropsStore;
     std::shared_ptr<Button> m_b_Back;
     std::shared_ptr<Button> m_b_CatCan;
+    std::shared_ptr<Button> m_b_XP;
 
 public:
 
@@ -38,6 +39,7 @@ public:
 
     void ToStageSelection();
     void ToUpgrade();
+    void ToTeamBuild();
     void ToPropsStore();
     void ToExit();
 };

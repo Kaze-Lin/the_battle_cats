@@ -61,7 +61,7 @@ public:
     virtual ~Unit() = default;
 
     void Update(float deltaTime);
-    void Render() const;
+    void Render() const; // TODO: remember to delete it if not implement
 
     // 戰鬥互動
     void TakeDamage(int damage);

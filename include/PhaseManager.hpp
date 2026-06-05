@@ -6,6 +6,7 @@
 #include "Phase/Login.hpp"
 #include "Phase/CatBase.hpp"
 #include "Phase/StageSelection.hpp"
+#include "Phase/TeamBuild.hpp"
 #include "Phase/Upgrade.hpp"
 #include "Phase/PropsStore.hpp"
 #include "Phase/Fight.hpp"

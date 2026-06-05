@@ -24,6 +24,8 @@ void PhaseManager::MapInitialize() {
 
     m_Map["StageSelection"] = [](){ return std::make_shared<StageSelection>(); };
 
+    m_Map["TeamBuild"] = []() { return std::make_shared<TeamBuild>(); };
+
     m_Map["Upgrade"] = [](){ return std::make_shared<Upgrade>(); };
 
     m_Map["Fight"] = [](){ return std::make_shared<Fight>(); };
