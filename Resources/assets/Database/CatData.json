@@ -5,11 +5,11 @@
       "name_internal": "Cat",
       "max_level": 20,
       "cat_path": ["/cat_materials/normal/cat/form/1.png",
-                   "/cat_materials/normal/cat/form/2.png",
-                   "/cat_materials/normal/cat/form/3.png"],
+        "/cat_materials/normal/cat/form/2.png",
+        "/cat_materials/normal/cat/form/3.png"],
       "generate_cat_button": ["/cat_materials/normal/cat/generate_cat_button/1.png",
-                               "/cat_materials/normal/cat/generate_cat_button/2.png",
-                               "/cat_materials/normal/cat/generate_cat_button/3.png"],
+        "/cat_materials/normal/cat/generate_cat_button/2.png",
+        "/cat_materials/normal/cat/generate_cat_button/3.png"],
       "forms": [
         {
           "form_index": 1, "name": "Cat", "cost": 50, "base_hp": 100, "hp_growth": 20, "base_attack": 8, "attack_growth": 2, "range": 140, "is_area_attack": false, "animation": { "precast": 8, "postcast": 14 }, "time_between_attacks": 37, "move_speed": 10, "Knockback": 3, "ability": "none", "talent": "none", "Recharge_Time": 60
@@ -28,11 +28,11 @@
       "name_internal": "Tank_Cat",
       "max_level": 20,
       "cat_path": ["/cat_materials/normal/tank_cat/form/1.png",
-                   "/cat_materials/normal/tank_cat/form/2.png",
-                   "/cat_materials/normal/tank_cat/form/3.png"],
+        "/cat_materials/normal/tank_cat/form/2.png",
+        "/cat_materials/normal/tank_cat/form/3.png"],
       "generate_cat_button": ["/cat_materials/normal/tank_cat/generate_cat_button/1.png",
-                              "/cat_materials/normal/tank_cat/generate_cat_button/2.png",
-                              "/cat_materials/normal/tank_cat/generate_cat_button/3.png"],
+        "/cat_materials/normal/tank_cat/generate_cat_button/2.png",
+        "/cat_materials/normal/tank_cat/generate_cat_button/3.png"],
       "forms": [
         {
           "form_index": 1, "name": "Tank_Cat", "cost": 100, "base_hp": 400, "hp_growth": 100, "base_attack": 2, "attack_growth": 1, "range": 110, "is_area_attack": false, "animation": { "precast": 8, "postcast": 15 }, "time_between_attacks": 67, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 60

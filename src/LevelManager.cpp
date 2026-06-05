@@ -87,9 +87,13 @@ void LevelManager::TriggerBossShockwave() {
     // 取得所有友軍 (貓咪)
     auto playerUnits = EntityManager::GetInstance().GetEntitiesByFaction(Faction::Player);
     
+    // 設定一個固定的擊退距離 (例如: 150.0f)
+    const float shockwaveDistance = 150.0f;
+    
     for (auto* unit : playerUnits) {
-        // 強制切換為擊退狀態
-        // unit->ChangeState(std::make_unique<KnockbackState>(unit));
-        LOG_INFO("[levelManager] cats being knockback!");
+        // 對所有友軍單位施加 Boss 震退效果
+        unit->ApplyBossShockwave(shockwaveDistance);
     }
+    
+    LOG_INFO("[LevelManager] Boss spawned! Triggered shockwave on player units.");
 }
