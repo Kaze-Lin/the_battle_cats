@@ -91,6 +91,13 @@ CatBase::CatBase(): Phase() {
             nullptr);
     m_b_CatCan->ScaleSize({ORIGINAL_SCALING + 0.15F, ORIGINAL_SCALING + 0.15F});
 
+    m_b_XP =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/phase/xp_button.png",
+            [this](){this->ToPropsStore();});
+    m_b_XP->ScaleSize({YELLOW_BUTTON_SCALE + 0.07F, YELLOW_BUTTON_SCALE + 0.07F});
+
+
     // --- Layout settings ---
     // background image (without interaction image)
     m_BackgroundImage->AlignWithWindow();
@@ -144,6 +151,10 @@ CatBase::CatBase(): Phase() {
     const auto catcanY = -353.0F;
     m_b_CatCan->Place({catcanX, catcanY});
     AddChild(m_b_CatCan);
+
+    const glm::vec2 XPPos = {260.0F, 347.0F};
+    m_b_XP->Place(XPPos);
+    AddChild(m_b_XP);
 
     // layout of wood area buttons
     const auto restoreIconX = -5.0F;

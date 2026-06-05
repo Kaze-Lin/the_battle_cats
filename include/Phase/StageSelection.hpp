@@ -29,6 +29,7 @@ private:
     std::shared_ptr<Button> m_b_PropsStore;
     std::shared_ptr<Button> m_b_Back;
     std::shared_ptr<Button> m_b_CatCan;
+    std::shared_ptr<Button> m_b_XP;
 
     std::vector<std::shared_ptr<StageBlock>> m_StageSelectionBar;
     void BuildSelectionBar();

@@ -27,6 +27,7 @@ private:
     std::shared_ptr<Button> m_b_Back;
     std::shared_ptr<Button> m_b_CatCan;
     std::shared_ptr<Button> m_b_Upgrade;
+    std::shared_ptr<Button> m_b_XP;
 
 
     // upgrade selections

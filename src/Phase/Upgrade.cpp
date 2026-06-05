@@ -82,6 +82,12 @@ Upgrade::Upgrade(): Phase() {
             nullptr);
     m_b_CatCan->ScaleSize({ORIGINAL_SCALING + 0.15F, ORIGINAL_SCALING + 0.15F});
 
+    m_b_XP =
+        std::make_shared<Button>(
+            RESOURCE_DIR "/phase/xp_button.png",
+            [this](){this->ToPropsStore();});
+    m_b_XP->ScaleSize({YELLOW_BUTTON_SCALE + 0.07F, YELLOW_BUTTON_SCALE + 0.07F});
+
     m_b_Upgrade =
         std::make_shared<Button>(
             RESOURCE_DIR "/phase/upgrade/upgrade_button.png",
@@ -121,6 +127,10 @@ Upgrade::Upgrade(): Phase() {
     constexpr auto catCanY = -353.0F;
     m_b_CatCan->Place({catCanX, catCanY});
     AddChild(m_b_CatCan);
+
+    const glm::vec2 XPPos = {260.0F, 347.0F};
+    m_b_XP->Place(XPPos);
+    AddChild(m_b_XP);
 
     constexpr auto upgradeX = -400.0F;
     constexpr auto upgradeY = -120.0F;
