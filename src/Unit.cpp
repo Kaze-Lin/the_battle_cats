@@ -102,10 +102,17 @@ void Unit::Update(float deltaTime) {
         }
 
         case UnitState::Knockback: {
-            float currentSpeed = m_stats.moveSpeed * EntityManager::GetInstance().GetGlobalMovementSpeedScale();
-            m_positionX -= (currentSpeed * 2.0f) * m_direction * deltaTime;
+            // 固定擊退距離與時間，與單位原本的跑速無關
+            const float KNOCKBACK_DISTANCE = 150.0f;
+            const float KNOCKBACK_DURATION = 0.5f;
 
-            if (m_stateTimer >= 0.5f) {
+            // 具有動畫感 (Ease-Out): 初速快，末速為零，產生物理衝擊感
+            float progress = std::min(m_stateTimer / KNOCKBACK_DURATION, 1.0f);
+            float currentSpeed = (2.0f * KNOCKBACK_DISTANCE / KNOCKBACK_DURATION) * (1.0f - progress);
+            
+            m_positionX -= currentSpeed * m_direction * deltaTime;
+
+            if (m_stateTimer >= KNOCKBACK_DURATION) {
                 if (IsDead()) {
                     ChangeState(UnitState::Dead);
                 } else {
@@ -152,6 +159,17 @@ void Unit::ForceKnockback() {
          LOG_INFO(m_stats.name + " knockback!\n");
         ChangeState(UnitState::Knockback);
     }
+}
+
+void Unit::ApplyBossShockwave(float distance) {
+    // 主堡(Cat_Base)不該被 Boss 震退，死亡狀態也不需要
+    if (IsDead() || m_stats.name == "Cat_Base") return;
+
+    // 將位置往後拉一段固定距離 (向基地退)
+    m_positionX -= distance * m_direction;
+    
+    // 同時觸發擊退狀態與動畫
+    ForceKnockback();
 }
 
 bool Unit::IsDeadAndAnimationFinished() const {

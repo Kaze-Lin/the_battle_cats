@@ -13,6 +13,7 @@ set(SRC_FILES
     Component/Block/DeployBlock.cpp
     Component/Wallet.cpp
     Component/Cannon.cpp
+    Component/HealthBar.cpp
 
     Phase/Phase.cpp
     Phase/Login.cpp
@@ -32,6 +33,7 @@ set(SRC_FILES
     EntityManager.cpp
     LevelManager.cpp
     Unit.cpp
+
 )
 
 set(INCLUDE_FILES
@@ -76,6 +78,9 @@ set(INCLUDE_FILES
     nlohmann/json.hpp
     UserData.hpp
     UserManager.hpp
+
+    Component/HealthBar.hpp
+    Component/ScrollContainer.hpp
 )
 
 set(TEST_FILES

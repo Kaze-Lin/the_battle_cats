@@ -66,6 +66,7 @@ public:
     // 戰鬥互動
     void TakeDamage(int damage);
     void ForceKnockback();
+    void ApplyBossShockwave(float distance);
 
     // 取得資訊
     bool IsDeadAndAnimationFinished() const;

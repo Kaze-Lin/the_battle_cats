@@ -96,7 +96,7 @@ public:
         std::shared_ptr<Phase> GetDestinationPhase() override;
 
         Fight();
-        ~Fight() override = default;
+        ~Fight() override;
 
         void Update() override;
     };
