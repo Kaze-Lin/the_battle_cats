@@ -3,13 +3,13 @@
 
 #include "Component/BackgroundImage.hpp"
 #include "Component/Button.hpp"
-#include "Component/OptionBlock.hpp"
+#include "../Component/Block/OptionBlock.hpp"
 
 #include "ImageScaling.hpp"
 
 #include "Component/ScrollManager.hpp"
 #include "Phase.hpp"
-#include "Component/StageBlock.hpp"
+#include "../Component/Block/StageBlock.hpp"
 
 class StageSelection: public Phase {
 private:

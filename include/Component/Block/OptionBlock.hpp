@@ -11,6 +11,8 @@ public:
         float zIndex = 10.0F
         );
 
+    ~OptionBlock() override = default;
+
 };
 
 #endif //OPTION_BLOCK_HPP

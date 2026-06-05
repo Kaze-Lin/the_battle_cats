@@ -1,4 +1,4 @@
-#include "Component/UpgradeBlock.hpp"
+#include "Component/Block/UpgradeBlock.hpp"
 
 UpgradeBlock::UpgradeBlock(UpgradeType blockType, const std::string& imagePath, float zIndex)
     : OptionBlock(imagePath, zIndex) {

@@ -1,7 +1,7 @@
 #ifndef UPGRADE_BLOCK_HPP
 #define UPGRADE_BLOCK_HPP
 
-#include "Component/OptionBlock.hpp"
+#include "Component/Block/OptionBlock.hpp"
 #include "Component/Text.hpp"
 
 enum class UpgradeType {
@@ -22,6 +22,7 @@ public:
         const std::string& imagePath,
         float zIndex = 10.0F
         );
+    ~UpgradeBlock() override = default;
 
     int ID = -1;
 
@@ -29,8 +30,9 @@ public:
     std::shared_ptr<Text> m_CatName;
     std::shared_ptr<Text> m_Max;
     std::shared_ptr<Text> m_CatLevel;
+    std::shared_ptr<Text> m_UpgradeXP;
 
-    UpgradeType GetBlockType() const;
+    [[nodiscard]] UpgradeType GetBlockType() const;
 };
 
 

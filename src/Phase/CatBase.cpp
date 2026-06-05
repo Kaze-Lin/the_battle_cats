@@ -52,7 +52,7 @@ CatBase::CatBase(): Phase() {
     m_b_TeamBuild =
         std::make_shared<Button>(
             RESOURCE_DIR "/phase/lobby/team_buildup.png",
-            nullptr);
+            [this](){ this->ToTeamBuild(); });
     m_b_TeamBuild->ScaleSize({YELLOW_BUTTON_SCALE, YELLOW_BUTTON_SCALE});
 
     m_b_RestoreIcon =
@@ -173,6 +173,10 @@ void CatBase::ToStageSelection() {
 
 void CatBase::ToUpgrade() {
     this->m_DestinationPhase = "Upgrade";
+}
+
+void CatBase::ToTeamBuild() {
+    this->m_DestinationPhase = "TeamBuild";
 }
 
 void CatBase::ToPropsStore() {

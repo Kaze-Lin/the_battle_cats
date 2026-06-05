@@ -38,6 +38,7 @@ public:
 
     void ToStageSelection();
     void ToUpgrade();
+    void ToTeamBuild();
     void ToPropsStore();
     void ToExit();
 };
