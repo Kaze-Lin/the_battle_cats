@@ -781,6 +781,422 @@
               "is_boss": false
             }
           ]
+        },
+
+        {
+          "stage_id": 16,
+          "enemy_limit": 7,
+          "background_length": 3600,
+          "stage_name": "Madagascar",
+          "base_path" : "/towel/madagascar.png",
+          "enemy_base_hp": 7000,
+          "experience": 5500,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 1,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 10,
+              "interval": 0.4,
+              "max_count": 12,
+              "magnification": 85,
+              "base_hp_trigger": 85,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 85,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 60,
+              "is_boss": true
+            }
+          ]
+        },
+
+        {
+          "stage_id": 17,
+          "enemy_limit": 10,
+          "background_length": 3600,
+          "stage_name": "South Africa",
+          "base_path" : "/towel/South_Africa.png",
+          "enemy_base_hp": 7000,
+          "experience": 5800,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 50,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 51,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 66.6,
+              "interval": 20,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 66.6,
+              "interval": 20,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": true
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 20,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 20,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 18,
+          "enemy_limit": 10,
+          "background_length": 4800,
+          "stage_name": "Ghana",
+          "base_path" : "/towel/ghana.png",
+          "enemy_base_hp": 8000,
+          "experience": 6100,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 50,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 66.6,
+              "interval": 20,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 66.6,
+              "interval": 20,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 60,
+              "is_boss": true
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 61,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 60,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 62,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 19,
+          "enemy_limit": 10,
+          "background_length": 3600,
+          "stage_name": "Ghana",
+          "base_path" : "/towel/ghana.png",
+          "enemy_base_hp": 9000,
+          "experience": 6400,
+          "spawn_rules": [
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 5,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 50,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 7,
+              "start_time": 30,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 0,
+              "interval": 0.03,
+              "max_count": 2,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": true
+            },
+            {
+              "enemy_id": 7,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": 10,
+              "magnification": 100,
+              "base_hp_trigger": 60,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 20,
+          "enemy_limit": 10,
+          "background_length": 4800,
+          "stage_name": "Egypt",
+          "base_path" : "/towel/egypt.png",
+          "enemy_base_hp": 9000,
+          "experience": 6700,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 5,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 7,
+              "start_time": 30,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 30,
+              "interval": 30,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 40,
+              "interval": 30,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": true
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 66.6,
+              "interval": 30,
+              "max_count": 4,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
         }
       ]
     }

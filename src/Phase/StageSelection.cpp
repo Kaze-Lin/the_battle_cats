@@ -145,7 +145,13 @@ void StageSelection::BuildSelectionBar() {
     LOG_DEBUG(str);
 
 
-    for (int i = 1; i <= user->progress.highestStageCleared + 1; i++) {
+    int maxStageToDisplay = user->progress.highestStageCleared + 1;
+    const ChapterData* currentChapter = DatabaseManager::GetInstance().GetChapterData(user->progress.currentStage[0]);
+    if (currentChapter != nullptr) {
+        maxStageToDisplay = std::min(maxStageToDisplay, static_cast<int>(currentChapter->stages.size()));
+    }
+
+    for (int i = 1; i <= maxStageToDisplay; i++) {
 
         auto bg = std::make_shared<StageBlock>(RESOURCE_DIR "/phase/stage_selection/stage_block_background.png");
 

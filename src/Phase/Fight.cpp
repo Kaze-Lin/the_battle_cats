@@ -421,9 +421,19 @@ void Fight::Update() {
         if (auto user = UserManager::GetInstance().GetCurrentUser()) {
             const StageData* currentStage = LevelManager::GetInstance().GetCurrentStage();
             if (currentStage && currentStage->stageId > user->progress.highestStageCleared) {
-                user->progress.highestStageCleared = currentStage->stageId;
-                user->progress.currentStage[1] = currentStage->stageId + 1; // 自動將選擇標籤推進到下一關
-                LOG_INFO("User progress updated! Highest stage cleared: %d", currentStage->stageId);
+                const ChapterData* currentChapter = DatabaseManager::GetInstance().GetChapterData(user->progress.currentStage[0]);
+                
+                if (currentChapter != nullptr) {
+                    user->progress.highestStageCleared = currentStage->stageId;
+                    
+                    // 閾值保護：如果是最後一關，關卡記錄不再往後推
+                    if (currentStage->stageId < currentChapter->stages.size()) {
+                        user->progress.currentStage[1] = currentStage->stageId + 1; // 自動將選擇標籤推進到下一關
+                    } else {
+                        user->progress.currentStage[1] = currentStage->stageId; // 停留在最後一關
+                    }
+                    LOG_INFO("User progress updated! Highest stage cleared: %d", currentStage->stageId);
+                }
             }
         }
         ShowSettlementScreen(true);

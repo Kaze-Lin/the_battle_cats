@@ -47,16 +47,16 @@
                 "cleared_chapters": 0,
                 "current_stage": [
                     1,
-                    7
+                    20
                 ],
-                "highest_stage_cleared": 9,
+                "highest_stage_cleared": 20,
                 "user_rank": 150
             },
             "resources": {
-                "cat_food": 150,
+                "cat_food": 99999999,
                 "energy": 100,
                 "max_energy": 100,
-                "xp": 15000
+                "xp": 99999999
             },
             "treasures": {
                 "chapter_1": [
