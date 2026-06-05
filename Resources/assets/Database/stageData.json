@@ -419,6 +419,368 @@
               "is_boss": true
             }
           ]
+        },
+
+        {
+          "stage_id": 11,
+          "enemy_limit": 6,
+          "background_length": 5000,
+          "stage_name": "India",
+          "base_path" : "/towel/india.png",
+          "enemy_base_hp": 3500,
+          "experience": 4000,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 0,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 20,
+              "interval": 2,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 2,
+              "max_count": 6,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 80,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 40,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 12,
+          "enemy_limit": 7,
+          "background_length": 4800,
+          "stage_name": "Nepal",
+          "base_path" : "/towel/nepal.png",
+          "enemy_base_hp": 4000,
+          "experience": 4300,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 4,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 2,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 1,
+              "max_count": 6,
+              "magnification": 100,
+              "base_hp_trigger": 99,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 98,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 78,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 13,
+          "enemy_limit": 7,
+          "background_length": 4800,
+          "stage_name": "Dubai",
+          "base_path" : "/towel/dubai.png",
+          "enemy_base_hp": 5000,
+          "experience": 4600,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 3.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 10,
+              "interval": 3.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 20,
+              "interval": 3.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 1,
+              "max_count": 6,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 1.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 88,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 88,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 14,
+          "enemy_limit": 7,
+          "background_length": 4800,
+          "stage_name": "Saudi Arabia",
+          "base_path" : "/towel/SaudiArabia.png",
+          "enemy_base_hp": 6000,
+          "experience": 4900,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 10,
+              "interval": 20,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 20,
+              "interval": 20,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 1,
+              "max_count": 6,
+              "magnification": 100,
+              "base_hp_trigger": 99,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 50,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 15,
+          "enemy_limit": 7,
+          "background_length": 3600,
+          "stage_name": "Kenya",
+          "base_path" : "/towel/kenya.png",
+          "enemy_base_hp": 6100,
+          "experience": 5200,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 10,
+              "interval": 5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 20,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 10,
+              "interval": 10,
+              "max_count": 8,
+              "magnification": 100,
+              "base_hp_trigger": 99,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 140,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 60,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 40,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 30,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
         }
       ]
     }

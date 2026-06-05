@@ -6,6 +6,7 @@
 #include "UserManager.hpp"
 #include "Util/Time.hpp"
 #include "PhaseManager.hpp"
+#include "Component/HealthBar.hpp"
 
 CatSlotController::CatSlotController(int cost, float maxCd)
     : m_Cost(cost), m_MaxCd(maxCd), m_CurrentCd(0.0f), m_LastSec(-1) {
@@ -69,6 +70,12 @@ void CatSlotController::Place(const glm::vec2& p) {
         }
         m_CostText->Place({p.x, p.y + offsetY});
     }
+}
+
+Fight::~Fight() {
+    EntityManager::GetInstance().ClearAllEntities();
+    EntityManager::GetInstance().SetSceneNode(nullptr);
+    LOG_INFO("Fight Phase Destructed: Cleared all entities and scene node.");
 }
 
 Fight::Fight(): Phase() {
@@ -321,50 +328,14 @@ Fight::Fight(): Phase() {
 
             // [貓咪塔血量顯示]
             if (catBase) {
-               auto catHpText = std::make_shared<Util::GameObject>(
-               std::make_shared<Util::Text>(
-                    TextThemeDetail::DefaultBackgroundFont,
-                    16,
-                    std::to_string(catBase->GetCurrentHp()) + "/" + std::to_string(catBase->GetMaxHp()),
-                    Util::Color::FromName(Util::Colors::BLACK)
-                ),
-                10
-               );
-               catHpText->m_Transform.translation = {catBase->GetPositionX() + 0.0f, 100.0f};
-               AddChild(catHpText);
-
-                std::weak_ptr<Util::GameObject> weakCatHpText = catHpText;
-                             catBase->SetOnHealthChanged([weakCatHpText](int current, int max) {
-                                 if (auto text = weakCatHpText.lock()) {
-                                     if (auto textComp = std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())) {
-                                         textComp->SetText(std::to_string(current) + "/" + std::to_string(max));
-                                     }
-                                 }
-                             });
+               auto catHealthBar = std::make_shared<HealthBar>(catBase, glm::vec2{10.0f, 135.0f});
+               AddChild(catHealthBar);
             }
 
             // [敵方塔血量顯示]
             if (enemyBase) {
-                auto enemyHpText = std::make_shared<Util::GameObject>(
-                std::make_shared<Util::Text>(
-                TextThemeDetail::DefaultBackgroundFont,
-                16,
-                std::to_string(enemyBase->GetCurrentHp()) + "/" + std::to_string(enemyBase->GetMaxHp()),
-                Util::Color::FromName(Util::Colors::BLACK)
-            ),
-            10
-           );
-                enemyHpText->m_Transform.translation = {enemyBase->GetPositionX() + 20.0f, 50.0f};
-               AddChild(enemyHpText);
-
-               std::weak_ptr<Util::GameObject> weakEnemyHpText = enemyHpText;
-               enemyBase->SetOnHealthChanged([weakEnemyHpText](int current, int max) {
-                   if (auto text = weakEnemyHpText.lock()) {
-                       if (auto textComp = std::dynamic_pointer_cast<Util::Text>(text->GetDrawable())) {
-                           textComp->SetText(std::to_string(current) + "/" + std::to_string(max));
-                       }
-                   }
-               });
+               auto enemyHealthBar = std::make_shared<HealthBar>(enemyBase, glm::vec2{10.0f, 135.0f});
+               AddChild(enemyHealthBar);
             }
 
         m_StageName->SetText(stage->stageName);
@@ -433,7 +404,13 @@ void Fight::Update() {
         }
     }
 
-    LevelManager::GetInstance().Update(gameDeltaTime, 1.0f);
+    float enemyBaseHpPercent = 100.0f;
+    if (auto enemyBase = EntityManager::GetInstance().GetEnemyBase()) {
+        if (enemyBase->GetMaxHp() > 0) {
+            enemyBaseHpPercent = (static_cast<float>(enemyBase->GetCurrentHp()) / enemyBase->GetMaxHp()) * 100.0f;
+        }
+    }
+    LevelManager::GetInstance().Update(gameDeltaTime, enemyBaseHpPercent);
     EntityManager::GetInstance().Update(gameDeltaTime);
 
     if (EntityManager::GetInstance().IsPlayerWin() && !m_isGameOver) {
