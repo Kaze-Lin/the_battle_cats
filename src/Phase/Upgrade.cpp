@@ -335,6 +335,10 @@ void Upgrade::UpgradeLevel() {
         
         // Update visual components
         m_UpgradeSelectionBar[midIndex]->m_CatLevel->SetText(std::to_string(updatedCatData.level));
+        auto catUpgradeCost = DatabaseManager::GetInstance().GetCatData(m_UpgradeSelectionBar[midIndex]->ID);
+        if (catUpgradeCost) {
+            m_UpgradeSelectionBar[midIndex]->m_UpgradeXP->SetText(std::to_string(catUpgradeCost->upgradeCosts[updatedCatData.level]));
+        }
         
         if (updatedCatData.level == 10) {
             m_UpgradeSelectionBar[midIndex]->m_CatBlockImage->SetImage(RESOURCE_DIR + GetIconPath(updatedCatData));
