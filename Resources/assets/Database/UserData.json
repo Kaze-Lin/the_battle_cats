@@ -47,9 +47,9 @@
                 "cleared_chapters": 0,
                 "current_stage": [
                     1,
-                    20
+                    26
                 ],
-                "highest_stage_cleared": 20,
+                "highest_stage_cleared": 30,
                 "user_rank": 150
             },
             "resources": {
@@ -80,8 +80,8 @@
                 },
                 {
                     "cat_id": 1,
-                    "current_form": 1,
-                    "level": 5
+                    "current_form": 2,
+                    "level": 10
                 },
                 {
                     "cat_id": 3,
