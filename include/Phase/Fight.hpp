@@ -10,14 +10,15 @@
 
 #include "ImageScaling.hpp"
 #include "SystemInfo.hpp"
-#include "Component/Text.hpp"
+#include "Component/TwoLayerText.hpp"
 #include "Component/TextButton.hpp"
+#include "Component/ResourceDisplay.hpp"
 
 class CatSlotController {
 private:
     std::shared_ptr<Button> m_Button;
-    std::shared_ptr<Text> m_CdText;
-    std::shared_ptr<Text> m_CostText;
+    std::shared_ptr<TwoLayerText> m_CdText;
+    std::shared_ptr<TwoLayerText> m_CostText;
     float m_CurrentCd = 0.0f;
     float m_MaxCd = 0.0f;
     int m_Cost = 0;
@@ -34,8 +35,8 @@ public:
     bool IsReady() const;
 
     std::shared_ptr<Button> GetButton() const { return m_Button; }
-    std::shared_ptr<Text> GetCdText() const { return m_CdText; }
-    std::shared_ptr<Text> GetCostText() const { return m_CostText; }
+    std::shared_ptr<TwoLayerText> GetCdText() const { return m_CdText; }
+    std::shared_ptr<TwoLayerText> GetCostText() const { return m_CostText; }
 
     void Place(const glm::vec2& p);
 };
@@ -63,16 +64,16 @@ public:
         std::shared_ptr<Button> m_b_CannonCharge;
 
         // stage name
-        std::shared_ptr<Text> m_StageName;
+        std::shared_ptr<TwoLayerText> m_StageName;
 
         // wallet and its UI
         std::shared_ptr<Wallet> m_Wallet;
-        std::shared_ptr<Text> m_WalletMoneyText;
-        std::shared_ptr<Text> m_WalletLevelText;
+        std::shared_ptr<TwoLayerText> m_WalletMoneyText;
+        std::shared_ptr<TwoLayerText> m_WalletLevelText;
 
         // cannon and its UI
         std::shared_ptr<Cannon> m_Cannon;
-        std::shared_ptr<Text> m_LaserEffectText;
+        std::shared_ptr<TwoLayerText> m_LaserEffectText;
         float m_laserTimer = 0.0f;
 
         float m_timeScale = 1.0f;
@@ -87,9 +88,11 @@ public:
         bool m_isGameOver = false;
 
         // 結算畫面元件
-        std::shared_ptr<Text> m_SettlementText;
+        std::shared_ptr<TwoLayerText> m_SettlementText;
         std::shared_ptr<TextButton> m_SettlementExitBtn;
         void ShowSettlementScreen(bool isVictory);
+
+        std::shared_ptr<ResourceDisplay> m_ResourceDisplay;
 
 
     public:

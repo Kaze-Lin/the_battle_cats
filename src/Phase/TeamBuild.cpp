@@ -56,7 +56,7 @@ TeamBuild::TeamBuild(): Phase() {
         std::make_shared<BackgroundImage>(
             RESOURCE_DIR "/phase/upgrade/top_left_banner.png",
             20.0F);
-    m_SubTitleText = std::make_shared<Text>(
+    m_SubTitleText = std::make_shared<TwoLayerText>(
         30,
         " ",
         -5.0F,
@@ -122,6 +122,9 @@ TeamBuild::TeamBuild(): Phase() {
     // ================
 
     BuildSelectionBar();
+
+    m_ResourceDisplay = std::make_shared<ResourceDisplay>();
+    AddChild(m_ResourceDisplay);
 }
 
 std::shared_ptr<Phase> TeamBuild::GetDestinationPhase() {
@@ -223,7 +226,7 @@ void TeamBuild::BuildSelectionBar() {
         // max level
         bg->SetImage(RESOURCE_DIR "/phase/upgrade/cat_background.png");
 
-        bg->m_Max = std::make_shared<Text>(28, "MAX", 15.0F);
+        bg->m_Max = std::make_shared<TwoLayerText>(28, "MAX", 15.0F);
 
         bg->m_Max->SetColor(Util::Color::FromName(Util::Colors::GREEN));
         bg->m_Max->Place({bg->GetCoordinate().x + 52.0F, bg->GetCoordinate().y + 15.0F});
@@ -238,7 +241,7 @@ void TeamBuild::BuildSelectionBar() {
         // cat name
         std::string name = catData->forms[unlockedCats[i].currentForm - 1].name;
         std::replace(name.begin(), name.end(), '_', ' ');
-        bg->m_CatName = std::make_shared<Text>(24, name, 15.0F);
+        bg->m_CatName = std::make_shared<TwoLayerText>(24, name, 15.0F);
 
         glm::vec2 catNameOffset = {0.0F, 125.0F};
         bg->m_CatName->Place({bg->GetCoordinate() + catNameOffset});
@@ -248,7 +251,7 @@ void TeamBuild::BuildSelectionBar() {
 
         // cat level
         std::string level = std::to_string(unlockedCats[i].level);
-        bg->m_CatLevel = std::make_shared<Text>(32, level, 15.0F);
+        bg->m_CatLevel = std::make_shared<TwoLayerText>(32, level, 15.0F);
 
         glm::vec2 catLevelPos = {135.0F, -8.0F};
         bg->m_CatLevel->Place(bg->GetCoordinate() + catLevelPos);

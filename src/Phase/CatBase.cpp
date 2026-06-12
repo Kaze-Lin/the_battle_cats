@@ -172,6 +172,8 @@ CatBase::CatBase(): Phase() {
     m_b_SpecialGachaIcon->Place({specialGachaIconX, specialGachaIconY});
     AddChild(m_b_SpecialGachaIcon);
 
+    m_ResourceDisplay = std::make_shared<ResourceDisplay>();
+    AddChild(m_ResourceDisplay);
 }
 
 std::shared_ptr<Phase> CatBase::GetDestinationPhase() {

@@ -4,7 +4,7 @@
 #include "Util/GameObject.hpp"
 #include "IStateful.hpp"
 #include "Unit.hpp"
-#include "Component/Text.hpp"
+#include "Component/TwoLayerText.hpp"
 
 /**
  * @brief A UI component for displaying a health bar and text relative to a Unit.

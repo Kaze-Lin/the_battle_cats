@@ -4,6 +4,7 @@
 #include "Phase.hpp"
 #include "Component/BackgroundImage.hpp"
 #include "Component/Button.hpp"
+#include "Component/ResourceDisplay.hpp"
 
 class PropsStore: public Phase {
 private:
@@ -16,6 +17,8 @@ private:
     // button image (with interaction image)
     std::shared_ptr<Button> m_b_Back;
     std::shared_ptr<Button> m_b_CatCan;
+
+    std::shared_ptr<ResourceDisplay> m_ResourceDisplay;
 
 public:
 

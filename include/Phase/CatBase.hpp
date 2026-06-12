@@ -3,6 +3,7 @@
 
 #include "Component/BackgroundImage.hpp"
 #include "Component/Button.hpp"
+#include "Component/ResourceDisplay.hpp"
 #include "ImageScaling.hpp"
 #include "Phase.hpp"
 #include "Util/Renderer.hpp"
@@ -29,6 +30,8 @@ private:
     std::shared_ptr<Button> m_b_Back;
     std::shared_ptr<Button> m_b_CatCan;
     std::shared_ptr<Button> m_b_XP;
+
+    std::shared_ptr<ResourceDisplay> m_ResourceDisplay;
 
 public:
 

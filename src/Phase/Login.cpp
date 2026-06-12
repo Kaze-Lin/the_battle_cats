@@ -4,7 +4,7 @@
 
 Login::Login(): Phase(){
     m_Prompt =
-        std::make_shared<Text>(
+        std::make_shared<TwoLayerText>(
             60,
             "Please Enter Your Account In Terminal_",
             0);

@@ -1,25 +1,36 @@
-#include "Component/Text.hpp"
+#include "Component/TwoLayerText.hpp"
 
-Text::Text(
+TwoLayerText::TwoLayerText(
     int size,
     const std::string &text,
     float zIndex
     ): Util::GameObject(nullptr, zIndex),
     size(size), text(text), zIndex(zIndex) {
 
-    auto content = std::make_shared<Util::GameObject>(
+    auto backgroundText = std::make_shared<Util::GameObject>(
         std::make_shared<Util::Text>(
-            TextTheme::DefaultHighlightFont,
+            TextThemeDetail::DefaultBackgroundFont,
             size,
             text,
-            TextTheme::DefaultHighlightColor
+            TextThemeDetail::DefaultBackgroundColor
+        ),
+        zIndex - 1
+        );
+    AddChild(backgroundText);
+
+    auto highlightText = std::make_shared<Util::GameObject>(
+        std::make_shared<Util::Text>(
+            TextThemeDetail::DefaultHighlightFont,
+            size,
+            text,
+            TextThemeDetail::DefaultHighlightColor
         ),
         zIndex
         );
-    AddChild(content);
+    AddChild(highlightText);
 };
 
-Text::Text(
+TwoLayerText::TwoLayerText(
     int size,
     const std::string &text,
     float zIndex,
@@ -27,23 +38,34 @@ Text::Text(
     ): Util::GameObject(nullptr, zIndex),
     size(size), text(text), zIndex(zIndex) {
 
-    auto content = std::make_shared<Util::GameObject>(
+    auto backgroundText = std::make_shared<Util::GameObject>(
         std::make_shared<Util::Text>(
-            TextTheme::DefaultHighlightFont,
+            TextThemeDetail::DefaultBackgroundFont,
+            size,
+            text,
+            TextThemeDetail::DefaultBackgroundColor
+        ),
+        zIndex - 1
+        );
+    AddChild(backgroundText);
+
+    auto highlightText = std::make_shared<Util::GameObject>(
+        std::make_shared<Util::Text>(
+            TextThemeDetail::DefaultHighlightFont,
             size,
             text,
             color
         ),
         zIndex
         );
-    AddChild(content);
+    AddChild(highlightText);
 };
 
-bool Text::GetVisible() {
+bool TwoLayerText::GetVisible() {
     return m_Visible;
 }
 
-glm::vec2 Text::GetSize() {
+glm::vec2 TwoLayerText::GetSize() {
     glm::vec2 maxSize = {0.0F, 0.0F};
     for (const auto &it: GetChildren()) {
         auto s = it->GetDrawable()->GetSize();
@@ -54,33 +76,33 @@ glm::vec2 Text::GetSize() {
     return maxSize;
 }
 
-void Text::Place(const glm::vec2 &p) {
+void TwoLayerText::Place(const glm::vec2 &p) {
     m_Transform.translation = p;
     for (auto &it: m_Children)
         it->m_Transform.translation = p;
 }
 
-void Text::SetText(const std::string& text) {
+void TwoLayerText::SetText(const std::string& text) {
     for (auto &it: m_Children) {
         auto item = std::dynamic_pointer_cast<Util::Text>(it->GetDrawable());
         item->SetText(text);
     }
 }
 
-void Text::SetColor(Util::Color color) {
+void TwoLayerText::SetColor(Util::Color color) {
     auto it = GetChildren();
     auto item = std::dynamic_pointer_cast<Util::Text>(it[1]->GetDrawable());
     item->SetColor(color);
 }
 
-void Text::SetVisible(bool visible) {
+void TwoLayerText::SetVisible(bool visible) {
     m_Visible = visible;
     for (auto& child : m_Children) {
         child->SetVisible(visible);
     }
 }
 
-void Text::Rotate(float degree) {
+void TwoLayerText::Rotate(float degree) {
     for (auto& child : m_Children) {
         child->m_Transform.rotation = degree * M_PI / 180.0F;
     }
