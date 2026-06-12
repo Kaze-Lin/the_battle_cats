@@ -6,6 +6,8 @@
 #include "Component/Button.hpp"
 #include "Component/ScrollManager.hpp"
 #include "Component/Block/DeployBlock.hpp"
+#include "Util/Input.hpp"
+#include "Util/Time.hpp"
 
 class TeamBuild: public Phase {
 public:
@@ -39,6 +41,15 @@ private:
     // upgrade selections
     std::vector<std::shared_ptr<DeployBlock>> m_CatSelectionBar;
     void BuildSelectionBar();
+
+    // === Drag and Drop state ===
+    std::shared_ptr<DeployBlock> m_PressedBlock = nullptr;
+    glm::vec2 m_PressStartPos = {0.0F, 0.0F};
+    Util::ms_t m_PressStartTime = 0;
+    bool m_IsDraggingBlock = false;
+    std::shared_ptr<BackgroundImage> m_DragGhost = nullptr;
+
+    bool IsBlockHovered(const std::shared_ptr<DeployBlock>& block);
 
 };
 

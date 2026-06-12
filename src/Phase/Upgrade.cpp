@@ -334,8 +334,11 @@ void Upgrade::UpgradeLevel() {
         LOG_DEBUG("Upgraded cat ID: " + std::to_string(targetCatId) + " to level: " + std::to_string(updatedCatData.level));
         
         // Update visual components
-        m_UpgradeSelectionBar[midIndex]->m_CatLevel->SetText(std::to_string(updatedCatData.level));
-        
+        const std::string currentLevel = std::to_string(updatedCatData.level);
+        const std::string currentUpgradeXP = std::to_string(DatabaseManager::GetInstance().GetCatData(targetCatId)->upgradeCosts[updatedCatData.level]);
+        m_UpgradeSelectionBar[midIndex]->m_CatLevel->SetText(currentLevel);
+        m_UpgradeSelectionBar[midIndex]->m_UpgradeXP->SetText(currentUpgradeXP);
+
         if (updatedCatData.level == 10) {
             m_UpgradeSelectionBar[midIndex]->m_CatBlockImage->SetImage(RESOURCE_DIR + GetIconPath(updatedCatData));
 

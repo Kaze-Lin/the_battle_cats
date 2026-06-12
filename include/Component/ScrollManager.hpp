@@ -55,12 +55,12 @@ public:
         }
 
         // 2. Mouse drag control logic (Must use IsKeyPressed for continuous holding)
+        glm::vec2 currentMousePos = Util::Input::GetCursorPosition();
         if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
             if (!m_IsDragging) {
                 m_IsDragging = true;
                 m_LastMousePos = Util::Input::GetCursorPosition();
             } else {
-                glm::vec2 currentMousePos = Util::Input::GetCursorPosition();
                 float deltaX = currentMousePos.x - m_LastMousePos.x;
                 if (std::abs(deltaX) > 0.0f) {
                     HorizontalMovement(v, -deltaX); // Move by the drag difference

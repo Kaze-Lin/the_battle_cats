@@ -3,14 +3,13 @@
 
 #include "Component/Block/OptionBlock.hpp"
 #include "Component/Text.hpp"
+#include "DataBase/UserData.hpp"
 #include "pch.hpp"
 
 enum class DeployType {
     FOLDER,
     CHARACTER
 };
-
-struct CatSaveData;
 
 class DeployBlock: public OptionBlock {
 public:
@@ -23,12 +22,12 @@ public:
         );
     ~DeployBlock() override = default;
 
-
-
     [[nodiscard]] DeployType GetBlockType() const;
+    [[nodiscard]] const CatSaveData& GetCatSaveData() const;
 
 private:
     DeployType m_DeployType = DeployType::CHARACTER;
+    CatSaveData m_CatSaveData;
 
     std::shared_ptr<BackgroundImage> m_CatBlockImage;
 

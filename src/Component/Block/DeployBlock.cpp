@@ -36,7 +36,8 @@ DeployBlock::DeployBlock(
     float zIndex
     )
     : OptionBlock(bgImagePath, zIndex),
-    m_DeployType(deployType){
+    m_DeployType(deployType),
+    m_CatSaveData(catSaveData){
     m_OriginalSize = m_Drawable->GetSize();
 
     auto id = catSaveData.catId;
@@ -119,4 +120,8 @@ DeployBlock::DeployBlock(
 
 DeployType DeployBlock::GetBlockType() const {
     return this->m_DeployType;
+}
+
+const CatSaveData& DeployBlock::GetCatSaveData() const {
+    return m_CatSaveData;
 }
