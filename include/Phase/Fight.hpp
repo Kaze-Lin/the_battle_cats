@@ -92,9 +92,6 @@ public:
         std::shared_ptr<TextButton> m_SettlementExitBtn;
         void ShowSettlementScreen(bool isVictory);
 
-        std::shared_ptr<ResourceDisplay> m_ResourceDisplay;
-
-
     public:
         std::shared_ptr<Phase> GetDestinationPhase() override;
 

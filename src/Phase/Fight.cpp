@@ -350,8 +350,6 @@ Fight::Fight(): Phase() {
         DeployCatButton(ids);
     }
 
-    m_ResourceDisplay = std::make_shared<ResourceDisplay>();
-    AddChild(m_ResourceDisplay);
 }
 
 void Fight::Update() {
@@ -418,6 +416,7 @@ void Fight::Update() {
 
     if (EntityManager::GetInstance().IsPlayerWin() && !m_isGameOver) {
         LOG_INFO("VICTORY! The Player has destroyed the Enemy Base!");
+        UserManager::GetInstance().AddXP(LevelManager::GetInstance().GetStageExperience());
         m_isGameOver = true;
 
         // 更新關卡進度
