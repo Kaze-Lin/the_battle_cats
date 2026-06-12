@@ -139,6 +139,47 @@ public:
 
     std::shared_ptr<UserProfile> GetCurrentUser() { return m_currentUser; }
 
+    // --- Resource Modification API ---
+    int GetXP() const {
+        return m_currentUser ? m_currentUser->resources.xp : 0;
+    }
+
+    void AddXP(int amount) {
+        if (m_currentUser && amount > 0) {
+            m_currentUser->resources.xp += amount;
+            SaveDatabase();
+        }
+    }
+
+    bool SpendXP(int amount) {
+        if (m_currentUser && amount > 0 && m_currentUser->resources.xp >= amount) {
+            m_currentUser->resources.xp -= amount;
+            SaveDatabase();
+            return true;
+        }
+        return false;
+    }
+
+    int GetCatFood() const {
+        return m_currentUser ? m_currentUser->resources.catFood : 0;
+    }
+
+    void AddCatFood(int amount) {
+        if (m_currentUser && amount > 0) {
+            m_currentUser->resources.catFood += amount;
+            SaveDatabase();
+        }
+    }
+
+    bool SpendCatFood(int amount) {
+        if (m_currentUser && amount > 0 && m_currentUser->resources.catFood >= amount) {
+            m_currentUser->resources.catFood -= amount;
+            SaveDatabase();
+            return true;
+        }
+        return false;
+    }
+
     // --- Encapsulated API for Cat Data Access & Modification ---
 
     std::vector<CatSaveData> GetUnlockedCats() const {

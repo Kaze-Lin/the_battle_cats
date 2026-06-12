@@ -9,7 +9,8 @@
 
 #include "Component/ScrollManager.hpp"
 #include "Phase.hpp"
-#include "../Component/Block/StageBlock.hpp"
+#include "Component/Block/StageBlock.hpp"
+#include "Component/ResourceDisplay.hpp"
 
 class StageSelection: public Phase {
 private:
@@ -33,6 +34,8 @@ private:
 
     std::vector<std::shared_ptr<StageBlock>> m_StageSelectionBar;
     void BuildSelectionBar();
+
+    std::shared_ptr<ResourceDisplay> m_ResourceDisplay;
 
 public:
 

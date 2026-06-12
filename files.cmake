@@ -6,6 +6,7 @@ set(SRC_FILES
     Component/BackgroundImage.cpp
     Component/Button.cpp
     Component/Text.cpp
+    Component/TwoLayerText.cpp
     Component/TextButton.cpp
     Component/Block/OptionBlock.cpp
     Component/Block/UpgradeBlock.cpp
@@ -14,6 +15,7 @@ set(SRC_FILES
     Component/Wallet.cpp
     Component/Cannon.cpp
     Component/HealthBar.cpp
+
 
     Phase/Phase.cpp
     Phase/Login.cpp
@@ -42,6 +44,7 @@ set(INCLUDE_FILES
     Component/BackgroundImage.hpp
     Component/Button.hpp
     Component/Text.hpp
+    Component/TwoLayerText.hpp
     Component/TextButton.hpp
     Component/Block/OptionBlock.hpp
     Component/Block/UpgradeBlock.hpp
@@ -81,6 +84,7 @@ set(INCLUDE_FILES
 
     Component/HealthBar.hpp
     Component/ScrollContainer.hpp
+    Component/ResourceDisplay.hpp
 )
 
 set(TEST_FILES

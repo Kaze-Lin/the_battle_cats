@@ -2,7 +2,7 @@
 #define DEPLOY_BLOCK_HPP
 
 #include "Component/Block/OptionBlock.hpp"
-#include "Component/Text.hpp"
+#include "Component/TwoLayerText.hpp"
 #include "DataBase/UserData.hpp"
 #include "pch.hpp"
 
@@ -31,10 +31,10 @@ private:
 
     std::shared_ptr<BackgroundImage> m_CatBlockImage;
 
-    std::shared_ptr<Text> m_CatName;
-    std::shared_ptr<Text> m_Max;
-    std::shared_ptr<Text> m_CatLevel;
-    std::shared_ptr<Text> m_DeployCost;
+    std::shared_ptr<TwoLayerText> m_CatName;
+    std::shared_ptr<TwoLayerText> m_Max;
+    std::shared_ptr<TwoLayerText> m_CatLevel;
+    std::shared_ptr<TwoLayerText> m_DeployCost;
 };
 
 #endif //DEPLOY_BLOCK_HPP

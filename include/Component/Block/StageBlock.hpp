@@ -1,7 +1,7 @@
 #ifndef STAGE_BLOCK_HPP
 #define STAGE_BLOCK_HPP
 
-#include "Component/Text.hpp"
+#include "Component/TwoLayerText.hpp"
 #include "Component/Block/OptionBlock.hpp"
 
 class StageBlock: public OptionBlock {
@@ -13,8 +13,8 @@ public:
 
     std::array<int, 2> m_StageID = {1, 1};
 
-    std::shared_ptr<Text> m_StageName;
-    std::shared_ptr<Text> m_Clear;
+    std::shared_ptr<TwoLayerText> m_StageName;
+    std::shared_ptr<TwoLayerText> m_Clear;
 
 };
 

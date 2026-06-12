@@ -95,6 +95,9 @@ StageSelection::StageSelection(): Phase() {
     AddChild(m_b_XP);
 
     BuildSelectionBar();
+
+    m_ResourceDisplay = std::make_shared<ResourceDisplay>();
+    AddChild(m_ResourceDisplay);
 }
 
 void StageSelection::Update() {
@@ -163,7 +166,7 @@ void StageSelection::BuildSelectionBar() {
         auto stage = DatabaseManager::GetInstance().GetStageData(bg->m_StageID[0], bg->m_StageID[1]);
         bg->Place({selectedPos.x + (bg->GetSize().x + 20.0F) * (i - 1), selectedPos.y});
 
-        bg->m_StageName = std::make_shared<Text>(
+        bg->m_StageName = std::make_shared<TwoLayerText>(
             42,
             stage->stageName,
             15.0F
@@ -171,7 +174,7 @@ void StageSelection::BuildSelectionBar() {
         bg->m_StageName->Place(bg->GetCoordinate());
         bg->AddChild(bg->m_StageName);
 
-        bg->m_Clear = std::make_shared<Text>(24, "Clear!!", 15.0F);
+        bg->m_Clear = std::make_shared<TwoLayerText>(24, "Clear!!", 15.0F);
         glm::vec2 clearOffset = {100.0F, -20.0F};
         bg->m_Clear->Place(bg->GetCoordinate() + clearOffset);
         bg->m_Clear->Rotate(45);

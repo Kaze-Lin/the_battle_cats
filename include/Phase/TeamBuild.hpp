@@ -8,6 +8,8 @@
 #include "Component/Block/DeployBlock.hpp"
 #include "Util/Input.hpp"
 #include "Util/Time.hpp"
+#include "Component/ResourceDisplay.hpp"
+#include "Component/TwoLayerText.hpp"
 
 class TeamBuild: public Phase {
 public:
@@ -28,7 +30,7 @@ private:
     std::shared_ptr<BackgroundImage> m_BottomBanner;
     std::shared_ptr<BackgroundImage> m_SubTitleBanner;
 
-    std::shared_ptr<Text> m_SubTitleText;
+    std::shared_ptr<TwoLayerText> m_SubTitleText;
 
 
     // button image (with interaction image)
@@ -50,6 +52,8 @@ private:
     std::shared_ptr<BackgroundImage> m_DragGhost = nullptr;
 
     bool IsBlockHovered(const std::shared_ptr<DeployBlock>& block);
+
+    std::shared_ptr<ResourceDisplay> m_ResourceDisplay;
 
 };
 

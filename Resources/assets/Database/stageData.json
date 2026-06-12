@@ -1051,8 +1051,8 @@
           "stage_id": 19,
           "enemy_limit": 10,
           "background_length": 3600,
-          "stage_name": "Ghana",
-          "base_path" : "/towel/ghana.png",
+          "stage_name": "Sahara",
+          "base_path" : "/towel/sahara.png",
           "enemy_base_hp": 9000,
           "experience": 6400,
           "spawn_rules": [
@@ -1192,6 +1192,734 @@
               "start_time": 66.6,
               "interval": 30,
               "max_count": 4,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 21,
+          "enemy_limit": 10,
+          "background_length": 6000,
+          "stage_name": "Turkey",
+          "base_path" : "/towel/turkey.png",
+          "enemy_base_hp": 10000,
+          "experience": 7000,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 5,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 7,
+              "start_time": 30,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 30,
+              "interval": 30,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 40,
+              "interval": 30,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": true
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 66.6,
+              "interval": 30,
+              "max_count":-1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 40,
+              "interval": 30,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
+        },
+
+         {
+          "stage_id": 22,
+          "enemy_limit": 4,
+          "background_length": 4800,
+          "stage_name": "Russia",
+          "base_path" : "/towel/russia.png",
+          "enemy_base_hp": 12000,
+          "experience": 7300,
+          "spawn_rules": [
+            {
+              "enemy_id": 1,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 5,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 7,
+              "start_time": 30,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 30,
+              "interval": 30,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 0,
+              "interval": 0.3,
+              "max_count": 2,
+              "magnification": 100,
+              "base_hp_trigger": 80,
+              "is_boss": true
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 0,
+              "interval": 0.2,
+              "max_count":2,
+              "magnification": 100,
+              "base_hp_trigger":70,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 0,
+              "interval": 0.2,
+              "max_count": 2,
+              "magnification": 100,
+              "base_hp_trigger": 60,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 23,
+          "enemy_limit": 5,
+          "background_length": 3200,
+          "stage_name": "Greece",
+          "base_path" : "/towel/greece.png",
+          "enemy_base_hp": 15000,
+          "experience": 7600,
+          "spawn_rules": [
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 5,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 95,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 8,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 93,
+              "is_boss": true
+            }
+          ]
+        },
+
+        {
+          "stage_id": 24,
+          "enemy_limit": 3,
+          "background_length": 4800,
+          "stage_name": "Italy",
+          "base_path" : "/towel/italy.png",
+          "enemy_base_hp": 15000,
+          "experience": 7900,
+          "spawn_rules": [
+            {
+              "enemy_id": 3,
+              "start_time": 0,
+              "interval": 5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 0,
+              "interval": 5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 5,
+              "start_time": 0,
+              "interval": 5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 0,
+              "interval": 5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 90,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 30,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 25,
+          "enemy_limit": 5,
+          "background_length": 4800,
+          "stage_name": "Monaco",
+          "base_path" : "/towel/monaco.png",
+          "enemy_base_hp": 15000,
+          "experience": 8200,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 5,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+
+            {
+              "enemy_id": 2,
+              "start_time": 10,
+              "interval": 0.5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 20,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 7,
+              "start_time": 0,
+              "interval": 2.3,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 50,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 0,
+              "interval": 2.3,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 50,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 26,
+          "enemy_limit": 40,
+          "background_length": 3600,
+          "stage_name": "Spain",
+          "base_path" : "/towel/spain.png",
+          "enemy_base_hp": 15000,
+          "experience": 8500,
+          "spawn_rules": [
+            {
+              "enemy_id": 13,
+              "start_time": 0,
+              "interval": 2.4,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 8,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 27,
+          "enemy_limit": 8,
+          "background_length": 4800,
+          "stage_name": "France",
+          "base_path" : "/towel/france.png",
+          "enemy_base_hp": 15000,
+          "experience": 8800,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 1.6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 5,
+              "interval": 2.4,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 10,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 13,
+              "start_time": 20,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 7,
+              "start_time": 30,
+              "interval": 12.3,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 50,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 40,
+              "interval": 15,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 8,
+              "start_time": 60,
+              "interval": 15,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 28,
+          "enemy_limit": 8,
+          "background_length": 4800,
+          "stage_name": "Germany",
+          "base_path" : "/towel/germany.png",
+          "enemy_base_hp": 15000,
+          "experience": 9100,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 1.6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 5,
+              "interval": 2.4,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 10,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 13,
+              "start_time": 20,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 60,
+              "interval": 15,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 40,
+              "interval": 15,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 8,
+              "start_time": 60,
+              "interval": 15,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 60,
+              "interval": 15,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            }
+          ]
+        },
+
+        {
+          "stage_id": 29,
+          "enemy_limit": 10,
+          "background_length": 4800,
+          "stage_name": "Denmark",
+          "base_path" : "/towel/denmark.png",
+          "enemy_base_hp": 18000,
+          "experience": 9400,
+          "spawn_rules": [
+            {
+              "enemy_id": 0,
+              "start_time": 0,
+              "interval": 1.6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 1,
+              "start_time": 5,
+              "interval": 2.4,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 10,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 13,
+              "start_time": 20,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 0.02,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 0,
+              "interval": 0.02,
+              "max_count": 20,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 9,
+              "start_time": 0,
+              "interval": 0,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 90,
+              "is_boss": true
+            }
+          ]
+        },
+
+        {
+          "stage_id": 30,
+          "enemy_limit": 10,
+          "background_length": 6000,
+          "stage_name": "Norway",
+          "base_path" : "/towel/norway.png",
+          "enemy_base_hp": 15000,
+          "experience": 9700,
+          "spawn_rules": [
+            {
+              "enemy_id": 1,
+              "start_time": 5,
+              "interval": 2.4,
+              "max_count": 1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 2,
+              "start_time": 10,
+              "interval": 6,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 13,
+              "start_time": 20,
+              "interval": 10,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 7,
+              "start_time": 30,
+              "interval": 5,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 6,
+              "start_time": 80,
+              "interval": 15,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 8,
+              "start_time": 100,
+              "interval": 15,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 5,
+              "start_time": 40,
+              "interval": 15,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 3,
+              "start_time": 60,
+              "interval": 15,
+              "max_count": -1,
+              "magnification": 100,
+              "base_hp_trigger": 100,
+              "is_boss": false
+            },
+            {
+              "enemy_id": 4,
+              "start_time": 60,
+              "interval": 15,
+              "max_count": -1,
               "magnification": 100,
               "base_hp_trigger": 100,
               "is_boss": false

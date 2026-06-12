@@ -10,7 +10,7 @@
 
 CatSlotController::CatSlotController(int cost, float maxCd)
     : m_Cost(cost), m_MaxCd(maxCd), m_CurrentCd(0.0f), m_LastSec(-1) {
-    m_CdText = std::make_shared<Text>(
+    m_CdText = std::make_shared<TwoLayerText>(
         TextThemeDetail::DefaultFontSize,
         " ",
         81.0f,
@@ -18,8 +18,8 @@ CatSlotController::CatSlotController(int cost, float maxCd)
     );
     m_CdText->SetVisible(false);
 
-    m_CostText = std::make_shared<Text>(
-        18, // 字不要太大
+    m_CostText = std::make_shared<TwoLayerText>(
+        18,
         "$" + std::to_string(m_Cost),
         85.0f,
         Util::Color::FromName(Util::Colors::BLACK)
@@ -97,7 +97,7 @@ Fight::Fight(): Phase() {
     m_Wallet->Initialize(workerCatEfficiency, walletCapacity);
 
     // Wallet UI - Money Text
-    m_WalletMoneyText = std::make_shared<Text>(
+    m_WalletMoneyText = std::make_shared<TwoLayerText>(
         TextThemeDetail::DefaultFontSize,
         "Money: 0 / 0",
         50
@@ -105,7 +105,7 @@ Fight::Fight(): Phase() {
     AddChild(m_WalletMoneyText);
 
     // Wallet UI - Upgrade Cost Text
-    m_WalletLevelText = std::make_shared<Text>(
+    m_WalletLevelText = std::make_shared<TwoLayerText>(
         TextThemeDetail::DefaultFontSize,
         "$ 0",
         80
@@ -122,7 +122,7 @@ Fight::Fight(): Phase() {
     m_Cannon = std::make_shared<Cannon>();
 
     // Laser Effect UI
-    m_LaserEffectText = std::make_shared<Text>(
+    m_LaserEffectText = std::make_shared<TwoLayerText>(
         TextThemeDetail::DefaultFontSize * 2,
         "============ LASER ============",
         80,
@@ -195,8 +195,8 @@ Fight::Fight(): Phase() {
     m_Cannon->Initialize(cannonAttack, cannonRange, cannonCharge);
 
     // 連接 Wallet 的事件來更新 UI
-    std::weak_ptr<Text> weakMoneyText = m_WalletMoneyText;
-    std::weak_ptr<Text> weakLevelText = m_WalletLevelText;
+    std::weak_ptr<TwoLayerText> weakMoneyText = m_WalletMoneyText;
+    std::weak_ptr<TwoLayerText> weakLevelText = m_WalletLevelText;
     std::weak_ptr<Button> weakUpgradeBtn = m_b_RickUpgrade;
     m_Wallet->SetOnWalletChanged([weakMoneyText, weakLevelText, weakUpgradeBtn](int current, int max, int level, int upgradeCost) {
         if (auto mText = weakMoneyText.lock()) {
@@ -266,7 +266,7 @@ Fight::Fight(): Phase() {
     SetPauseMenuVisible(false);
 
     // stage name
-    m_StageName = std::make_shared<Text>(
+    m_StageName = std::make_shared<TwoLayerText>(
         TextThemeDetail::DefaultFontSize,
         " ",
         -8
@@ -349,6 +349,9 @@ Fight::Fight(): Phase() {
         std::reverse(ids.begin(), ids.end());
         DeployCatButton(ids);
     }
+
+    m_ResourceDisplay = std::make_shared<ResourceDisplay>();
+    AddChild(m_ResourceDisplay);
 }
 
 void Fight::Update() {
@@ -558,7 +561,7 @@ void Fight::ShowSettlementScreen(bool isVictory) {
     // 3. 建立並加入結算文字
     std::string textStr = isVictory ? "VICTORY!" : "DEFEAT!";
     auto color = isVictory ? Util::Color::FromName(Util::Colors::YELLOW) : Util::Color::FromName(Util::Colors::RED);
-    m_SettlementText = std::make_shared<Text>(
+    m_SettlementText = std::make_shared<TwoLayerText>(
         TextThemeDetail::DefaultFontSize * 3,
         textStr,
         100,

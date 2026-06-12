@@ -7,27 +7,16 @@ Text::Text(
     ): Util::GameObject(nullptr, zIndex),
     size(size), text(text), zIndex(zIndex) {
 
-    auto backgroundText = std::make_shared<Util::GameObject>(
+    auto content = std::make_shared<Util::GameObject>(
         std::make_shared<Util::Text>(
-            TextThemeDetail::DefaultBackgroundFont,
+            TextTheme::DefaultHighlightFont,
             size,
             text,
-            TextThemeDetail::DefaultBackgroundColor
-        ),
-        zIndex - 1
-        );
-    AddChild(backgroundText);
-
-    auto highlightText = std::make_shared<Util::GameObject>(
-        std::make_shared<Util::Text>(
-            TextThemeDetail::DefaultHighlightFont,
-            size,
-            text,
-            TextThemeDetail::DefaultHighlightColor
+            TextTheme::DefaultHighlightColor
         ),
         zIndex
         );
-    AddChild(highlightText);
+    AddChild(content);
 };
 
 Text::Text(
@@ -38,27 +27,16 @@ Text::Text(
     ): Util::GameObject(nullptr, zIndex),
     size(size), text(text), zIndex(zIndex) {
 
-    auto backgroundText = std::make_shared<Util::GameObject>(
+    auto content = std::make_shared<Util::GameObject>(
         std::make_shared<Util::Text>(
-            TextThemeDetail::DefaultBackgroundFont,
-            size,
-            text,
-            TextThemeDetail::DefaultBackgroundColor
-        ),
-        zIndex - 1
-        );
-    AddChild(backgroundText);
-
-    auto highlightText = std::make_shared<Util::GameObject>(
-        std::make_shared<Util::Text>(
-            TextThemeDetail::DefaultHighlightFont,
+            TextTheme::DefaultHighlightFont,
             size,
             text,
             color
         ),
         zIndex
         );
-    AddChild(highlightText);
+    AddChild(content);
 };
 
 bool Text::GetVisible() {
@@ -91,7 +69,7 @@ void Text::SetText(const std::string& text) {
 
 void Text::SetColor(Util::Color color) {
     auto it = GetChildren();
-    auto item = std::dynamic_pointer_cast<Util::Text>(it[1]->GetDrawable());
+    auto item = std::dynamic_pointer_cast<Util::Text>(it[0]->GetDrawable());
     item->SetColor(color);
 }
 

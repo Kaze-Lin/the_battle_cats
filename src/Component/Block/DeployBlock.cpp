@@ -3,6 +3,7 @@
 #include "DataBase//UnitData.hpp"
 #include "DataBaseManager.hpp"
 #include "UserManager.hpp"
+#include "Component/TwoLayerText.hpp"
 
 namespace {
     std::string to_lower(std::string s) {
@@ -40,6 +41,7 @@ DeployBlock::DeployBlock(
     m_CatSaveData(catSaveData){
     m_OriginalSize = m_Drawable->GetSize();
 
+    LOG_DEBUG("Build Cat Block With ID: " + std::to_string(m_CatSaveData.catId));
     auto id = catSaveData.catId;
 
     const UnitData* catData = DatabaseManager::GetInstance().GetCatData(id);
@@ -69,7 +71,7 @@ DeployBlock::DeployBlock(
     // max level
     // SetImage(RESOURCE_DIR "/phase/upgrade/cat_background.png");
 
-    m_Max = std::make_shared<Text>(28, "MAX", 15.0F);
+    m_Max = std::make_shared<TwoLayerText>(28, "MAX", 15.0F);
 
     m_Max->SetColor(Util::Color::FromName(Util::Colors::GREEN));
     m_Max->Place({GetCoordinate().x + 52.0F, GetCoordinate().y + 15.0F});
@@ -84,7 +86,7 @@ DeployBlock::DeployBlock(
     // cat name
     std::string name = catData->forms[catSaveData.currentForm - 1].name;
     std::replace(name.begin(), name.end(), '_', ' ');
-    m_CatName = std::make_shared<Text>(24, name, 15.0F);
+    m_CatName = std::make_shared<TwoLayerText>(24, name, 15.0F);
 
     glm::vec2 catNameOffset = {0.0F, 125.0F};
     m_CatName->Place({GetCoordinate() + catNameOffset});
@@ -94,7 +96,7 @@ DeployBlock::DeployBlock(
 
     // cat level
     std::string level = std::to_string(catSaveData.level);
-    m_CatLevel = std::make_shared<Text>(32, level, 15.0F);
+    m_CatLevel = std::make_shared<TwoLayerText>(32, level, 15.0F);
 
     glm::vec2 catLevelOffset = {135.0F, -8.0F};
     m_CatLevel->Place(GetCoordinate() + catLevelOffset);
@@ -108,7 +110,7 @@ DeployBlock::DeployBlock(
         deployCost = catData->forms[catSaveData.currentForm - 1].cost;
     }
     std::string deploy_cost = std::to_string(deployCost);
-    m_DeployCost = std::make_shared<Text>(24, deploy_cost, 15.0F);
+    m_DeployCost = std::make_shared<TwoLayerText>(24, deploy_cost, 15.0F);
 
     glm::vec2 deployCostOffset = {50.0F, -113.0F};
     m_DeployCost->Place(GetCoordinate() + deployCostOffset);

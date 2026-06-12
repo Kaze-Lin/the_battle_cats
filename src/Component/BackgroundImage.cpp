@@ -1,6 +1,6 @@
 #include "Component/BackgroundImage.hpp"
 #include "Component/Button.hpp"
-#include "Component/Text.hpp"
+#include "Component/TwoLayerText.hpp"
 
 BackgroundImage::BackgroundImage(const std::string& imagePath, float zIndex)
     : GameObject(std::make_shared<Util::Image>(imagePath), zIndex) {

@@ -62,7 +62,7 @@ TeamBuild::TeamBuild(): Phase() {
         std::make_shared<BackgroundImage>(
             RESOURCE_DIR "/phase/upgrade/top_left_banner.png",
             20.0F);
-    m_SubTitleText = std::make_shared<Text>(
+    m_SubTitleText = std::make_shared<TwoLayerText>(
         30,
         " ",
         25.0F,
@@ -128,6 +128,9 @@ TeamBuild::TeamBuild(): Phase() {
     // ================
 
     BuildSelectionBar();
+
+    m_ResourceDisplay = std::make_shared<ResourceDisplay>();
+    AddChild(m_ResourceDisplay);
 }
 
 std::shared_ptr<Phase> TeamBuild::GetDestinationPhase() {
@@ -189,12 +192,12 @@ void TeamBuild::Update() {
 
             RemoveChild(m_DragGhost);
             m_DragGhost = nullptr;
-            
+
         } else if (m_PressedBlock) {
             // 原地單擊邏輯
             LOG_DEBUG("單擊了貓咪方塊");
         }
-        
+
         // 狀態重置
         m_PressedBlock = nullptr;
         m_IsDraggingBlock = false;
@@ -222,9 +225,8 @@ void TeamBuild::Update() {
             // 【左右拉】判定為意圖滑動選單
             m_PressedBlock = nullptr; // 清除點擊目標，放棄拖曳貓咪的意圖
         } else if (elapsedTime >= 200 || delta.y > threshold) {
-            // 【向上拉或長按】判定為意圖拖曳貓咪
             m_IsDraggingBlock = true;
-            
+
             m_DragGhost = std::make_shared<BackgroundImage>(
                 RESOURCE_DIR + GetDragIconPath(m_PressedBlock->GetCatSaveData()),
                 50.0F // 給一個很高的 zIndex 確保蓋在所有畫面最上層
@@ -273,13 +275,13 @@ void TeamBuild::BuildSelectionBar() {
     // Start Position
     glm::vec2 pos = {0.0F, -150.0F};
 
-    for (size_t i = 0; i < unlockedCats.size(); i++) {
+    for (auto& catInfo: unlockedCats) {
         // team build block --
         auto bg = std::make_shared<DeployBlock>(
             DeployType::CHARACTER,
             RESOURCE_DIR "/phase/team_build/cat_deploy_bg.png",
             pos,
-            unlockedCats[i]
+            catInfo
             );
         pos = {pos.x + bg->GetSize().x + 20.0F, pos.y};
 
