@@ -5,7 +5,7 @@
 #include "Component/BackgroundImage.hpp"
 #include "Component/Button.hpp"
 #include "Component/ScrollManager.hpp"
-#include "../Component/Block/UpgradeBlock.hpp"
+#include "Component/Block/DeployBlock.hpp"
 
 class TeamBuild: public Phase {
 public:
@@ -19,10 +19,10 @@ public:
 
 
 private:
-    ScrollManager<UpgradeBlock> m_ScrollManager;
+    ScrollManager<DeployBlock> m_ScrollManager;
     // background image (without interaction image)
     std::shared_ptr<BackgroundImage> m_BackgroundImage;
-    std::shared_ptr<BackgroundImage> m_UpgradeBanner;
+    std::shared_ptr<BackgroundImage> m_TeamBuildBanner;
     std::shared_ptr<BackgroundImage> m_BottomBanner;
     std::shared_ptr<BackgroundImage> m_SubTitleBanner;
 
@@ -37,7 +37,7 @@ private:
 
 
     // upgrade selections
-    std::vector<std::shared_ptr<UpgradeBlock>> m_CatSelectionBar;
+    std::vector<std::shared_ptr<DeployBlock>> m_CatSelectionBar;
     void BuildSelectionBar();
 
 };

@@ -6,32 +6,6 @@
 #include "DatabaseManager.hpp"
 #include "UserManager.hpp"
 
-
-
-namespace {
-    std::string to_lower(std::string s) {
-        std::transform(
-            s.begin(),
-            s.end(),
-            s.begin(),
-            [](unsigned char c) {
-                return std::tolower(c);
-            }
-        );
-        return s;
-    }
-
-    std::string GetIconPath(CatSaveData &data) {
-        std::string path = "/cat_materials/normal/";
-
-        std::string name = DatabaseManager::GetInstance().GetCatData(data.catId)->nameInternal;
-
-        path = path + to_lower(name) + "/cat_block_image/" + std::to_string(data.currentForm) + ".png";
-
-        return path;
-    }
-}
-
 TeamBuild::TeamBuild(): Phase() {
     // background image (without interaction image)
     m_BackgroundImage =
@@ -40,11 +14,11 @@ TeamBuild::TeamBuild(): Phase() {
             -10.0F);
     AddChild(m_BackgroundImage);
 
-    m_UpgradeBanner =
+    m_TeamBuildBanner =
         std::make_shared<BackgroundImage>(
-            RESOURCE_DIR "/phase/upgrade/upgrade_Banner.png",
+            RESOURCE_DIR "/phase/team_build/team_build_Banner.png",
             -7.0F);
-    AddChild(m_UpgradeBanner);
+    AddChild(m_TeamBuildBanner);
 
     m_BottomBanner =
         std::make_shared<BackgroundImage>(
@@ -59,7 +33,7 @@ TeamBuild::TeamBuild(): Phase() {
     m_SubTitleText = std::make_shared<Text>(
         30,
         " ",
-        -5.0F,
+        25.0F,
         Util::Color::FromName(Util::Colors::WHITE));
     m_SubTitleBanner->AddChild(m_SubTitleText);
     AddChild(m_SubTitleBanner);
@@ -89,9 +63,9 @@ TeamBuild::TeamBuild(): Phase() {
     // background image (without interaction image)
     m_BackgroundImage->AlignWithWindow();
 
-    m_UpgradeBanner->AlignWithWindowWidth();
-    const auto upgradeBannerY = System::GetWindowHeight() / 2.0 - m_UpgradeBanner->GetSize().y / 2.0;
-    m_UpgradeBanner->Place({0.0F, upgradeBannerY});
+    m_TeamBuildBanner->AlignWithWindowWidth();
+    const auto upgradeBannerY = System::GetWindowHeight() / 2.0 - m_TeamBuildBanner->GetSize().y / 2.0;
+    m_TeamBuildBanner->Place({0.0F, upgradeBannerY});
 
     m_BottomBanner->AlignWithWindowWidth();
     const auto bottomBannerY = -1 * System::GetWindowHeight() / 2.0 + m_BottomBanner->GetSize().y / 2.0;
@@ -153,20 +127,8 @@ void TeamBuild::Update() {
             if (middleIndex < m_CatSelectionBar.size()) {
                 auto block = m_CatSelectionBar[middleIndex];
                 switch (block->GetBlockType()) {
-                case UpgradeType::CHARACTER:
+                case DeployType::CHARACTER:
                     title = "角色";
-                    break;
-                case UpgradeType::CANNON:
-                    title = "貓咪砲";
-                    break;
-                case UpgradeType::WORKER_CAT:
-                    title = "工作狂貓";
-                    break;
-                case UpgradeType::CASTLE:
-                    title = "城堡";
-                    break;
-                case UpgradeType::SPECIAL_ABILITIES:
-                    title = "特殊能力";
                     break;
                 default:
                     title = " ";
@@ -174,6 +136,7 @@ void TeamBuild::Update() {
                 }
             }
         }
+
         m_SubTitleText->SetText(title);
     }
 
@@ -183,78 +146,18 @@ void TeamBuild::Update() {
 void TeamBuild::BuildSelectionBar() {
     auto unlockedCats = UserManager::GetInstance().GetUnlockedCats();
 
-    // Middle Position
-    glm::vec2 selectedPos = {0.0F, -150.0F};
+    // Start Position
+    glm::vec2 pos = {0.0F, -150.0F};
 
     for (size_t i = 0; i < unlockedCats.size(); i++) {
-        int catId = unlockedCats[i].catId;
-
-        const UnitData* catData = DatabaseManager::GetInstance().GetCatData(catId);
-
-        if (catData == nullptr) {
-            LOG_WARN("cannot find cat with ID " + std::to_string(catId));
-            continue;
-        }
-
-        std::string deploySort = std::to_string(catId) + ": " + catData->nameInternal;
-        LOG_DEBUG(deploySort);
-
-        // Upgrade block --
-        auto bg = std::make_shared<UpgradeBlock>(
-            UpgradeType::CHARACTER,
-            RESOURCE_DIR "/phase/upgrade/cat_background_xp.png"
+        // team build block --
+        auto bg = std::make_shared<DeployBlock>(
+            DeployType::CHARACTER,
+            RESOURCE_DIR "/phase/team_build/cat_deploy_bg.png",
+            pos,
+            unlockedCats[i]
             );
-        bg->ID = catId;
-
-        // layout
-        bg->ScaleSize({0.39F, 0.39F});
-        bg->Place({selectedPos.x + (bg->GetSize().x + 20.0F) * i, selectedPos.y});
-
-        // cat block image
-        bg->m_CatBlockImage = std::make_shared<BackgroundImage>(
-            RESOURCE_DIR + GetIconPath(unlockedCats[i]),
-            11.0F
-            );
-        glm::vec2 catBlockImageT = {0.0F, 40.0F};
-        bg->m_CatBlockImage->Place(bg->GetCoordinate() + catBlockImageT);
-        bg->m_CatBlockImage->ScaleSize({1.14F, 1.14F});
-        bg->AddChild(bg->m_CatBlockImage);
-
-        // max level
-        bg->SetImage(RESOURCE_DIR "/phase/upgrade/cat_background.png");
-
-        bg->m_Max = std::make_shared<Text>(28, "MAX", 15.0F);
-
-        bg->m_Max->SetColor(Util::Color::FromName(Util::Colors::GREEN));
-        bg->m_Max->Place({bg->GetCoordinate().x + 52.0F, bg->GetCoordinate().y + 15.0F});
-
-        bg->AddChild(bg->m_Max);
-
-        bg->m_Max->SetVisible(false);
-        if (unlockedCats[i].level == 10) {
-            bg->m_Max->SetVisible(true);
-        }
-
-        // cat name
-        std::string name = catData->forms[unlockedCats[i].currentForm - 1].name;
-        std::replace(name.begin(), name.end(), '_', ' ');
-        bg->m_CatName = std::make_shared<Text>(24, name, 15.0F);
-
-        glm::vec2 catNameOffset = {0.0F, 125.0F};
-        bg->m_CatName->Place({bg->GetCoordinate() + catNameOffset});
-        bg->m_CatName->SetColor(Util::Color::FromName(Util::Colors::WHITE));
-
-        bg->AddChild(bg->m_CatName);
-
-        // cat level
-        std::string level = std::to_string(unlockedCats[i].level);
-        bg->m_CatLevel = std::make_shared<Text>(32, level, 15.0F);
-
-        glm::vec2 catLevelPos = {135.0F, -8.0F};
-        bg->m_CatLevel->Place(bg->GetCoordinate() + catLevelPos);
-        bg->m_CatLevel->SetColor(Util::Color::FromName(Util::Colors::YELLOW));
-
-        bg->AddChild(bg->m_CatLevel);
+        pos = {pos.x + bg->GetSize().x + 20.0F, pos.y};
 
         m_CatSelectionBar.push_back(bg);
     }

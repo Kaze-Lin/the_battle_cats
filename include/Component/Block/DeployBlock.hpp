@@ -10,14 +10,16 @@ enum class DeployType {
     CHARACTER
 };
 
+struct CatSaveData;
+
 class DeployBlock: public OptionBlock {
 public:
     DeployBlock(
         DeployType deployType,
         const std::string& bgImagePath,
-        float zIndex = 10.0F,
-
-        int id = 1
+        glm::vec2 position,
+        const CatSaveData& catSaveData,
+        float zIndex = 10.0F
         );
     ~DeployBlock() override = default;
 
@@ -26,7 +28,6 @@ public:
     [[nodiscard]] DeployType GetBlockType() const;
 
 private:
-    int m_ID;
     DeployType m_DeployType = DeployType::CHARACTER;
 
     std::shared_ptr<BackgroundImage> m_CatBlockImage;
@@ -34,6 +35,7 @@ private:
     std::shared_ptr<Text> m_CatName;
     std::shared_ptr<Text> m_Max;
     std::shared_ptr<Text> m_CatLevel;
+    std::shared_ptr<Text> m_DeployCost;
 };
 
 #endif //DEPLOY_BLOCK_HPP
