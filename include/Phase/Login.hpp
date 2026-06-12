@@ -2,7 +2,7 @@
 #define LOGIN_HPP
 
 #include "Phase.hpp"
-#include "Component/Text.hpp"
+#include "Component/TwoLayerText.hpp"
 #include "Component/TextButton.hpp"
 #include "SystemInfo.hpp"
 #include "PhaseManager.hpp"
@@ -10,7 +10,7 @@
 
 class Login: public Phase{
 private:
-    std::shared_ptr<Text> m_Prompt;
+    std::shared_ptr<TwoLayerText> m_Prompt;
 
     std::shared_ptr<TextButton> m_tb_ToBeContinue;
 

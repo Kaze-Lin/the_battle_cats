@@ -6,6 +6,7 @@
 #include "Component/Button.hpp"
 #include "Component/ScrollManager.hpp"
 #include "../Component/Block/UpgradeBlock.hpp"
+#include "Component/ResourceDisplay.hpp"
 
 class TeamBuild: public Phase {
 public:
@@ -26,7 +27,7 @@ private:
     std::shared_ptr<BackgroundImage> m_BottomBanner;
     std::shared_ptr<BackgroundImage> m_SubTitleBanner;
 
-    std::shared_ptr<Text> m_SubTitleText;
+    std::shared_ptr<TwoLayerText> m_SubTitleText;
 
 
     // button image (with interaction image)
@@ -39,6 +40,8 @@ private:
     // upgrade selections
     std::vector<std::shared_ptr<UpgradeBlock>> m_CatSelectionBar;
     void BuildSelectionBar();
+
+    std::shared_ptr<ResourceDisplay> m_ResourceDisplay;
 
 };
 

@@ -7,8 +7,9 @@
 #include "../Component/Block/UpgradeBlock.hpp"
 #include "ImageScaling.hpp"
 #include "Component/ScrollManager.hpp"
-#include "Component/Text.hpp"
+#include "Component/TwoLayerText.hpp"
 #include "Phase/CatBase.hpp"
+#include "Component/ResourceDisplay.hpp"
 
 class Upgrade: public Phase {
 private:
@@ -19,7 +20,7 @@ private:
     std::shared_ptr<BackgroundImage> m_BottomBanner;
     std::shared_ptr<BackgroundImage> m_SubTitleBanner;
 
-    std::shared_ptr<Text> m_SubTitleText;
+    std::shared_ptr<TwoLayerText> m_SubTitleText;
 
 
     // button image (with interaction image)
@@ -33,6 +34,8 @@ private:
     // upgrade selections
     std::vector<std::shared_ptr<UpgradeBlock>> m_UpgradeSelectionBar;
     void BuildSelectionBar();
+
+    std::shared_ptr<ResourceDisplay> m_ResourceDisplay;
 
 
 public:

@@ -1,12 +1,12 @@
 #ifndef TEXT_BUTTON_HPP
 #define TEXT_BUTTON_HPP
 
-#include "Component/Text.hpp"
+#include "Component/TwoLayerText.hpp"
 #include "Util/GameObject.hpp"
 #include "Component/Button.hpp"
 #include "IStateful.hpp"
 
-class TextButton: public Text, public IStateful {
+class TextButton: public TwoLayerText, public IStateful {
 private:
     int fontSize = 16;
 

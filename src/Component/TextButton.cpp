@@ -1,10 +1,10 @@
 #include "Component/TextButton.hpp"
 
 TextButton::TextButton(int size, const std::string& text, float zIndex, std::function<void()> Move):
-    Text(size, text, zIndex), Move(Move) {}
+    TwoLayerText(size, text, zIndex), Move(Move) {}
 
 void TextButton::Place(glm::vec2 p) {
-    Text::Place(p);
+    TwoLayerText::Place(p);
     m_Transform.translation = p;
 }
 
@@ -52,7 +52,7 @@ void TextButton::Update() {
 }
 
 glm::vec2 TextButton::GetSize() {
-    return Text::GetSize();
+    return TwoLayerText::GetSize();
 }
 
 bool TextButton::IsHovered() {

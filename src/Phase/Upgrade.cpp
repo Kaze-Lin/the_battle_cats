@@ -3,6 +3,7 @@
 #include "PhaseManager.hpp"
 #include "DatabaseManager.hpp"
 #include "UserManager.hpp"
+#include "UserManager.hpp"
 #include <algorithm>
 #include <cctype>
 
@@ -54,7 +55,7 @@ Upgrade::Upgrade(): Phase() {
         std::make_shared<BackgroundImage>(
             RESOURCE_DIR "/phase/upgrade/top_left_banner.png",
             -7.0F);
-    m_SubTitleText = std::make_shared<Text>(
+    m_SubTitleText = std::make_shared<TwoLayerText>(
         30,
         " ",
         -5.0F,
@@ -142,6 +143,9 @@ Upgrade::Upgrade(): Phase() {
     // ================
 
     BuildSelectionBar();
+
+    m_ResourceDisplay = std::make_shared<ResourceDisplay>();
+    AddChild(m_ResourceDisplay);
 }
 
 std::shared_ptr<Phase> Upgrade::GetDestinationPhase() {
@@ -263,7 +267,7 @@ void Upgrade::BuildSelectionBar() {
         bg->AddChild(bg->m_CatBlockImage);
 
 
-        bg->m_Max = std::make_shared<Text>(28, "MAX", 15.0F);
+        bg->m_Max = std::make_shared<TwoLayerText>(28, "MAX", 15.0F);
 
         bg->m_Max->SetColor(Util::Color::FromName(Util::Colors::GREEN));
         bg->m_Max->Place({bg->GetCoordinate().x + 52.0F, bg->GetCoordinate().y + 15.0F});
@@ -273,7 +277,7 @@ void Upgrade::BuildSelectionBar() {
         // cat name
         std::string name = catData->forms[unlockedCats[i].currentForm - 1].name;
         std::replace(name.begin(), name.end(), '_', ' ');
-        bg->m_CatName = std::make_shared<Text>(24, name, 15.0F);
+        bg->m_CatName = std::make_shared<TwoLayerText>(24, name, 15.0F);
 
         glm::vec2 catNameOffset = {0.0F, 125.0F};
         bg->m_CatName->Place({bg->GetCoordinate() + catNameOffset});
@@ -283,7 +287,7 @@ void Upgrade::BuildSelectionBar() {
 
         // cat level
         std::string level = std::to_string(unlockedCats[i].level);
-        bg->m_CatLevel = std::make_shared<Text>(32, level, 15.0F);
+        bg->m_CatLevel = std::make_shared<TwoLayerText>(32, level, 15.0F);
 
         glm::vec2 catLevelOffset = {135.0F, -8.0F};
         bg->m_CatLevel->Place(bg->GetCoordinate() + catLevelOffset);
@@ -293,7 +297,7 @@ void Upgrade::BuildSelectionBar() {
 
         // cat upgrade xp
         std::string xp = std::to_string(catData->upgradeCosts[unlockedCats[i].level]);
-        bg->m_UpgradeXP = std::make_shared<Text>(40, xp, 15.0F);
+        bg->m_UpgradeXP = std::make_shared<TwoLayerText>(40, xp, 15.0F);
 
         glm::vec2 XPOffset = {90, -75.0F};
         bg->m_UpgradeXP->Place(bg->GetCoordinate() + XPOffset);
@@ -326,6 +330,7 @@ void Upgrade::UpgradeLevel() {
     int targetCatId = m_UpgradeSelectionBar[midIndex]->ID;
 
     CatSaveData updatedCatData;
+
     
     // Delegate the update logic to the data layer to maintain loose coupling
     bool isUpgraded = UserManager::GetInstance().TryUpgradeCat(targetCatId, updatedCatData);
@@ -337,7 +342,8 @@ void Upgrade::UpgradeLevel() {
         m_UpgradeSelectionBar[midIndex]->m_CatLevel->SetText(std::to_string(updatedCatData.level));
         auto catUpgradeCost = DatabaseManager::GetInstance().GetCatData(m_UpgradeSelectionBar[midIndex]->ID);
         if (catUpgradeCost) {
-            m_UpgradeSelectionBar[midIndex]->m_UpgradeXP->SetText(std::to_string(catUpgradeCost->upgradeCosts[updatedCatData.level]));
+            UserManager::GetInstance().SpendXP(catUpgradeCost->upgradeCosts[updatedCatData.level-1]);
+            m_UpgradeSelectionBar[midIndex]->m_UpgradeXP->SetText(std::to_string(catUpgradeCost->upgradeCosts[updatedCatData.level++]));
         }
         
         if (updatedCatData.level == 10) {

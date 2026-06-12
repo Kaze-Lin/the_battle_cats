@@ -58,6 +58,9 @@ PropsStore::PropsStore(): Phase() {
     m_b_CatCan->Place({catcanX, catcanY});
     AddChild(m_b_CatCan);
 
+    m_ResourceDisplay = std::make_shared<ResourceDisplay>();
+    AddChild(m_ResourceDisplay);
+
 }
 
 std::shared_ptr<Phase> PropsStore::GetDestinationPhase() {

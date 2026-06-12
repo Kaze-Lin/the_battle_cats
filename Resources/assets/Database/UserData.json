@@ -19,6 +19,18 @@
                     1
                 ],
                 "highest_stage_cleared": 0,
+                "team_build": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
                 "user_rank": 1
             },
             "resources": {
@@ -50,13 +62,25 @@
                     26
                 ],
                 "highest_stage_cleared": 30,
+                "team_build": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
                 "user_rank": 150
             },
             "resources": {
                 "cat_food": 99999999,
                 "energy": 100,
                 "max_energy": 100,
-                "xp": 99999999
+                "xp": 83083484
             },
             "treasures": {
                 "chapter_1": [
@@ -75,8 +99,8 @@
             "unlocked_cats": [
                 {
                     "cat_id": 0,
-                    "current_form": 2,
-                    "level": 10
+                    "current_form": 1,
+                    "level": 7
                 },
                 {
                     "cat_id": 1,
@@ -110,6 +134,18 @@
                     1
                 ],
                 "highest_stage_cleared": 0,
+                "team_build": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
                 "user_rank": 1
             },
             "resources": {
