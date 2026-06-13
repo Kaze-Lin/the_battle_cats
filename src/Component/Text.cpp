@@ -69,7 +69,7 @@ void Text::SetText(const std::string& text) {
 
 void Text::SetColor(Util::Color color) {
     auto it = GetChildren();
-    auto item = std::dynamic_pointer_cast<Util::Text>(it[1]->GetDrawable());
+    auto item = std::dynamic_pointer_cast<Util::Text>(it[0]->GetDrawable());
     item->SetColor(color);
 }
 

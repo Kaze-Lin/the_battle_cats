@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <memory>
-#include <cmath>
 #include "Util/Input.hpp"
 
 template <typename T>

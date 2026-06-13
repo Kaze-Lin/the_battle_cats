@@ -11,7 +11,7 @@
                 "wallet_capacity": 1,
                 "worker_cat_efficiency": 1
             },
-            "password": "20050905",
+            "password": "o",
             "progress": {
                 "cleared_chapters": 0,
                 "current_stage": [
@@ -41,7 +41,7 @@
             },
             "treasures": {},
             "unlocked_cats": [],
-            "username": "purplesheep"
+            "username": "O"
         },
         {
             "base_upgrades": {
@@ -126,7 +126,7 @@
                 "wallet_capacity": 1,
                 "worker_cat_efficiency": 1
             },
-            "password": "o",
+            "password": "20050905",
             "progress": {
                 "cleared_chapters": 0,
                 "current_stage": [
@@ -156,7 +156,7 @@
             },
             "treasures": {},
             "unlocked_cats": [],
-            "username": "O"
+            "username": "purplesheep"
         }
     ]
 }

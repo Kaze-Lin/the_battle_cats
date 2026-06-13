@@ -6,8 +6,6 @@
 #include "DatabaseManager.hpp"
 #include "UserManager.hpp"
 
-
-
 namespace {
     std::string to_lower(std::string s) {
         std::transform(
@@ -21,14 +19,22 @@ namespace {
         return s;
     }
 
-    std::string GetIconPath(CatSaveData &data) {
+    std::string GetDragIconPath(const CatSaveData& data) {
         std::string path = "/cat_materials/normal/";
-
-        std::string name = DatabaseManager::GetInstance().GetCatData(data.catId)->nameInternal;
-
-        path = path + to_lower(name) + "/cat_block_image/" + std::to_string(data.currentForm) + ".png";
-
+        const auto* catData = DatabaseManager::GetInstance().GetCatData(data.catId);
+        if (catData != nullptr) {
+            std::string name = catData->nameInternal;
+            path = path + to_lower(name) + "/generate_cat_button/" + std::to_string(data.currentForm) + ".png";
+        }
         return path;
+    }
+
+    bool IsInBlock(
+        const glm::vec2& left_bottom_pos,
+        const glm::vec2& right_top_pos,
+        const glm::vec2& pos) {
+        return glm::all(glm::greaterThanEqual(pos, left_bottom_pos)) &&
+               glm::all(glm::lessThanEqual(pos, right_top_pos));
     }
 }
 
@@ -40,11 +46,11 @@ TeamBuild::TeamBuild(): Phase() {
             -10.0F);
     AddChild(m_BackgroundImage);
 
-    m_UpgradeBanner =
+    m_TeamBuildBanner =
         std::make_shared<BackgroundImage>(
-            RESOURCE_DIR "/phase/upgrade/upgrade_Banner.png",
+            RESOURCE_DIR "/phase/team_build/team_build_Banner.png",
             -7.0F);
-    AddChild(m_UpgradeBanner);
+    AddChild(m_TeamBuildBanner);
 
     m_BottomBanner =
         std::make_shared<BackgroundImage>(
@@ -59,7 +65,7 @@ TeamBuild::TeamBuild(): Phase() {
     m_SubTitleText = std::make_shared<TwoLayerText>(
         30,
         " ",
-        -5.0F,
+        25.0F,
         Util::Color::FromName(Util::Colors::WHITE));
     m_SubTitleBanner->AddChild(m_SubTitleText);
     AddChild(m_SubTitleBanner);
@@ -89,9 +95,9 @@ TeamBuild::TeamBuild(): Phase() {
     // background image (without interaction image)
     m_BackgroundImage->AlignWithWindow();
 
-    m_UpgradeBanner->AlignWithWindowWidth();
-    const auto upgradeBannerY = System::GetWindowHeight() / 2.0 - m_UpgradeBanner->GetSize().y / 2.0;
-    m_UpgradeBanner->Place({0.0F, upgradeBannerY});
+    m_TeamBuildBanner->AlignWithWindowWidth();
+    const auto upgradeBannerY = System::GetWindowHeight() / 2.0 - m_TeamBuildBanner->GetSize().y / 2.0;
+    m_TeamBuildBanner->Place({0.0F, upgradeBannerY});
 
     m_BottomBanner->AlignWithWindowWidth();
     const auto bottomBannerY = -1 * System::GetWindowHeight() / 2.0 + m_BottomBanner->GetSize().y / 2.0;
@@ -144,8 +150,99 @@ void TeamBuild::ToPropsStore() {
 void TeamBuild::Update() {
 
     Phase::Update();
+    const auto mousePos = Util::Input::GetCursorPosition();
 
-    if (!m_CatSelectionBar.empty()) {
+    if (Util::Input::IsKeyUp(Util::Keycode::MOUSE_LB)) {
+        if (m_IsDraggingBlock && m_DragGhost) {
+
+            constexpr glm::vec2 block_size = {148.0F, 114.0F};
+            constexpr glm::vec2 horizontal_offset = {196.0F, 0.0F};
+            constexpr glm::vec2 vertical_offset = {0.0F, 127.0F};
+            constexpr glm::vec2 pos = {-331.0F, 219.0F};
+
+            // every block has 2 range elements, first one is left bottom, second one is right top
+            std::array<std::array<glm::vec2, 2>, 10> blocks_range;
+
+            // set the range for each block
+            for (float i = 0; i < 2; i++) {
+                for (float j = 0; j < 5; j++) {
+                    glm::vec2 offset = (-1.0F * i * vertical_offset) + (horizontal_offset * j);
+                    blocks_range[(i * 5) + j][0] = pos - (block_size / 2.0F) + offset;
+                    blocks_range[(i * 5) + j][1] = pos + (block_size / 2.0F) + offset;
+                }
+            }
+
+            auto it = std::find_if(
+                blocks_range.begin(),
+                blocks_range.end(),
+                [&](const auto& block) {
+                    return IsInBlock(
+                        block[0],
+                        block[1],
+                        mousePos);
+                });
+
+            // is in range
+            if (it != blocks_range.end()) {
+                int index = std::distance(blocks_range.begin(), it);
+                //　
+            } else {
+
+            }
+
+            RemoveChild(m_DragGhost);
+            m_DragGhost = nullptr;
+
+        } else if (m_PressedBlock) {
+            // 原地單擊邏輯
+            LOG_DEBUG("單擊了貓咪方塊");
+        }
+
+        // 狀態重置
+        m_PressedBlock = nullptr;
+        m_IsDraggingBlock = false;
+    }
+
+    // 2. 按下左鍵：記錄潛在的拖曳目標與起始點
+    if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB)) {
+        for (const auto& block : m_CatSelectionBar) {
+            if (IsBlockHovered(block)) {
+                m_PressedBlock = block;
+                m_PressStartPos = mousePos;
+                m_PressStartTime = Util::Time::GetElapsedTimeMs();
+                break;
+            }
+        }
+    }
+
+    // 3. 壓住滑鼠並移動：判定意圖 (拖曳 vs 左右滑動)
+    if (m_PressedBlock && !m_IsDraggingBlock && Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
+        glm::vec2 delta = mousePos - m_PressStartPos;
+        constexpr float threshold = 15.0F; // 容錯閾值，超過 15 像素才算有滑動
+        auto elapsedTime = Util::Time::GetElapsedTimeMs() - m_PressStartTime;
+
+        if (std::abs(delta.x) > threshold && elapsedTime < 200) {
+            // 【左右拉】判定為意圖滑動選單
+            m_PressedBlock = nullptr; // 清除點擊目標，放棄拖曳貓咪的意圖
+        } else if (elapsedTime >= 200 || delta.y > threshold) {
+            m_IsDraggingBlock = true;
+
+            m_DragGhost = std::make_shared<BackgroundImage>(
+                RESOURCE_DIR + GetDragIconPath(m_PressedBlock->GetCatSaveData()),
+                50.0F // 給一個很高的 zIndex 確保蓋在所有畫面最上層
+            );
+            m_DragGhost->ScaleSize({1.14F, 1.14F}); // 保持跟原本大小一樣
+            AddChild(m_DragGhost);
+        }
+    }
+
+    // 4. 更新拖曳虛影的座標 (保持在游標位置)
+    if (m_IsDraggingBlock && m_DragGhost) {
+        m_DragGhost->Place(mousePos);
+    }
+
+    // 5. ScrollManager 邏輯
+    if (!m_IsDraggingBlock && !m_CatSelectionBar.empty()) {
         m_ScrollManager.Update(m_CatSelectionBar);
     }
 
@@ -156,20 +253,8 @@ void TeamBuild::Update() {
             if (middleIndex < m_CatSelectionBar.size()) {
                 auto block = m_CatSelectionBar[middleIndex];
                 switch (block->GetBlockType()) {
-                case UpgradeType::CHARACTER:
+                case DeployType::CHARACTER:
                     title = "角色";
-                    break;
-                case UpgradeType::CANNON:
-                    title = "貓咪砲";
-                    break;
-                case UpgradeType::WORKER_CAT:
-                    title = "工作狂貓";
-                    break;
-                case UpgradeType::CASTLE:
-                    title = "城堡";
-                    break;
-                case UpgradeType::SPECIAL_ABILITIES:
-                    title = "特殊能力";
                     break;
                 default:
                     title = " ";
@@ -177,6 +262,7 @@ void TeamBuild::Update() {
                 }
             }
         }
+
         m_SubTitleText->SetText(title);
     }
 
@@ -186,81 +272,34 @@ void TeamBuild::Update() {
 void TeamBuild::BuildSelectionBar() {
     auto unlockedCats = UserManager::GetInstance().GetUnlockedCats();
 
-    // Middle Position
-    glm::vec2 selectedPos = {0.0F, -150.0F};
+    // Start Position
+    glm::vec2 pos = {0.0F, -150.0F};
 
-    for (size_t i = 0; i < unlockedCats.size(); i++) {
-        int catId = unlockedCats[i].catId;
-
-        const UnitData* catData = DatabaseManager::GetInstance().GetCatData(catId);
-
-        if (catData == nullptr) {
-            LOG_WARN("cannot find cat with ID " + std::to_string(catId));
-            continue;
-        }
-
-        std::string deploySort = std::to_string(catId) + ": " + catData->nameInternal;
-        LOG_DEBUG(deploySort);
-
-        // Upgrade block --
-        auto bg = std::make_shared<UpgradeBlock>(
-            UpgradeType::CHARACTER,
-            RESOURCE_DIR "/phase/upgrade/cat_background_xp.png"
+    for (auto& catInfo: unlockedCats) {
+        // team build block --
+        auto bg = std::make_shared<DeployBlock>(
+            DeployType::CHARACTER,
+            RESOURCE_DIR "/phase/team_build/cat_deploy_bg.png",
+            pos,
+            catInfo
             );
-        bg->ID = catId;
-
-        // layout
-        bg->ScaleSize({0.39F, 0.39F});
-        bg->Place({selectedPos.x + (bg->GetSize().x + 20.0F) * i, selectedPos.y});
-
-        // cat block image
-        bg->m_CatBlockImage = std::make_shared<BackgroundImage>(
-            RESOURCE_DIR + GetIconPath(unlockedCats[i]),
-            11.0F
-            );
-        glm::vec2 catBlockImageT = {0.0F, 40.0F};
-        bg->m_CatBlockImage->Place(bg->GetCoordinate() + catBlockImageT);
-        bg->m_CatBlockImage->ScaleSize({1.14F, 1.14F});
-        bg->AddChild(bg->m_CatBlockImage);
-
-        // max level
-        bg->SetImage(RESOURCE_DIR "/phase/upgrade/cat_background.png");
-
-        bg->m_Max = std::make_shared<TwoLayerText>(28, "MAX", 15.0F);
-
-        bg->m_Max->SetColor(Util::Color::FromName(Util::Colors::GREEN));
-        bg->m_Max->Place({bg->GetCoordinate().x + 52.0F, bg->GetCoordinate().y + 15.0F});
-
-        bg->AddChild(bg->m_Max);
-
-        bg->m_Max->SetVisible(false);
-        if (unlockedCats[i].level == 10) {
-            bg->m_Max->SetVisible(true);
-        }
-
-        // cat name
-        std::string name = catData->forms[unlockedCats[i].currentForm - 1].name;
-        std::replace(name.begin(), name.end(), '_', ' ');
-        bg->m_CatName = std::make_shared<TwoLayerText>(24, name, 15.0F);
-
-        glm::vec2 catNameOffset = {0.0F, 125.0F};
-        bg->m_CatName->Place({bg->GetCoordinate() + catNameOffset});
-        bg->m_CatName->SetColor(Util::Color::FromName(Util::Colors::WHITE));
-
-        bg->AddChild(bg->m_CatName);
-
-        // cat level
-        std::string level = std::to_string(unlockedCats[i].level);
-        bg->m_CatLevel = std::make_shared<TwoLayerText>(32, level, 15.0F);
-
-        glm::vec2 catLevelPos = {135.0F, -8.0F};
-        bg->m_CatLevel->Place(bg->GetCoordinate() + catLevelPos);
-        bg->m_CatLevel->SetColor(Util::Color::FromName(Util::Colors::YELLOW));
-
-        bg->AddChild(bg->m_CatLevel);
+        pos = {pos.x + bg->GetSize().x + 20.0F, pos.y};
 
         m_CatSelectionBar.push_back(bg);
     }
 
     for (auto &item: m_CatSelectionBar) AddChild(item);
+}
+
+bool TeamBuild::IsBlockHovered(const std::shared_ptr<DeployBlock>& block) {
+    if (!block) return false;
+
+    const auto mousePos = Util::Input::GetCursorPosition();
+    const auto size = block->GetSize();
+    const auto pos = block->GetCoordinate();
+    const auto halfWidth = size.x / 2.0F;
+    const auto halfHeight = size.y / 2.0F;
+
+    return (mousePos.x >= pos.x - halfWidth && mousePos.x <= pos.x + halfWidth &&
+            mousePos.y >= pos.y - halfHeight && mousePos.y <= pos.y + halfHeight);
 }

@@ -5,8 +5,11 @@
 #include "Component/BackgroundImage.hpp"
 #include "Component/Button.hpp"
 #include "Component/ScrollManager.hpp"
-#include "../Component/Block/UpgradeBlock.hpp"
+#include "Component/Block/DeployBlock.hpp"
+#include "Util/Input.hpp"
+#include "Util/Time.hpp"
 #include "Component/ResourceDisplay.hpp"
+#include "Component/TwoLayerText.hpp"
 
 class TeamBuild: public Phase {
 public:
@@ -20,10 +23,10 @@ public:
 
 
 private:
-    ScrollManager<UpgradeBlock> m_ScrollManager;
+    ScrollManager<DeployBlock> m_ScrollManager;
     // background image (without interaction image)
     std::shared_ptr<BackgroundImage> m_BackgroundImage;
-    std::shared_ptr<BackgroundImage> m_UpgradeBanner;
+    std::shared_ptr<BackgroundImage> m_TeamBuildBanner;
     std::shared_ptr<BackgroundImage> m_BottomBanner;
     std::shared_ptr<BackgroundImage> m_SubTitleBanner;
 
@@ -38,8 +41,17 @@ private:
 
 
     // upgrade selections
-    std::vector<std::shared_ptr<UpgradeBlock>> m_CatSelectionBar;
+    std::vector<std::shared_ptr<DeployBlock>> m_CatSelectionBar;
     void BuildSelectionBar();
+
+    // === Drag and Drop state ===
+    std::shared_ptr<DeployBlock> m_PressedBlock = nullptr;
+    glm::vec2 m_PressStartPos = {0.0F, 0.0F};
+    Util::ms_t m_PressStartTime = 0;
+    bool m_IsDraggingBlock = false;
+    std::shared_ptr<BackgroundImage> m_DragGhost = nullptr;
+
+    bool IsBlockHovered(const std::shared_ptr<DeployBlock>& block);
 
     std::shared_ptr<ResourceDisplay> m_ResourceDisplay;
 
