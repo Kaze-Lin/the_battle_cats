@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethical Hacking 刷題網</title>
+    <script src="data.js"></script>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border-radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 10px 15px;
+            border-radius: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-bar label {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .color-picker {
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .color-picker::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        .color-picker::-webkit-color-swatch {
+            border: none;
+            border-radius: 50%;
+        }
+
+        /* Container */
+        .container {
+            background: var(--card-bg);
+            max-width: 700px;
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* Setup Screen */
+        #setup-screen h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus {
+            border-color: var(--primary-color);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.1s;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Quiz Screen */
+        #quiz-screen {
+            display: none;
+            text-align: left;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background-color: #f9fafb;
+            border: 2px solid #e5e7eb;
+            color: var(--text-main);
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-btn:hover {
+            border-color: #d1d5db;
+            background-color: #f3f4f6;
+        }
+
+        .option-btn.correct {
+            background-color: #d1fae5;
+            border-color: var(--success);
+            color: #065f46;
+        }
+
+        .option-btn.incorrect {
+            background-color: #fee2e2;
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+        
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .feedback-area {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+        }
+
+        .feedback-area.correct {
+            display: block;
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .feedback-area.incorrect {
+            display: block;
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .next-btn {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .return-btn {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--text-muted);
+        }
+        .return-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        /* Mistakes Screen */
+        #mistakes-screen {
+            display: none;
+            text-align: left;
+        }
+
+        #mistakes-list {
+            max-height: 450px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+
+        /* Custom Scrollbar for mistakes list */
+        #mistakes-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        #mistakes-list::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 10px;
+        }
+        #mistakes-list::-webkit-scrollbar-thumb {
+            background: #c1c1c1; 
+            border-radius: 10px;
+        }
+        #mistakes-list::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8; 
+        }
+
+        .mistake-item {
+            padding: 15px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background-color: #f9fafb;
+        }
+
+        .danger-btn {
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+        .danger-btn:hover {
+            background-color: #fee2e2;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <label for="bg-color">背景顏色</label>
+        <input type="color" id="bg-color" class="color-picker" value="#f3f4f6">
+    </div>
+
+    <div class="container">
+        <!-- Setup Screen -->
+        <div id="setup-screen">
+            <h1>Ethical Hacking 刷題網</h1>
+            <div class="form-group">
+                <label for="mode-select">選擇模式：</label>
+                <select id="mode-select">
+                    <option value="mixed">混合模式 (選擇題 + 是非題)</option>
+                    <option value="mcq">只有選擇題</option>
+                    <option value="tf">只有是非題</option>
+                    <option value="mistakes">🎯 錯題練習模式 (僅出現錯過的題目)</option>
+                </select>
+            </div>
+            <button class="btn" onclick="startQuiz()">開始刷題</button>
+            <button class="btn return-btn" onclick="showMistakesScreen()">📖 查看錯題本</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen">
+            <div class="stats-bar">
+                <span id="stat-mode">模式: 混合</span>
+                <span id="stat-count">答對: 0 / 0</span>
+            </div>
+            
+            <div class="question-text" id="question-text">
+                載入中...
+            </div>
+
+            <div class="options-grid" id="options-grid">
+                <!-- Options injected by JS -->
+            </div>
+
+            <div id="feedback-area" class="feedback-area">
+                <h3 id="feedback-title"></h3>
+                <p id="feedback-desc"></p>
+            </div>
+
+            <button class="btn next-btn" id="next-btn" onclick="nextQuestion()">下一題</button>
+            <button class="btn return-btn" style="margin-top: 10px;" onclick="returnToMenu()">返回主選單</button>
+        </div>
+
+        <!-- Mistakes Screen -->
+        <div id="mistakes-screen">
+            <h2 style="margin-bottom: 20px; color: var(--primary-color);">📖 錯題本紀錄</h2>
+            <div id="mistakes-list">
+                <!-- Mistakes injected here -->
+            </div>
+            <button class="btn" onclick="returnToMenuFromMistakes()">返回主選單</button>
+            <button class="btn return-btn danger-btn" onclick="clearMistakes()">🗑️ 清空錯題紀錄</button>
+        </div>
+    </div>
+
+    <script>
+        // Background color logic (Restore from local storage if available)
+        const bgColorPicker = document.getElementById('bg-color');
+        const savedBg = localStorage.getItem('quizBgColor');
+        if(savedBg) {
+            document.body.style.backgroundColor = savedBg;
+            bgColorPicker.value = savedBg;
+        }
+
+        bgColorPicker.addEventListener('input', (e) => {
+            const color = e.target.value;
+            document.body.style.backgroundColor = color;
+            localStorage.setItem('quizBgColor', color); // Save preference
+        });
+
+        // App state
+        let currentPool = [];
+        let poolIndex = 0;
+        let currentQuestion = null;
+        let stats = { total: 0, correct: 0 };
+        let hasAnswered = false;
+
+        // Elements
+        const setupScreen = document.getElementById('setup-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const mistakesScreen = document.getElementById('mistakes-screen');
+        const questionText = document.getElementById('question-text');
+        const optionsGrid = document.getElementById('options-grid');
+        const feedbackArea = document.getElementById('feedback-area');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackDesc = document.getElementById('feedback-desc');
+        const nextBtn = document.getElementById('next-btn');
+        const statCount = document.getElementById('stat-count');
+        const statMode = document.getElementById('stat-mode');
+        const mistakesList = document.getElementById('mistakes-list');
+
+        // Local Storage Methods
+        function getMistakes() {
+            return JSON.parse(localStorage.getItem('quizMistakes') || '{}');
+        }
+
+        function saveMistakes(mistakesObj) {
+            localStorage.setItem('quizMistakes', JSON.stringify(mistakesObj));
+        }
+
+        function recordMistake(q) {
+            const mistakes = getMistakes();
+            const key = q.question; // Use question string as unique ID
+            
+            if (!mistakes[key]) {
+                mistakes[key] = {
+                    ...q,
+                    mistakeCount: 1
+                };
+            } else {
+                mistakes[key].mistakeCount += 1;
+            }
+            saveMistakes(mistakes);
+        }
+
+        // Util
+        function shuffleArray(array) {
+            let curId = array.length;
+            while (0 !== curId) {
+                let randId = Math.floor(Math.random() * curId);
+                curId -= 1;
+                let tmp = array[curId];
+                array[curId] = array[randId];
+                array[randId] = tmp;
+            }
+            return array;
+        }
+
+        function startQuiz() {
+            const mode = document.getElementById('mode-select').value;
+            
+            if (mode === 'mcq') {
+                currentPool = [...quizData.mcq];
+                statMode.innerText = "模式: 選擇題";
+            } else if (mode === 'tf') {
+                currentPool = [...quizData.tf];
+                statMode.innerText = "模式: 是非題";
+            } else if (mode === 'mistakes') {
+                const mistakes = getMistakes();
+                const keys = Object.keys(mistakes);
+                if (keys.length === 0) {
+                    alert('目前沒有錯題紀錄！去刷點題目再來吧！');
+                    return;
+                }
+                currentPool = keys.map(k => ({
+                    type: mistakes[k].type,
+                    question: mistakes[k].question,
+                    answer: mistakes[k].answer,
+                    options: mistakes[k].options
+                }));
+                statMode.innerText = "模式: 錯題練習";
+            } else {
+                currentPool = [...quizData.mcq, ...quizData.tf];
+                statMode.innerText = "模式: 混合模式";
+            }
+
+            if (currentPool.length === 0) {
+                alert('沒有找到題目資料！');
+                return;
+            }
+
+            shuffleArray(currentPool);
+            poolIndex = 0;
+            stats = { total: 0, correct: 0 };
+            updateStats();
+
+            setupScreen.style.display = 'none';
+            mistakesScreen.style.display = 'none';
+            quizScreen.style.display = 'block';
+
+            loadQuestion();
+        }
+
+        function returnToMenu() {
+            quizScreen.style.display = 'none';
+            setupScreen.style.display = 'block';
+        }
+
+        function loadQuestion() {
+            // Reset UI
+            hasAnswered = false;
+            feedbackArea.className = 'feedback-area';
+            feedbackArea.style.display = 'none';
+            nextBtn.style.display = 'none';
+            optionsGrid.innerHTML = '';
+
+            // Get next question or reshuffle if end of pool
+            if (poolIndex >= currentPool.length) {
+                shuffleArray(currentPool);
+                poolIndex = 0;
+            }
+
+            currentQuestion = currentPool[poolIndex];
+            poolIndex++;
+
+            // Render Question
+            let qText = currentQuestion.question;
+            if (currentQuestion.type === 'mcq') {
+                qText = `<span style="color:var(--primary-color); font-weight:bold;">[選擇題]</span> ` + qText;
+            } else {
+                qText = `<span style="color:var(--primary-color); font-weight:bold;">[是非題]</span> ` + qText;
+            }
+            questionText.innerHTML = qText;
+
+            // Render Options
+            if (currentQuestion.type === 'mcq') {
+                // Create a copy of options to shuffle
+                let optionsToRender = [...currentQuestion.options];
+                shuffleArray(optionsToRender);
+
+                optionsToRender.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    
+                    const match = opt.match(/^\(([A-D])\)\s+(.*)/);
+                    let letter = "";
+                    if(match) {
+                        letter = match[1];
+                        // Render option text without the original (A)(B) letter since order is randomized now.
+                        // We will hide the original letter to prevent confusion, but still pass it to handleAnswer.
+                        btn.innerHTML = `${match[2]}`;
+                    } else {
+                        btn.textContent = opt;
+                        letter = opt.charAt(1);
+                    }
+
+                    // Attach the true original letter so handleAnswer works correctly
+                    btn.onclick = () => handleAnswer(btn, letter);
+                    // Also store the letter on the dataset so we can style the correct answer later
+                    btn.dataset.letter = letter;
+                    
+                    optionsGrid.appendChild(btn);
+                });
+            } else if (currentQuestion.type === 'tf') {
+                const btnTrue = document.createElement('button');
+                btnTrue.className = 'option-btn';
+                btnTrue.innerHTML = `<strong>(T)</strong> True (正確)`;
+                btnTrue.onclick = () => handleAnswer(btnTrue, 'T');
+                
+                const btnFalse = document.createElement('button');
+                btnFalse.className = 'option-btn';
+                btnFalse.innerHTML = `<strong>(F)</strong> False (錯誤)`;
+                btnFalse.onclick = () => handleAnswer(btnFalse, 'F');
+
+                optionsGrid.appendChild(btnTrue);
+                optionsGrid.appendChild(btnFalse);
+            }
+        }
+
+        function handleAnswer(selectedBtn, selectedLetter) {
+            if (hasAnswered) return;
+            hasAnswered = true;
+            stats.total++;
+
+            const isCorrect = selectedLetter === currentQuestion.answer;
+            
+            // Record mistake if incorrect
+            if (!isCorrect) {
+                recordMistake(currentQuestion);
+            }
+
+            // Disable all buttons and show correct answer
+            const allBtns = optionsGrid.querySelectorAll('.option-btn');
+            allBtns.forEach(btn => {
+                btn.disabled = true;
+                
+                let btnLetter = "";
+                if (currentQuestion.type === 'mcq') {
+                    // We stored the original letter in the dataset when rendering
+                    btnLetter = btn.dataset.letter;
+                } else {
+                    const match = btn.textContent.match(/^\(([TF])\)/);
+                    if (match) btnLetter = match[1];
+                }
+
+                if (btnLetter === currentQuestion.answer) {
+                    btn.classList.add('correct');
+                } else if (btn === selectedBtn && !isCorrect) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            if (isCorrect) {
+                stats.correct++;
+                feedbackArea.className = 'feedback-area correct';
+                feedbackTitle.textContent = '🎉 答對了！';
+                feedbackDesc.textContent = '';
+            } else {
+                feedbackArea.className = 'feedback-area incorrect';
+                feedbackTitle.textContent = '❌ 答錯了！';
+                
+                let correctText = currentQuestion.answer;
+                if(currentQuestion.type === 'mcq') {
+                    const correctOpt = currentQuestion.options.find(o => o.startsWith(`(${currentQuestion.answer})`));
+                    if(correctOpt) correctText = correctOpt;
+                } else {
+                    correctText = currentQuestion.answer === 'T' ? 'True (正確)' : 'False (錯誤)';
+                }
+                
+                feedbackDesc.textContent = `正確答案是: ${correctText}`;
+            }
+
+            feedbackArea.style.display = 'block';
+            nextBtn.style.display = 'block';
+            updateStats();
+        }
+
+        function nextQuestion() {
+            loadQuestion();
+        }
+
+        function updateStats() {
+            statCount.textContent = `答對: ${stats.correct} / ${stats.total}`;
+        }
+
+        // Mistakes Screen Methods
+        function showMistakesScreen() {
+            setupScreen.style.display = 'none';
+            quizScreen.style.display = 'none';
+            mistakesScreen.style.display = 'block';
+            renderMistakes();
+        }
+
+        function returnToMenuFromMistakes() {
+            mistakesScreen.style.display = 'none';
+            setupScreen.style.display = 'block';
+        }
+
+        function renderMistakes() {
+            const mistakes = getMistakes();
+            const keys = Object.keys(mistakes);
+            mistakesList.innerHTML = '';
+
+            if (keys.length === 0) {
+                mistakesList.innerHTML = '<p style="text-align:center; color: var(--text-muted); padding: 20px;">目前沒有錯題紀錄！太棒了！</p>';
+                return;
+            }
+
+            // Sort by mistake count descending
+            const sortedMistakes = keys.map(k => mistakes[k]).sort((a, b) => b.mistakeCount - a.mistakeCount);
+
+            sortedMistakes.forEach(m => {
+                const item = document.createElement('div');
+                item.className = 'mistake-item';
+
+                let correctText = m.answer;
+                if(m.type === 'mcq') {
+                    const correctOpt = m.options.find(o => o.startsWith(`(${m.answer})`));
+                    if(correctOpt) correctText = correctOpt;
+                } else {
+                    correctText = m.answer === 'T' ? 'True (正確)' : 'False (錯誤)';
+                }
+
+                item.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                        <strong style="color: var(--text-main); line-height: 1.4; flex: 1;">${m.question}</strong>
+                        <span style="background-color: var(--danger); color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; margin-left: 10px; white-space: nowrap; font-weight: 600;">錯了 ${m.mistakeCount} 次</span>
+                    </div>
+                    <div style="color: var(--success); font-size: 0.95rem; background-color: #d1fae5; padding: 8px 12px; border-radius: 6px; display: inline-block;">
+                        <strong>正確答案：</strong> ${correctText}
+                    </div>
+                `;
+                mistakesList.appendChild(item);
+            });
+        }
+
+        function clearMistakes() {
+            const keys = Object.keys(getMistakes());
+            if (keys.length === 0) {
+                alert("已經沒有錯題紀錄可以清空囉！");
+                return;
+            }
+            if (confirm('確定要清空所有錯題紀錄嗎？這個動作無法復原。')) {
+                localStorage.removeItem('quizMistakes');
+                renderMistakes();
+            }
+        }
+    </script>
+</body>
+</html>
