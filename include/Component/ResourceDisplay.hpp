@@ -28,6 +28,12 @@ public:
         AddChild(m_catfoodText);
     }
 
+    void SetVisible(const bool visible) override {
+        Util::GameObject::SetVisible(visible);
+        if (m_xpText) m_xpText->SetVisible(visible);
+        if (m_catfoodText) m_catfoodText->SetVisible(visible);
+    }
+
     void Update() override {
         int currentXP = UserManager::GetInstance().GetXP();
         int currentCatFood = UserManager::GetInstance().GetCatFood();
