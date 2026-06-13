@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <nlohmann/json.hpp>
 
+#include "spdlog/fmt/bundled/chrono.h"
+
 struct Resources {
     int xp = 0;
     int catFood = 0;
@@ -27,7 +29,7 @@ struct Progress {
     std::array<int, 2> currentStage = {1, 1}; // {chapter, stage}
     int highestStageCleared = 0;
     int userRank = 1;
-    std::array<int, 10> teamBuild = {1};//cat_id
+    std::array<int, 10> teamBuild = {1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL};//cat_id
 };
 inline void to_json(nlohmann::json& j, const Progress& p) {
     j = nlohmann::json{{"cleared_chapters", p.clearedChapters}, {"current_stage", p.currentStage}, {"highest_stage_cleared", p.highestStageCleared}, {"team_build", p.teamBuild},{"user_rank", p.userRank}};

@@ -59,7 +59,7 @@
                 "cleared_chapters": 0,
                 "current_stage": [
                     1,
-                    26
+                    1
                 ],
                 "highest_stage_cleared": 30,
                 "team_build": [
@@ -80,7 +80,7 @@
                 "cat_food": 99999999,
                 "energy": 100,
                 "max_energy": 100,
-                "xp": 83083484
+                "xp": 83044284
             },
             "treasures": {
                 "chapter_1": [
@@ -99,8 +99,8 @@
             "unlocked_cats": [
                 {
                     "cat_id": 0,
-                    "current_form": 1,
-                    "level": 7
+                    "current_form": 2,
+                    "level": 10
                 },
                 {
                     "cat_id": 1,
