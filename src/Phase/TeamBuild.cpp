@@ -21,7 +21,7 @@ namespace {
 
     std::string GetDragIconPath(const CatSaveData& data) {
         std::string path = "/cat_materials/normal/";
-        const auto* catData = DatabaseManager::GetInstance().GetCatData(data.catId);
+        const auto catData = DatabaseManager::GetInstance().GetCatData(data.catId);
         if (catData != nullptr) {
             std::string name = catData->nameInternal;
             path = path + to_lower(name) + "/generate_cat_button/" + std::to_string(data.currentForm) + ".png";
@@ -131,12 +131,99 @@ TeamBuild::TeamBuild(): Phase() {
 
     m_ResourceDisplay = std::make_shared<ResourceDisplay>();
     AddChild(m_ResourceDisplay);
+
+    CalculateBlocksRange();
+
+    auto currentUser = UserManager::GetInstance().GetCurrentUser();
+    if (currentUser) {
+        m_CurrentTeam = currentUser->progress.teamBuild;
+    } else {
+        m_CurrentTeam.fill(-1);
+    }
+
+    for (int i = 0; i < 10; ++i) {
+        // Only load a completely transparent placeholder if you don't want a solid BG
+        m_TeamImages[i] = std::make_shared<BackgroundImage>(RESOURCE_DIR "/phase/team_build/cat_deploy_bg.png", 5.0F);
+
+        glm::vec2 pos = (m_BlocksRange[i][0] + m_BlocksRange[i][1]) / 2.0F;
+        m_TeamImages[i]->Place(pos);
+        m_TeamImages[i]->ScaleSize({1.14F, 1.14F});
+        AddChild(m_TeamImages[i]);
+    }
+    RefreshTeamImages();
+}
+
+void TeamBuild::CalculateBlocksRange() {
+    constexpr glm::vec2 block_size = {148.0F, 114.0F};
+    constexpr glm::vec2 horizontal_offset = {196.0F, 0.0F};
+    constexpr glm::vec2 vertical_offset = {0.0F, 127.0F};
+    constexpr glm::vec2 pos = {-331.0F, 219.0F};
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 5; j++) {
+            glm::vec2 offset = (-1.0F * static_cast<float>(i) * vertical_offset) + (horizontal_offset * static_cast<float>(j));
+            m_BlocksRange[(i * 5) + j][0] = pos - (block_size / 2.0F) + offset;
+            m_BlocksRange[(i * 5) + j][1] = pos + (block_size / 2.0F) + offset;
+        }
+    }
+}
+
+void TeamBuild::RefreshTeamImages() {
+    auto currentUser = UserManager::GetInstance().GetCurrentUser();
+    for (int i = 0; i < 10; ++i) {
+        if (m_CurrentTeam[i] != -1) {
+            CatSaveData catData{m_CurrentTeam[i], 1, 1};
+            if (currentUser) {
+                for (const auto& cat : currentUser->unlockedCats) {
+                    if (cat.catId == m_CurrentTeam[i]) {
+                        catData = cat;
+                        break;
+                    }
+                }
+            }
+            m_TeamImages[i]->SetImage(RESOURCE_DIR + GetDragIconPath(catData));
+            m_TeamImages[i]->SetVisible(true);
+        } else {
+            m_TeamImages[i]->SetVisible(false);
+        }
+    }
+}
+
+int TeamBuild::FindNearestEmptySlot(int target_index) {
+    int target_row = target_index / 5;
+    int target_col = target_index % 5;
+    
+    int nearest_index = -1;
+    int min_dist = 9999;
+
+    for (int i = 0; i < 10; ++i) {
+        if (m_CurrentTeam[i] == -1) {
+            int row = i / 5;
+            int col = i % 5;
+            int dist = std::abs(target_row - row) + std::abs(target_col - col);
+            if (dist < min_dist) {
+                min_dist = dist;
+                nearest_index = i;
+            }
+        }
+    }
+    return nearest_index;
 }
 
 std::shared_ptr<Phase> TeamBuild::GetDestinationPhase() {
+    if (this->m_DestinationPhase == "Non") {
+        return nullptr;
+    }
+
+    auto currentUser = UserManager::GetInstance().GetCurrentUser();
+    if (currentUser) {
+        currentUser->progress.teamBuild = m_CurrentTeam;
+        UserManager::GetInstance().SaveDatabase();
+    }
+
     if (this->m_DestinationPhase.empty())
         return PhaseManager::GetNextPhase();
-    return PhaseManager::GetNextPhase("Upgrade", this->m_DestinationPhase);
+    return PhaseManager::GetNextPhase("TeamBuild", this->m_DestinationPhase);
 }
 
 void TeamBuild::GoBack() {
@@ -155,26 +242,9 @@ void TeamBuild::Update() {
     if (Util::Input::IsKeyUp(Util::Keycode::MOUSE_LB)) {
         if (m_IsDraggingBlock && m_DragGhost) {
 
-            constexpr glm::vec2 block_size = {148.0F, 114.0F};
-            constexpr glm::vec2 horizontal_offset = {196.0F, 0.0F};
-            constexpr glm::vec2 vertical_offset = {0.0F, 127.0F};
-            constexpr glm::vec2 pos = {-331.0F, 219.0F};
-
-            // every block has 2 range elements, first one is left bottom, second one is right top
-            std::array<std::array<glm::vec2, 2>, 10> blocks_range;
-
-            // set the range for each block
-            for (float i = 0; i < 2; i++) {
-                for (float j = 0; j < 5; j++) {
-                    glm::vec2 offset = (-1.0F * i * vertical_offset) + (horizontal_offset * j);
-                    blocks_range[(i * 5) + j][0] = pos - (block_size / 2.0F) + offset;
-                    blocks_range[(i * 5) + j][1] = pos + (block_size / 2.0F) + offset;
-                }
-            }
-
             auto it = std::find_if(
-                blocks_range.begin(),
-                blocks_range.end(),
+                m_BlocksRange.begin(),
+                m_BlocksRange.end(),
                 [&](const auto& block) {
                     return IsInBlock(
                         block[0],
@@ -183,15 +253,50 @@ void TeamBuild::Update() {
                 });
 
             // is in range
-            if (it != blocks_range.end()) {
-                int index = std::distance(blocks_range.begin(), it);
-                //　
+            if (it != m_BlocksRange.end()) {
+                int target_index = std::distance(m_BlocksRange.begin(), it);
+                
+                if (m_PressedBlock != nullptr) {
+                    // Dragged from bottom selection bar
+                    bool is_full = true;
+                    for (int i = 0; i < 10; ++i) {
+                        if (m_CurrentTeam[i] == -1) { is_full = false; break; }
+                    }
+                    
+                    if (!is_full) {
+                        int cat_id = m_PressedBlock->GetCatSaveData().catId;
+                        if (m_CurrentTeam[target_index] != -1) {
+                            int empty_slot = FindNearestEmptySlot(target_index);
+                            if (empty_slot != -1) {
+                                m_CurrentTeam[empty_slot] = m_CurrentTeam[target_index];
+                            }
+                        }
+                        m_CurrentTeam[target_index] = cat_id;
+                    }
+                } else if (m_PressedGridIndex != -1) {
+                    // Dragged from top grid
+                    int cat_id = m_CurrentTeam[m_PressedGridIndex];
+                    m_CurrentTeam[m_PressedGridIndex] = -1; // Temporarily vacate the origin slot
+                    
+                    if (m_CurrentTeam[target_index] != -1) {
+                        int empty_slot = FindNearestEmptySlot(target_index);
+                        if (empty_slot != -1) {
+                            m_CurrentTeam[empty_slot] = m_CurrentTeam[target_index];
+                        }
+                    }
+                    m_CurrentTeam[target_index] = cat_id;
+                }
             } else {
-
+                // Out of range drop
+                if (m_PressedGridIndex != -1 && mousePos.y < 0.0F) {
+                    // Dragged from top grid and dropped in bottom area -> remove from team
+                    m_CurrentTeam[m_PressedGridIndex] = -1;
+                }
             }
 
             RemoveChild(m_DragGhost);
             m_DragGhost = nullptr;
+            RefreshTeamImages();
 
         } else if (m_PressedBlock) {
             // 原地單擊邏輯
@@ -200,35 +305,85 @@ void TeamBuild::Update() {
 
         // 狀態重置
         m_PressedBlock = nullptr;
+        m_PressedGridIndex = -1;
         m_IsDraggingBlock = false;
     }
 
     // 2. 按下左鍵：記錄潛在的拖曳目標與起始點
     if (Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB)) {
-        for (const auto& block : m_CatSelectionBar) {
-            if (IsBlockHovered(block)) {
-                m_PressedBlock = block;
+        bool clicked_top_grid = false;
+        for (int i = 0; i < 10; ++i) {
+            if (m_CurrentTeam[i] != -1 && IsInBlock(m_BlocksRange[i][0], m_BlocksRange[i][1], mousePos)) {
+                m_PressedGridIndex = i;
                 m_PressStartPos = mousePos;
                 m_PressStartTime = Util::Time::GetElapsedTimeMs();
+                clicked_top_grid = true;
                 break;
+            }
+        }
+        
+        if (!clicked_top_grid) {
+            bool is_full = true;
+            for (int i = 0; i < 10; ++i) {
+                if (m_CurrentTeam[i] == -1) { is_full = false; break; }
+            }
+            if (!is_full) {
+                for (const auto& block : m_CatSelectionBar) {
+                    if (IsBlockHovered(block)) {
+                        int cat_id = block->GetCatSaveData().catId;
+                        bool already_in_team = false;
+                        for (int i = 0; i < 10; ++i) {
+                            if (m_CurrentTeam[i] == cat_id) {
+                                already_in_team = true;
+                                break;
+                            }
+                        }
+                        
+                        if (!already_in_team) {
+                            m_PressedBlock = block;
+                            m_PressStartPos = mousePos;
+                            m_PressStartTime = Util::Time::GetElapsedTimeMs();
+                        }
+                        break;
+                    }
+                }
             }
         }
     }
 
     // 3. 壓住滑鼠並移動：判定意圖 (拖曳 vs 左右滑動)
-    if (m_PressedBlock && !m_IsDraggingBlock && Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
+    bool has_pressed_item = (m_PressedBlock != nullptr) || (m_PressedGridIndex != -1);
+    if (has_pressed_item && !m_IsDraggingBlock && Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
         glm::vec2 delta = mousePos - m_PressStartPos;
         constexpr float threshold = 15.0F; // 容錯閾值，超過 15 像素才算有滑動
         auto elapsedTime = Util::Time::GetElapsedTimeMs() - m_PressStartTime;
 
-        if (std::abs(delta.x) > threshold && elapsedTime < 200) {
+        if (m_PressedBlock != nullptr && std::abs(delta.x) > threshold && elapsedTime < 200) {
             // 【左右拉】判定為意圖滑動選單
             m_PressedBlock = nullptr; // 清除點擊目標，放棄拖曳貓咪的意圖
-        } else if (elapsedTime >= 200 || delta.y > threshold) {
+        } else if (elapsedTime >= 200 || std::abs(delta.y) > threshold || std::abs(delta.x) > threshold) {
             m_IsDraggingBlock = true;
 
+            std::string icon_path = "";
+            if (m_PressedBlock != nullptr) {
+                icon_path = GetDragIconPath(m_PressedBlock->GetCatSaveData());
+            } else if (m_PressedGridIndex != -1) {
+                CatSaveData catData{m_CurrentTeam[m_PressedGridIndex], 1, 1};
+                auto currentUser = UserManager::GetInstance().GetCurrentUser();
+                if (currentUser) {
+                    for (const auto& cat : currentUser->unlockedCats) {
+                        if (cat.catId == m_CurrentTeam[m_PressedGridIndex]) {
+                            catData = cat;
+                            break;
+                        }
+                    }
+                }
+                icon_path = GetDragIconPath(catData);
+                m_TeamImages[m_PressedGridIndex]->SetVisible(false); // Hide original
+            }
+            
             m_DragGhost = std::make_shared<BackgroundImage>(
-                RESOURCE_DIR + GetDragIconPath(m_PressedBlock->GetCatSaveData()),
+                RESOURCE_DIR + icon_path,
                 50.0F // 給一個很高的 zIndex 確保蓋在所有畫面最上層
             );
             m_DragGhost->ScaleSize({1.14F, 1.14F}); // 保持跟原本大小一樣
@@ -266,6 +421,12 @@ void TeamBuild::Update() {
         m_SubTitleText->SetText(title);
     }
 
+    if (Util::Input::IsKeyUp(Util::Keycode::ESCAPE) || Util::Input::IfExit()) {
+        auto currentUser = UserManager::GetInstance().GetCurrentUser();
+        if (currentUser) {
+            currentUser->progress.teamBuild = m_CurrentTeam;
+        }
+    }
 }
 
 
@@ -277,15 +438,17 @@ void TeamBuild::BuildSelectionBar() {
 
     for (auto& catInfo: unlockedCats) {
         // team build block --
-        auto bg = std::make_shared<DeployBlock>(
-            DeployType::CHARACTER,
-            RESOURCE_DIR "/phase/team_build/cat_deploy_bg.png",
-            pos,
-            catInfo
-            );
-        pos = {pos.x + bg->GetSize().x + 20.0F, pos.y};
+        if (DatabaseManager::GetInstance().GetCatData(catInfo.catId) != nullptr) {
+            auto bg = std::make_shared<DeployBlock>(
+                DeployType::CHARACTER,
+                RESOURCE_DIR "/phase/team_build/cat_deploy_bg.png",
+                pos,
+                catInfo
+                );
+            pos = {pos.x + bg->GetSize().x + 20.0F, pos.y};
 
-        m_CatSelectionBar.push_back(bg);
+            m_CatSelectionBar.push_back(bg);
+        }
     }
 
     for (auto &item: m_CatSelectionBar) AddChild(item);

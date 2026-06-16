@@ -37,6 +37,7 @@ public:
     std::shared_ptr<Button> GetButton() const { return m_Button; }
     std::shared_ptr<TwoLayerText> GetCdText() const { return m_CdText; }
     std::shared_ptr<TwoLayerText> GetCostText() const { return m_CostText; }
+    int GetCost() const { return m_Cost; }
 
     void Place(const glm::vec2& p);
 };

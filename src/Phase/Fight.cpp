@@ -8,6 +8,16 @@
 #include "PhaseManager.hpp"
 #include "Component/HealthBar.hpp"
 
+namespace {
+    std::vector<int> GetTeamReverse() {
+        auto teamBuild = UserManager::GetInstance().GetCurrentUser()->progress.teamBuild;
+        std::vector<int> team;
+        for (int i = 0; i < 10; i++) team.push_back(teamBuild[i]);
+
+        return team;
+    }
+}
+
 CatSlotController::CatSlotController(int cost, float maxCd)
     : m_Cost(cost), m_MaxCd(maxCd), m_CurrentCd(0.0f), m_LastSec(-1) {
     m_CdText = std::make_shared<TwoLayerText>(
@@ -344,10 +354,8 @@ Fight::Fight(): Phase() {
         const auto stageNameXNew = pauseX + pauseSize.x / 2 + textSize.x / 2.0F + 15.0F;
         m_StageName->Place({stageNameXNew, stageNameY});
 
-        // TODO: deploy cats
-        std::vector<int> ids = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-        std::reverse(ids.begin(), ids.end());
-        DeployCatButton(ids);
+
+        DeployCatButton(GetTeamReverse());
     }
 
 }
@@ -380,8 +388,16 @@ void Fight::Update() {
 
     float gameDeltaTime = realDeltaTime * m_timeScale;
 
+    int currentMoney = m_Wallet ? m_Wallet->GetCurrentMoney() : 0;
     for (auto& slot : m_CatSlots) {
         slot->Update(gameDeltaTime);
+        if (slot->GetCostText()) {
+            if (currentMoney < slot->GetCost()) {
+                slot->GetCostText()->SetColor(Util::Color::FromName(Util::Colors::RED));
+            } else {
+                slot->GetCostText()->SetColor(Util::Color::FromName(Util::Colors::YELLOW));
+            }
+        }
     }
 
     // Wallet Passive Money Generation
@@ -456,85 +472,96 @@ void Fight::Update() {
 }
 
 void Fight::DeployCatButton(std::vector<int> IDs) {
-    std::unordered_map<int, const UnitData*> cats;
-    for (auto i: IDs) {
-        cats[i] = DatabaseManager::GetInstance().GetCatData(i);
-    }
+    const float startX = -245.0F;
+    const float startY = -250.0F;
 
-    if (!cats.empty() || (cats.size() > 0 && cats.size() < 10)) {
-        for (auto cat: cats) {
-            if (cat.second == nullptr) {
-                LOG_WARN("cannot find cat with ID " + std::to_string(cat.first));
-                continue;
+    for (int i = 0; i < 10; ++i) {
+        if (i >= IDs.size() || IDs[i] == -1) {
+            continue; // Skip rendering for empty slots
+        }
+
+        int catId = IDs[i];
+        const auto* catData = DatabaseManager::GetInstance().GetCatData(catId);
+        
+        if (catData == nullptr) {
+            LOG_WARN("cannot find cat with ID " + std::to_string(catId));
+            continue;
+        }
+
+        auto currentUser = UserManager::GetInstance().GetCurrentUser();
+        int currentForm = 1;
+        int level = 1;
+        if (currentUser) {
+            for (const auto& cat : currentUser->unlockedCats) {
+                if (cat.catId == catId) {
+                    currentForm = cat.currentForm;
+                    level = cat.level;
+                    break;
+                }
             }
+        }
+        int formIndexForData = currentForm - 1;
 
-            int cost = cat.second->forms[0].cost;
-            // 貓咪大戰爭資料庫的 rechargeTime 通常為 Frame (以 30FPS 為基準)，轉換為秒數：
-            float maxCd = cat.second->forms[0].rechargeTime / 30.0f;
+        int cost = catData->forms[formIndexForData].cost;
+        // 貓咪大戰爭資料庫的 rechargeTime 通常為 Frame (以 30FPS 為基準)，轉換為秒數：
+        float maxCd = catData->forms[formIndexForData].rechargeTime / 30.0f;
 
-            // 建立這個格子的獨立控制器
-            auto slot = std::make_shared<CatSlotController>(cost, maxCd);
-            std::weak_ptr<CatSlotController> weakSlot = slot;
-            std::weak_ptr<Wallet> weakWallet = m_Wallet;
+        // 建立這個格子的獨立控制器
+        auto slot = std::make_shared<CatSlotController>(cost, maxCd);
+        std::weak_ptr<CatSlotController> weakSlot = slot;
+        std::weak_ptr<Wallet> weakWallet = m_Wallet;
 
-            auto btn = std::make_shared<Button>(
-                RESOURCE_DIR + cat.second->catGenButton[0],
-                [cat, weakWallet, weakSlot, cost]() {
-                    if (auto s = weakSlot.lock()) {
-                        // 【先判斷冷卻】
-                        if (!s->IsReady()) {
-                            LOG_INFO("Cat is cooling down!");
-                            return; // 直接擋下點擊事件
-                        }
-                        // 【再判斷金錢】
-                        if (auto w = weakWallet.lock()) {
-                            if (w->SpendMoney(cost)) {
-                                EntityManager::GetInstance().SpawnCat(
-                                    cat.first,
-                                    cat.second->maxLevel,
-                                    cat.second->forms[0].formIndex - 1);
+        auto btn = std::make_shared<Button>(
+            RESOURCE_DIR + catData->catGenButton[formIndexForData],
+            [catId, weakWallet, weakSlot, cost, level, formIndexForData]() {
+                if (auto s = weakSlot.lock()) {
+                    // 【先判斷冷卻】
+                    if (!s->IsReady()) {
+                        LOG_INFO("Cat is cooling down!");
+                        return; // 直接擋下點擊事件
+                    }
+                    // 【再判斷金錢】
+                    if (auto w = weakWallet.lock()) {
+                        if (w->SpendMoney(cost)) {
+                            EntityManager::GetInstance().SpawnCat(
+                                catId,
+                                level,
+                                formIndexForData);
 
-                                // 產貓成功！觸發冷卻器
-                                s->StartCooldown();
-                            } else {
-                                LOG_INFO("Not enough money!");
-                            }
+                            // 產貓成功！觸發冷卻器
+                            s->StartCooldown();
+                        } else {
+                            LOG_INFO("Not enough money!");
                         }
                     }
-                },
-                80.0f
-            );
+                }
+            },
+            80.0f
+        );
 
-            slot->SetButton(btn);
-            m_CatSlots.push_back(slot);
+        slot->SetButton(btn);
+        m_CatSlots.push_back(slot);
 
-            // 將按鈕與讀條文字都交給 Scene Graph 管理
-            AddChild(slot->GetButton());
-            AddChild(slot->GetCdText());
-            AddChild(slot->GetCostText());
+        // 將按鈕與讀條文字都交給 Scene Graph 管理
+        AddChild(slot->GetButton());
+        AddChild(slot->GetCdText());
+        AddChild(slot->GetCostText());
+
+        // Calculate Position using existing offset logic equivalent
+        float btnWidth = btn->GetSize().x;
+        float btnHeight = btn->GetSize().y;
+        
+        float catButtonX = startX;
+        float catButtonY = startY;
+
+        if (i > 0 && i < 5) {
+            catButtonX = startX + (btnWidth + 15.0F) * i;
+        } else if (i >= 5) {
+            catButtonX = startX + (btnWidth + 15.0F) * (i - 5);
+            catButtonY = startY - btnHeight - 15.0F;
         }
 
-        if (m_CatSlots.empty()) {
-            LOG_WARN("No cat slots were generated. Skip layout.");
-            return;
-        }
-        const auto X = -245.0F;
-        const auto Y = -250.0F;
-        m_CatSlots[0]->Place({X, Y});
-
-        auto catButtonX = X;
-        auto catButtonY = Y;
-
-        for (int i = 1; i < m_CatSlots.size(); i++) {
-            auto photoSize = m_CatSlots[i]->GetButton()->GetSize();
-            if (i <= 4 || (i > 5 && i <= 10)) {
-                catButtonX += m_CatSlots[i - 1]->GetButton()->GetSize().x / 2.0F + photoSize.x / 2.0F + 15.0F;
-            } else if (i == 5) {
-                catButtonX = X;
-                catButtonY = catButtonY - m_CatSlots[i - 5]->GetButton()->GetSize().y / 2.0F - photoSize.y / 2.0F - 15.0F;
-            }
-            m_CatSlots[i]->Place({catButtonX, catButtonY});
-        }
+        slot->Place({catButtonX, catButtonY});
     }
 }
 

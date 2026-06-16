@@ -44,8 +44,12 @@ private:
     std::vector<std::shared_ptr<DeployBlock>> m_CatSelectionBar;
     void BuildSelectionBar();
 
+    std::shared_ptr<ResourceDisplay> m_ResourceDisplay;
+
     // === Drag and Drop state ===
     std::shared_ptr<DeployBlock> m_PressedBlock = nullptr;
+    int m_PressedGridIndex = -1; // -1 means not from top grid
+    
     glm::vec2 m_PressStartPos = {0.0F, 0.0F};
     Util::ms_t m_PressStartTime = 0;
     bool m_IsDraggingBlock = false;
@@ -53,8 +57,15 @@ private:
 
     bool IsBlockHovered(const std::shared_ptr<DeployBlock>& block);
 
-    std::shared_ptr<ResourceDisplay> m_ResourceDisplay;
-
+    // === Grid State ===
+    std::array<int, 10> m_CurrentTeam;
+    std::array<std::shared_ptr<BackgroundImage>, 10> m_TeamImages;
+    std::array<std::array<glm::vec2, 2>, 10> m_BlocksRange;
+    
+    void RefreshTeamImages();
+    int FindNearestEmptySlot(int target_index);
+    void CalculateBlocksRange();
+    
 };
 
 #endif //TEAM_BUILD_HPP
