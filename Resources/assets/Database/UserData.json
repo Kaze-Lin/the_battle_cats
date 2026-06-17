@@ -11,7 +11,7 @@
                 "wallet_capacity": 1,
                 "worker_cat_efficiency": 1
             },
-            "password": "20050905",
+            "password": "o",
             "progress": {
                 "cleared_chapters": 0,
                 "current_stage": [
@@ -20,16 +20,16 @@
                 ],
                 "highest_stage_cleared": 0,
                 "team_build": [
+                    0,
                     1,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1
                 ],
                 "user_rank": 1
             },
@@ -41,7 +41,7 @@
             },
             "treasures": {},
             "unlocked_cats": [],
-            "username": "purplesheep"
+            "username": "O"
         },
         {
             "base_upgrades": {
@@ -80,7 +80,7 @@
                 "cat_food": 99999999,
                 "energy": 100,
                 "max_energy": 100,
-                "xp": 99999999
+                "xp": 100000999
             },
             "treasures": {
                 "chapter_1": [
@@ -161,7 +161,7 @@
                 "wallet_capacity": 1,
                 "worker_cat_efficiency": 1
             },
-            "password": "o",
+            "password": "20050905",
             "progress": {
                 "cleared_chapters": 0,
                 "current_stage": [
@@ -170,16 +170,16 @@
                 ],
                 "highest_stage_cleared": 0,
                 "team_build": [
-                    0,
                     1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1,
-                    -1
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
                 ],
                 "user_rank": 1
             },
@@ -191,7 +191,7 @@
             },
             "treasures": {},
             "unlocked_cats": [],
-            "username": "O"
+            "username": "purplesheep"
         }
     ]
 }
