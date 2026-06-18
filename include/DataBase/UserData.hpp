@@ -29,7 +29,7 @@ struct Progress {
     std::array<int, 2> currentStage = {1, 1}; // {chapter, stage}
     int highestStageCleared = 0;
     int userRank = 1;
-    std::array<int, 10> teamBuild = {1, -1, -1, -1, -1, -1, -1, -1, -1, -1};//cat_id
+    std::array<int, 10> teamBuild = {0, -1, -1, -1, -1, -1, -1, -1, -1, -1};//cat_id
     // -1 means empty
 };
 inline void to_json(nlohmann::json& j, const Progress& p) {
@@ -40,7 +40,7 @@ inline void from_json(const nlohmann::json& j, Progress& p) {
     p.currentStage = j.value("current_stage", std::array<int, 2>{1, 1});
     p.highestStageCleared = j.value("highest_stage_cleared", 0);
     p.userRank = j.value("user_rank", 0);
-    p.teamBuild = j.value("team_build", std::array<int, 10>{1});
+    p.teamBuild = j.value("team_build", std::array<int, 10>{0});
 }
 
 struct BaseUpgrades {

@@ -11,7 +11,56 @@
                 "wallet_capacity": 1,
                 "worker_cat_efficiency": 1
             },
-            "password": "20050905",
+            "password": "1",
+            "progress": {
+                "cleared_chapters": 0,
+                "current_stage": [
+                    1,
+                    2
+                ],
+                "highest_stage_cleared": 1,
+                "team_build": [
+                    0,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1
+                ],
+                "user_rank": 1
+            },
+            "resources": {
+                "cat_food": 100,
+                "energy": 0,
+                "max_energy": 0,
+                "xp": 300
+            },
+            "treasures": {},
+            "unlocked_cats": [
+                {
+                    "cat_id": 0,
+                    "current_form": 1,
+                    "level": 2
+                }
+            ],
+            "username": "SHIT"
+        },
+        {
+            "base_upgrades": {
+                "accounting": 1,
+                "base_hp": 1,
+                "cannon_attack": 1,
+                "cannon_charge": 1,
+                "cannon_range": 1,
+                "study": 1,
+                "wallet_capacity": 1,
+                "worker_cat_efficiency": 1
+            },
+            "password": "0",
             "progress": {
                 "cleared_chapters": 0,
                 "current_stage": [
@@ -21,15 +70,15 @@
                 "highest_stage_cleared": 0,
                 "team_build": [
                     1,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1
                 ],
                 "user_rank": 1
             },
@@ -41,7 +90,50 @@
             },
             "treasures": {},
             "unlocked_cats": [],
-            "username": "purplesheep"
+            "username": "test"
+        },
+        {
+            "base_upgrades": {
+                "accounting": 1,
+                "base_hp": 1,
+                "cannon_attack": 1,
+                "cannon_charge": 1,
+                "cannon_range": 1,
+                "study": 1,
+                "wallet_capacity": 1,
+                "worker_cat_efficiency": 1
+            },
+            "password": "o",
+            "progress": {
+                "cleared_chapters": 0,
+                "current_stage": [
+                    1,
+                    1
+                ],
+                "highest_stage_cleared": 0,
+                "team_build": [
+                    0,
+                    1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1,
+                    -1
+                ],
+                "user_rank": 1
+            },
+            "resources": {
+                "cat_food": 100,
+                "energy": 0,
+                "max_energy": 0,
+                "xp": 0
+            },
+            "treasures": {},
+            "unlocked_cats": [],
+            "username": "O"
         },
         {
             "base_upgrades": {
@@ -161,7 +253,7 @@
                 "wallet_capacity": 1,
                 "worker_cat_efficiency": 1
             },
-            "password": "o",
+            "password": "20050905",
             "progress": {
                 "cleared_chapters": 0,
                 "current_stage": [
@@ -170,8 +262,51 @@
                 ],
                 "highest_stage_cleared": 0,
                 "team_build": [
-                    0,
                     1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                "user_rank": 1
+            },
+            "resources": {
+                "cat_food": 100,
+                "energy": 0,
+                "max_energy": 0,
+                "xp": 0
+            },
+            "treasures": {},
+            "unlocked_cats": [],
+            "username": "purplesheep"
+        },
+        {
+            "base_upgrades": {
+                "accounting": 1,
+                "base_hp": 1,
+                "cannon_attack": 1,
+                "cannon_charge": 1,
+                "cannon_range": 1,
+                "study": 1,
+                "wallet_capacity": 1,
+                "worker_cat_efficiency": 1
+            },
+            "password": "0",
+            "progress": {
+                "cleared_chapters": 0,
+                "current_stage": [
+                    1,
+                    1
+                ],
+                "highest_stage_cleared": 0,
+                "team_build": [
+                    1,
+                    -1,
                     -1,
                     -1,
                     -1,
@@ -190,8 +325,14 @@
                 "xp": 0
             },
             "treasures": {},
-            "unlocked_cats": [],
-            "username": "O"
+            "unlocked_cats": [
+                {
+                    "cat_id": 0,
+                    "current_form": 1,
+                    "level": 1
+                }
+            ],
+            "username": "fuck"
         }
     ]
 }

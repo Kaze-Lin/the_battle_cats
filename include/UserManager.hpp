@@ -98,6 +98,11 @@ public:
         newUser->username = username;
         newUser->password = password;
 
+        CatSaveData saveData;
+        saveData.catId = 0;
+        saveData.level = 1;
+        saveData.currentForm = 1;
+        newUser->unlockedCats.push_back(saveData);
         newUser->resources.catFood = 100;
         newUser->progress.currentStage = {1, 1};
         newUser->baseUpgrades.walletCapacity = 1;
