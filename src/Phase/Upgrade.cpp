@@ -330,9 +330,20 @@ void Upgrade::UpgradeLevel() {
 
     CatSaveData updatedCatData;
 
+    // Get current level to determine cost
+    int currentLevel = 0;
+    for (const auto& cat : UserManager::GetInstance().GetUnlockedCats()) {
+        if (cat.catId == targetCatId) {
+            currentLevel = cat.level;
+            break;
+        }
+    }
+    if (currentLevel >= 10) return; // Already max level
+
+    int cost = DatabaseManager::GetInstance().GetCatData(targetCatId)->upgradeCosts[currentLevel];
 
     // Delegate the update logic to the data layer to maintain loose coupling
-    bool isUpgraded = UserManager::GetInstance().TryUpgradeCat(targetCatId, updatedCatData);
+    bool isUpgraded = UserManager::GetInstance().TryUpgradeCat(targetCatId, cost, updatedCatData);
 
     if (isUpgraded) {
         LOG_DEBUG("Upgraded cat ID: " + std::to_string(targetCatId) + " to level: " + std::to_string(updatedCatData.level));
