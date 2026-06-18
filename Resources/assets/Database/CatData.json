@@ -206,6 +206,223 @@
         }
       ],
       "upgrade_costs": [0, 700, 1600, 2800, 4300, 6100, 8200, 10600, 13300, 16300, 800, 1400, 3200, 5600, 8600, 12200, 16400, 21200, 26600, 32600]
+    },
+
+    {
+      "id": 18,
+      "name_internal": "Ninja_cat",
+      "max_level": 20,
+      "cat_path": ["/cat_materials/normal/ninja_cat/form/1.png",
+        "/cat_materials/normal/ninja_cat/form/2.png",
+        "/cat_materials/normal/ninja_cat/form/3.png"],
+      "generate_cat_button": ["/cat_materials/normal/ninja_cat/generate_cat_button/1.png",
+        "/cat_materials/normal/ninja_cat/generate_cat_button/2.png",
+        "/cat_materials/normal/ninja_cat/generate_cat_button/3.png"],
+      "forms": [
+        {
+          "form_index": 1, "name": "Ninja_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 2, "name": "Ninja_Frog_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 3, "name": "Flying_Ninja_Cat", "cost": 1300, "base_hp": 3000, "hp_growth": 600, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "Knockback", "talent": "none", "Recharge_Time": 546
+        }
+      ],
+      "upgrade_costs": [0, 700, 1600, 2800, 4300, 6100, 8200, 10600, 13300, 16300, 800, 1400, 3200, 5600, 8600, 12200, 16400, 21200, 26600, 32600]
+    },
+
+    {
+      "id": 21,
+      "name_internal": "Sumo_cat",
+      "max_level": 20,
+      "cat_path": ["/cat_materials/normal/sumo_cat/form/1.png",
+        "/cat_materials/normal/sumo_cat/form/2.png",
+        "/cat_materials/normal/sumo_cat/form/3.png"],
+      "generate_cat_button": ["/cat_materials/normal/sumo_cat/generate_cat_button/1.png",
+        "/cat_materials/normal/sumo_cat/generate_cat_button/2.png",
+        "/cat_materials/normal/sumo_cat/generate_cat_button/3.png"],
+      "forms": [
+        {
+          "form_index": 1, "name": "Sumo_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 2, "name": "Madame_Sumo", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 3, "name": "Flying_Ninja_Cat", "cost": 1300, "base_hp": 3000, "hp_growth": 600, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "Knockback", "talent": "none", "Recharge_Time": 546
+        }
+      ],
+      "upgrade_costs": [0, 700, 1600, 2800, 4300, 6100, 8200, 10600, 13300, 16300, 800, 1400, 3200, 5600, 8600, 12200, 16400, 21200, 26600, 32600]
+    },
+
+    {
+      "id": 32,
+      "name_internal": "Hip_Hop_Cat",
+      "max_level": 20,
+      "cat_path": ["/cat_materials/normal/hip_hop_cat/form/1.png",
+        "/cat_materials/normal/hip_hop_cat/form/2.png",
+        "/cat_materials/normal/hip_hop_cat/form/3.png"],
+      "generate_cat_button": ["/cat_materials/normal/hip_hop_cat/generate_cat_button/1.png",
+        "/cat_materials/normal/hip_hop_cat/generate_cat_button/2.png",
+        "/cat_materials/normal/hip_hop_cat/generate_cat_button/3.png"],
+      "forms": [
+        {
+          "form_index": 1, "name": "Hip_Hop_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 2, "name": "Dancing_Flasher_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 3, "name": "Can_Can_Cat", "cost": 1300, "base_hp": 3000, "hp_growth": 600, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "Knockback", "talent": "none", "Recharge_Time": 546
+        }
+      ],
+      "upgrade_costs": [0, 700, 1600, 2800, 4300, 6100, 8200, 10600, 13300, 16300, 800, 1400, 3200, 5600, 8600, 12200, 16400, 21200, 26600, 32600]
+    },
+
+    {
+      "id": 37,
+      "name_internal": "Pogo_Cat",
+      "max_level": 20,
+      "cat_path": ["/cat_materials/normal/pogo_cat/form/1.png",
+        "/cat_materials/normal/pogo_cat/form/2.png",
+        "/cat_materials/normal/pogo_cat/form/3.png"],
+      "generate_cat_button": ["/cat_materials/normal/pogo_cat/generate_cat_button/1.png",
+        "/cat_materials/normal/pogo_cat/generate_cat_button/2.png",
+        "/cat_materials/normal/pogo_cat/generate_cat_button/3.png"],
+      "forms": [
+        {
+          "form_index": 1, "name": "Pogo_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 2, "name": "Masai_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 3, "name": "Jiangshi_Cat", "cost": 1300, "base_hp": 3000, "hp_growth": 600, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "Knockback", "talent": "none", "Recharge_Time": 546
+        }
+      ],
+      "upgrade_costs": [0, 700, 1600, 2800, 4300, 6100, 8200, 10600, 13300, 16300, 800, 1400, 3200, 5600, 8600, 12200, 16400, 21200, 26600, 32600]
+    },
+
+    {
+      "id": 41,
+      "name_internal": "Salon_Cat",
+      "max_level": 20,
+      "cat_path": ["/cat_materials/normal/salon_cat/form/1.png",
+        "/cat_materials/normal/salon_cat/form/2.png",
+        "/cat_materials/normal/salon_cat/form/3.png"],
+      "generate_cat_button": ["/cat_materials/normal/salon_cat/generate_cat_button/1.png",
+        "/cat_materials/normal/salon_cat/generate_cat_button/2.png",
+        "/cat_materials/normal/salon_cat/generate_cat_button/3.png"],
+      "forms": [
+        {
+          "form_index": 1, "name": "Salon_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 2, "name": "Paris_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 3, "name": "Cyborg_Cat", "cost": 1300, "base_hp": 3000, "hp_growth": 600, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "Knockback", "talent": "none", "Recharge_Time": 546
+        }
+      ],
+      "upgrade_costs": [0, 700, 1600, 2800, 4300, 6100, 8200, 10600, 13300, 16300, 800, 1400, 3200, 5600, 8600, 12200, 16400, 21200, 26600, 32600]
+    },
+
+    {
+      "id": 46,
+      "name_internal": "Jurassic_Cat",
+      "max_level": 20,
+      "cat_path": ["/cat_materials/normal/jurassic_cat/form/1.png",
+        "/cat_materials/normal/jurassic_cat/form/2.png",
+        "/cat_materials/normal/jurassic_cat/form/3.png"],
+      "generate_cat_button": ["/cat_materials/normal/jurassic_cat/generate_cat_button/1.png",
+        "/cat_materials/normal/jurassic_cat/generate_cat_button/2.png",
+        "/cat_materials/normal/jurassic_cat/generate_cat_button/3.png"],
+      "forms": [
+        {
+          "form_index": 1, "name": "Jurassic_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 2, "name": "Jurassic_Cat_Sitter", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 3, "name": "Catasaurus", "cost": 1300, "base_hp": 3000, "hp_growth": 600, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "Knockback", "talent": "none", "Recharge_Time": 546
+        }
+      ],
+      "upgrade_costs": [0, 700, 1600, 2800, 4300, 6100, 8200, 10600, 13300, 16300, 800, 1400, 3200, 5600, 8600, 12200, 16400, 21200, 26600, 32600]
+    },
+
+    {
+      "id": 47,
+      "name_internal": "Viking_Cat",
+      "max_level": 20,
+      "cat_path": ["/cat_materials/normal/viking_cat/form/1.png",
+        "/cat_materials/normal/viking_cat/form/2.png",
+        "/cat_materials/normal/viking_cat/form/3.png"],
+      "generate_cat_button": ["/cat_materials/normal/viking_cat/generate_cat_button/1.png",
+        "/cat_materials/normal/viking_cat/generate_cat_button/2.png",
+        "/cat_materials/normal/viking_cat/generate_cat_button/3.png"],
+      "forms": [
+        {
+          "form_index": 1, "name": "Viking_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 2, "name": "Thor_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 3, "name": "Maximum_the_Fighter", "cost": 1300, "base_hp": 3000, "hp_growth": 600, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "Knockback", "talent": "none", "Recharge_Time": 546
+        }
+      ],
+      "upgrade_costs": [0, 700, 1600, 2800, 4300, 6100, 8200, 10600, 13300, 16300, 800, 1400, 3200, 5600, 8600, 12200, 16400, 21200, 26600, 32600]
+    },
+
+    {
+      "id": 52,
+      "name_internal": "Shaman_Cat",
+      "max_level": 20,
+      "cat_path": ["/cat_materials/normal/shaman_cat/form/1.png",
+        "/cat_materials/normal/shaman_cat/form/2.png",
+        "/cat_materials/normal/shaman_cat/form/3.png"],
+      "generate_cat_button": ["/cat_materials/normal/shaman_cat/generate_cat_button/1.png",
+        "/cat_materials/normal/shaman_cat/generate_cat_button/2.png",
+        "/cat_materials/normal/shaman_cat/generate_cat_button/3.png"],
+      "forms": [
+        {
+          "form_index": 1, "name": "Shaman_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 2, "name": "Necromancer_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 3, "name": "Necro-Dancer_Cat", "cost": 1300, "base_hp": 3000, "hp_growth": 600, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "Knockback", "talent": "none", "Recharge_Time": 546
+        }
+      ],
+      "upgrade_costs": [0, 700, 1600, 2800, 4300, 6100, 8200, 10600, 13300, 16300, 800, 1400, 3200, 5600, 8600, 12200, 16400, 21200, 26600, 32600]
+    },
+
+    {
+      "id": 149,
+      "name_internal": "Mer_Cat",
+      "max_level": 20,
+      "cat_path": ["/cat_materials/normal/mer_cat/form/1.png",
+        "/cat_materials/normal/mer_cat/form/2.png",
+        "/cat_materials/normal/mer_cat/form/3.png"],
+      "generate_cat_button": ["/cat_materials/normal/mer_cat/generate_cat_button/1.png",
+        "/cat_materials/normal/mer_cat/generate_cat_button/2.png",
+        "/cat_materials/normal/mer_cat/generate_cat_button/3.png"],
+      "forms": [
+        {
+          "form_index": 1, "name": "Mer_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 2, "name": "Commando_Cat", "cost": 1300, "base_hp": 1500, "hp_growth": 300, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "none", "talent": "none", "Recharge_Time": 546
+        },
+        {
+          "form_index": 3, "name": "Cameraman_Cat", "cost": 1300, "base_hp": 3000, "hp_growth": 600, "base_attack": 150, "attack_growth": 40, "range": 150, "is_area_attack": true, "animation": { "precast": 20, "postcast": 30 }, "time_between_attacks": 140, "move_speed": 8.0, "Knockback": 1, "ability": "Knockback", "talent": "none", "Recharge_Time": 546
+        }
+      ],
+      "upgrade_costs": [0, 700, 1600, 2800, 4300, 6100, 8200, 10600, 13300, 16300, 800, 1400, 3200, 5600, 8600, 12200, 16400, 21200, 26600, 32600]
     }
+    
   ]
 }
