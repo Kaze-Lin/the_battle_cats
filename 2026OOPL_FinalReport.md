@@ -7,163 +7,186 @@
 
 ## 專案簡介
 ### 遊戲簡介
-- 因為我開學時還不知道要做什麼遊戲，所以我就去詢問漢軒助教，他推薦我製作他上次修OOPL製作的魔塔，我看到魔塔覺得很有趣，所以就決定要做魔塔。
-- 這次製作的魔塔原版是地上 20 層魔塔與地下 25 層魔塔，以及 10 關隱藏關卡的遊戲，但我只有製作地上 20 層魔塔以及 5 關隱藏關卡，並且做了一些劇情上的更動。
+  - 《貓咪大戰爭》是一款操作直覺的橫向塔防遊戲。玩家的核心目標是死守左方的我方基地，並派出貓咪大軍摧毀右方的敵方主堡。
+  - 戰鬥時，金錢會隨時間自動累積，玩家可花費金錢升級「工作狂貓」來加快賺錢速度與提升錢包上限。只要資金足夠，點擊圖示即可召喚貓咪。出擊的貓咪會自動前進、攻擊敵人，無須進行任何走位等複雜操作。
+  - 若遭遇敵方大軍壓境，可利用右下角自動充能的「貓咪砲」，抓準時機發射雷射來造成傷害並強制擊退敵人，藉此逆轉戰局。成功通關後會獲得經驗值（XP），玩家可用來升級貓咪、解鎖奇特的進化型態，或是強化基礎設施，為後續關卡做準備。
 
 ### 組別分工
-- 因為我是一個人一組，所以遊戲是由我一個人完成。
+  - 林秉峰
+    - UI
+    - 畫面事件觸發
+    - 資料、邏輯引用
+    - 素材裁切、加工
+    - 字幕
+    - 期末專案報告
+  - 鄭源勳
+    - JSON資料撰寫、讀取
+    - 抓取素材
+    - 角色召喚
+    - 攻擊、升級邏輯
+    - 影片拍攝
 
 ## 遊戲介紹
 ### 遊戲規則
-- **攻略魔塔** - 按鍵
-  - Space - 確認
-  - 上下左右 - 操縱勇者移動
-  - R - 重新開始
-  - Q - 撤退（攻擊中使用）
-  - S - 加速攻擊過程（攻擊中使用）
-  - A - 讓勇者的攻擊力變為3571（再按一次回復原本的攻擊力）
-    - 切換成Debug模式中所讓攻擊力上升，也會加在原本的攻擊力上，不會加在3571上
-  - W - 查看功能列表（再按一次關閉功能列表）
-- **攻擊規則**
-  - 勇者攻擊1次，敵人攻擊1~3次（根據攻擊次數來定）
-  - 勇者攻擊敵人
-    - 傷害 = 勇者攻擊力 - 敵人防禦力
-    - 特殊條件
-      - 如果傷害 == 0 - 傷害 = 1
-      - 會有（敵人敏捷）%的機會被敵人迴避攻擊
-  - 敵人攻擊勇者
-    - 傷害 = 敵人攻擊力 - 勇者防禦力
-      - 如果敵人有無視防禦力的特殊能力，就不須扣掉勇者防禦力
-    - 特殊條件
-      - 如果傷害 <= 0 -> 傷害 = 1
-      - 會有（勇者敏捷）%的機會被勇者迴避攻擊
-      - 如果敵人有必殺攻擊的特殊能力，就有10%的機會直接被擊殺
-      - 如果敵人有衰弱的特殊能力，就有1%的機會受到衰弱攻擊
-      - 如果敵人有中毒的特殊能力，就有1%的機會受到中毒攻擊
-        - 但我們做的遊戲關卡內沒有中毒攻擊的敵人
-- **道具獎勵**
-  - 上下左右 - 觸碰道具，獲得道具
-- **NPC對話**
-  - 上下左右 - 觸碰NPC，和NPC對話
-- **開啟門**
-  - 上下左右 - 觸碰門，判斷是否有對應鑰匙，開啟門
-- **樓層上下**
-  - 上下左右 - 從其他走道踩上樓梯，觸發上樓梯機制
-- **商店購物**
-  - 上下左右 - 觸碰商店(如果是三個連著的大商店，需觸碰中間的商店)，開啟商店選擇介面
+- **戰鬥系統**
+  - **資源管理**：戰鬥中錢包會隨時間自動累積金錢（Money），玩家可以消耗金錢來升級工作貓（Wallet Upgrade），藉此提高金錢累積速度與金錢上限。
+  - **出兵機制**：畫面下方有貓咪陣容按鈕，當金錢足夠且貓咪冷卻完畢時，點擊即可消耗金錢召喚貓咪。
+  - **貓咪大砲**：戰鬥過程中大砲會隨時間充能，集滿後可點擊發射，對敵方造成全畫面範圍傷害與擊退效果。
+  - **勝負條件**：我方貓咪主堡與敵方主堡各自擁有血量，只要優先將敵方主堡摧毀即獲勝；反之若我方主堡血量歸零則戰鬥失敗。
+  - **戰鬥判定**：每隻單位都有攻擊前搖（Precast）、後搖（Postcast）、攻擊間隔（Cooldown）與射程。當敵人進入射程後，單位會停下進行攻擊前搖，前搖結束當下進行傷害判定。
+- **貓咪基地與升級系統**
+  - 玩家可在基地查看當前持有的 XP 與貓罐頭。
+  - 進入「升級」介面可消耗 XP 升級解鎖的貓咪，或是升級主堡血量、工作貓效率、大砲攻擊力等科技。
+  - 進入「隊伍編成」介面可以藉由拖曳或是點擊的方式，將你所擁有的貓咪編排進 10 格的出戰陣容當中。
+- **關卡系統**
+  - 遊戲提供多個章節與關卡供玩家挑戰。會依據玩家的破關進度解鎖下一關。關卡會根據設計好的時間軸與觸發條件（如敵方主堡血量）來生成不同的敵人與 Boss。
 
 ### 遊戲畫面
 |   階段   |                        遊戲畫面                        |
 |:------:|:--------------------------------------------------:|
-|  開始畫面  |  <img src="FinalProjectImg/開始畫面.jpg" width="400">  |
-|  故事畫面  |  <img src="FinalProjectImg/故事畫面.jpg" width="400">  |
-|  攻略魔塔  |  <img src="FinalProjectImg/攻略魔塔.jpg" width="400">  |
-| NPC對話  | <img src="FinalProjectImg/NPC對話.jpg" width="400">  |
-|  敵人打架  |  <img src="FinalProjectImg/敵人打架.jpg" width="400">  |
-|  打贏獎勵  |  <img src="FinalProjectImg/打贏獎勵.jpg" width="400">  |
-|  領取道具  |  <img src="FinalProjectImg/領取道具.jpg" width="400">  |
-|  商店採買  |  <img src="FinalProjectImg/商店採買.jpg" width="400">  |
-| 查看敵人資料 | <img src="FinalProjectImg/查看敵人資料.jpg" width="400"> |
-|  樓層飛行  |  <img src="FinalProjectImg/樓層飛行.jpg" width="400">  |
-|  按鍵說明  |  <img src="FinalProjectImg/按鍵說明.jpg" width="400">  |
-|  巨大怪物  |  <img src="FinalProjectImg/巨大怪物.jpg" width="400">  |
-|  假公主   |  <img src="FinalProjectImg/假公主.jpg" width="400">   |
-|  真公主   |  <img src="FinalProjectImg/真公主.jpg" width="400">   |
-| 失敗結束畫面 | <img src="FinalProjectImg/失敗結束畫面.jpg" width="400"> |
-| 勝利結束畫面 | <img src="FinalProjectImg/勝利結束畫面.jpg" width="400"> |
+|  登入畫面  |  <img src="FinalProjectImg/登入畫面.jpg" width="400">  |
+|  貓咪基地  | <img src="FinalProjectImg/貓咪基地畫面.jpg" width="400"> |
+|    升級   |  <img src="FinalProjectImg/升級介面.jpg" width="400">  |
+|隊伍編成介面|  <img src="FinalProjectImg/編成介面.jpg" width="400">  |
+|  關卡選擇  |  <img src="FinalProjectImg/關卡選擇.jpg" width="400">  |
+|    戰鬥   |  <img src="FinalProjectImg/戰鬥畫面.jpg" width="400">  |
+|   結算畫面   | <img src="FinalProjectImg/結算畫面.jpg" width="400"> |
 
 ## 程式設計
 ### 程式架構
+  #### 1. 基礎物件與 UI 系統 (Core & UI System)
+  ```mermaid
+  %%{init: {"class": {"hideEmptyMembersBox": true}}}%%
+  classDiagram
+      %% Core & UI Components
+      class IStateful {
+          <<Interface>>
+      }
+
+      GameObject <|-- BackgroundImage
+      GameObject <|-- Button
+      GameObject <|-- HealthBar
+      GameObject <|-- ResourceDisplay
+      GameObject <|-- ScrollContainer
+      GameObject <|-- Text
+      GameObject <|-- TwoLayerText
+      
+      BackgroundImage <|-- OptionBlock
+      OptionBlock <|-- DeployBlock
+      OptionBlock <|-- StageBlock
+      OptionBlock <|-- UpgradeBlock
+      
+      TwoLayerText <|-- TextButton
+
+      IStateful <|.. Button
+      IStateful <|.. HealthBar
+      IStateful <|.. ResourceDisplay
+      IStateful <|.. TextButton
+  ```
+- `GameObject`：所有遊戲物件與介面的最底層基礎類別，提供渲染與更新的基本介面。
+- **UI 與 Component 組件**：
+  - `Button`、`TextButton`：實現狀態介面（`IStateful`），處理按鈕的 Hover、PressDown 等互動行為。
+  - `TwoLayerText`：實作帶有外框效果的雙層文字組件。
+  - 各種 `OptionBlock`：應用於不同選單中的選項區塊元件。
+  - `HealthBar`、`ResourceDisplay`：呈現單位血量與遊戲資源。
+
+#### 2. 遊戲場景與流程管理 (Phase & State Management)
 ```mermaid
-graph TD
+%%{init: {"class": {"hideEmptyMembersBox": true}}}%%
+classDiagram
+    %% Phase Management
+    GameObject <|-- Phase
+    
+    Phase <|-- Login
+    Phase <|-- CatBase
+    Phase <|-- StageSelection
+    Phase <|-- TeamBuild
+    Phase <|-- Upgrade
+    Phase <|-- PropsStore
+    Phase <|-- Fight
 
+    class App
+    class PhaseManager
+    class ScrollManager
 
-    Util::GameObject --> AnimationObject
-    Util::GameObject --> ImageObject
-    Util::GameObject --> TextObject
-    Util::GameObject --> BackGroundImage
+    %% Dependencies & Compositions
+    App *-- Phase : current phase
+    PhaseManager ..> Phase : manages & switches
     
-    AnimationObject --> Thing
-    
-    Thing --> Road
-    Thing --> Enemy
-    Thing --> Item
-    Thing --> NPC
-    Thing --> Door
-    Thing --> Stair
-    Thing --> Shop
-    
-    Enemy --> BigEnemy
-    Enemy --> FakePrincess
-    
-    Dialog --> ItemDialog
-    Dialog --> NPCDialog
-    Dialog --> ShopDialog
-    
-    EnemyDataManager
-    Fighting
-    Fly
-    SceneManager
-    MapManager
-    App
-
+    StageSelection *-- ScrollManager : contains
+    TeamBuild *-- ScrollManager : contains
+    Upgrade *-- ScrollManager : contains
 ```
-以下的點代表繼承、數字代表詳細解釋
-- `Util::GameObject` - PTSD中的遊戲物件
-  - `AnimationObject` - 動畫呈現的遊戲物件
-    - `Thing` - 基礎地圖物件
-      - `Road` - 地圖上的路跟牆
-      - `Enemy` - 地圖上的敵人
-        - `BigEnemy` - 地圖上的巨大敵人
-        - `FakePrincess` - 地圖上的假公主
-      - `Item` - 地圖上的道具
-      - `NPC` - 地圖上的NPC
-      - `Door` - 地圖上的門
-      - `Stair` - 地圖上的樓梯和特殊樓梯
-      - `Shop` - 地圖上的商店
-  - `ImageObject` - 圖片呈現的遊戲物件
-  - `TextObject` - 文字呈現的遊戲物件
-  - `BackgroundImage` - 背景圖片 - 內涵切換背景的函式
-- `Dialog` - 基礎對話框物件
-  - `ItemDialog` - 獲得道具的對話框（可能會被NPC觸發）
-  - `NPCDialog` - 跟NPC對話的對話框
-  - `ShopDialog` - 商店購物的對話框
-- `EnemyDataManager` - 查看敵人資料的介面
-  1. 使用`EnemyData`複製一頁三個敵人資訊
-- `Fighting` - 戰鬥介面
-- `Fly` - 飛行介面
-- `SceneManager` - 場景控制
-- `MapManager` - 地圖控制、勇者觸碰其他物體
-- `App` - 主遊戲架構
+- `App`：主程式進入點，控制 `START`、`UPDATE`、`END` 的基本狀態迴圈，並負責管理當前的遊戲場景（Phase）。
+- `PhaseManager`（Singleton）：負責遊戲場景的切換與歷史路徑堆疊記憶（用於返回上一頁）。
+- **Phase 場景系統**：皆繼承自 `GameObject`，作為各個獨立畫面的容器。
+  - `Phase`：基礎場景類別。
+  - `Login`：登入與註冊畫面。
+  - `CatBase`：貓咪大廳，遊戲選單的中樞。
+  - `StageSelection`, `Upgrade`, `TeamBuild`：分別負責關卡選擇、貓咪與科技升級，以及支援拖曳換位的隊伍編成。
+- `ScrollManager`：泛型的滑動管理器，被多個場景包含，負責處理選單的拖曳滾動與自動吸附（Snap）功能。
+
+#### 3. 戰鬥系統與資料管理 (Combat & Data Management)
+```mermaid
+%%{init: {"class": {"hideEmptyMembersBox": true}}}%%
+classDiagram
+    %% Combat Systems & Managers
+    class Fight
+    class EntityManager
+    class Unit
+    class Cannon
+    class Wallet
+    class CatSlotController
+    class HealthBar
+
+    class DatabaseManager { <<Singleton>> }
+    class LevelManager { <<Singleton>> }
+    class UserManager { <<Singleton>> }
+
+    Fight *-- Wallet : contains
+    Fight *-- Cannon : contains
+    Fight *-- CatSlotController : contains
+    Fight ..> EntityManager : delegates to
+    
+    EntityManager o-- Unit : spawns & manages
+    HealthBar o-- Unit : observes health
+    
+    Fight ..> DatabaseManager : queries data
+    Fight ..> LevelManager : checks progress
+    Fight ..> UserManager : updates money/XP
+```
+- `Fight`：核心戰鬥場景，負責整合介面（如金錢 UI `Wallet`、大砲充能 UI `Cannon`、出兵按鈕 `CatSlotController`）與底層邏輯。
+- **Entity 實體系統**：
+  - `EntityManager`：戰鬥時專用的實體管理器。負責動態生成我方貓咪、敵方單位以及雙方主堡，並負責處理單位的死亡回收、碰撞偵測以及攻擊範圍篩選。
+  - `Unit`：戰場上的戰鬥單位。內部擁有狀態機來控制（Walk, Precast, Postcast, Cooldown, Knockback, Dead），並處理動畫對齊與血量邏輯。
+- **資料管理類別（Singleton 單例模式）**：
+  - `DatabaseManager`：讀取並管理唯讀的遊戲靜態數據，如 `UnitData`（貓咪數值）、`EnemyData`（敵人數值）、`StageData`（關卡出怪規則）。
+  - `UserManager`：處理玩家帳號系統，管理與儲存資源（XP/罐頭）、貓咪等級與解鎖進度、隊伍編成等資料。
+  - `LevelManager`：載入並管理當前關卡的時間軸與出怪規則。
 
 ### 程式技術
-- **控制狀態**
-  - 使用enum控制當前畫面與`FakePrincess`的狀態
-    - 例如：開始畫面、故事畫面、攻略魔塔、結束畫面
-- **分類不同物件**
-  - 地圖物件：
-    - 一開始分析這個遊戲的時候發現地圖上的物件（除了勇者）大致分成7（路牆、敵人、道具、NPC、門、樓梯、商店），因此我設立了父物件`Thing`，讓地圖上的各種子物件都能繼承父類別。將他們編號好讓地圖可以只用數字表示且分類每種不同的物件。
-  - 對話框：
-    - 我一開始發現獲得道具跟NPC對話還有商店採買東西的介面都有一個可變動的文字對話框，我便建立了`Dialog`的基底類別，讓`ItemDialog`, `NPCDialog`, `ShopDialog`繼承。
-- **NPC對話特殊事件**
-  - 一些`NPC`互動是一些買賣，因此我把它當作是`Shop`，觸發`Shop`的互動事件。
-  - 一些`NPC`不只是有對話，還有多次來回對話、獲得獎勵和對話完消失之類的情況，因此我在`NPC`對話的腳本中加入了一些特出規則。
-    - 例如：用csv儲存，第一格為判斷格（類似opcode），可以寫上`對話角色的名稱`, `0`, `item`, `hide`, `win`，分別代表新的一個對話格、延續上個對話格的下一行話、對話結束獲得物品、對話結束消失在地圖上、對話結束時勝利（只有真公主會用到）。
-- **檔案讀取**
-  - 我建立了`Read.hpp`來包裝檔案讀取的function。
-    - 例如：`split_csv`和`open_csv`是讀取csv並將他們切割開來、`open_txt`是讀取txt的資料。
-- **可加快攻擊的迭代速度**
-  - 原本的魔塔沒辦法加快攻擊的速度，只能等他們慢慢打，但我在試玩的時候覺得慢慢打太慢了，所以我新增了按鍵可以讓破關速度更快。
-- **死靈系列敵人**
-  - 死靈系列敵人死後會在同地點重生一個較弱的敵人，因此我就在`Enemy`中新增一個`Next_Enemy`敵人死後可以直接變成下一個敵人，這樣就不需要額外建立敵人物件。
+- **場景管理 (Phase Management)**
+  - 利用字串對應（`std::unordered_map`）與 Factory 模式來動態生成場景，並用 `std::vector<std::string>` 紀錄玩家進入的路徑，輕鬆實現「Go Back（返回上一頁）」的功能，不需要將所有場景同時保留在記憶體中。
+- **JSON 資料驅動 (Data-Driven Design)**
+  - 大量使用 `nlohmann::json` 解析遊戲基礎數據。貓咪的血量、攻擊、前後搖時間，以及關卡的出怪間隔等，都可以脫離程式碼直接修改 JSON 檔，讓遊戲的數值平衡調整非常方便。存檔系統也依靠 JSON 將複雜的使用者結構（`UserProfile`）序列化儲存。
+- **戰鬥有限狀態機 (Finite State Machine)**
+  - `Unit` 內部實作了嚴謹的狀態機切換（`UnitState`）。單位遭遇敵人時切換至 `Precast` 並開始前搖計時，前搖結束的當下才會扣除敵人血量，隨後進入 `Postcast` 與 `Cooldown`。徹底解決了「動作還沒播放完就先扣血」的邏輯與動畫分離問題。
+- **UI 互動與拖曳機制**
+  - 在編成介面中實作了 Drag & Drop 機制。利用滑鼠按下的時間與座標差距來區分玩家是想要「滑動畫面（Scroll）」還是「拖拉物件（Drag）」。當判定為拖拉時，會生成半透明的跟隨虛影（Ghost），並在放開時計算最靠近的格子（Grid Index）進行陣容抽換。
+- **事件回調與解耦 (Observer / Callback Pattern)**
+  - 大量利用 `std::function` 將 UI 更新邏輯與底層數值解耦。例如戰鬥中的 `Unit` 血量變化會觸發 `m_onHealthChanged` 通知血條更新；`Wallet` 餘額改變會通知 UI 更新文字，避免每幀在 UI 層輪詢變數。
 
 ## 結語
 ### 問題與解決方法
-- 亂數產生器感覺並不亂數
-  - 因為我產生亂數種子應該放在程式執行的一開始，而不是要用到亂數當下的函式
-- 假公主的繼承問題
-  - 我在設計假公主的時候，發現假公主會先需要跟他對話，對話後封住後路並觸發戰鬥功能，因此我原本的設計是讓`FakePrincess`同時繼承`Enemy`和`NPC`，但發現這樣會造成菱形繼承的問題，因為`Enemy`和`NPC`都繼承了`Thing`，因此經過助教的建議後我改讓`FakePrincess`僅繼承`Enemy`，但在內部會有一個`NPC`的物件再讓`FakePrincess`自行控制是要觸發`Enemy`的`Touch`或是`NPC`的`Touch`。
-
+- **問題一：介面拖曳（Drag）與畫面滾動（Scroll）的判定衝突**
+  - **描述**：在貓咪編成畫面中，背景選單可以橫向滑動，但個別貓咪圖示又需要支援拖曳放入隊伍中。若判定條件太寬鬆，玩家點擊滑動時很容易誤觸發貓咪拖曳事件。
+  - **解決方法**：引入了「按壓時間」與「移動閥值」雙重判定。當滑鼠按下後若位移超過一定像素，或停留超過特定毫秒後再移動，才會將狀態切換為生成「拖曳虛影（Drag Ghost）」；若是快速短暫的橫向位移，則全部交由 `ScrollManager` 處理滾動邏輯。
+- **問題二：大量實體在範圍判定時的效能浪費**
+  - **描述**：遊戲後期場上可能同時存在數十隻貓咪與敵人。若每隻單位在攻擊時都透過雙層迴圈掃描全場尋找可攻擊對象，會造成嚴重的效能浪費。
+  - **解決方法**：將場上單位統一交由 `EntityManager` 集中管理。當單位攻擊時，只需呼叫 `GetEntitiesInRange(faction, startX, endX)`。管理器可以根據陣營與 X 座標進行高效率的篩選並回傳目標陣列，讓單位能輕易實現單體打第一隻，或範圍攻擊打全部的邏輯。
+- **問題三：單位攻擊與動畫不同步**
+  - **描述**：一開始設計攻擊邏輯時，冷卻一到就直接扣除敵方血量，導致貓咪的「揮擊動畫」才剛開始，敵人就已經受傷或死亡，視覺非常突兀。
+  - **解決方法**：在 `Unit` 中建立時間軸計時器與多重狀態（Precast / Postcast）。讓單位的攻擊邏輯拆分為「準備攻擊（等待前搖）」和「造成傷害（前搖結束的那一幀）」兩階段，才順利讓動畫與實際判定完美貼合。
 
 ### 自評
 | 項次 | 項目                      | 完成 |
@@ -175,12 +198,18 @@ graph TD
 | 5  | 報告至少保持基本的美感，人類可讀        | V  |
 
 ### 心得
-- **112820018 許景喬**
-  - 在這次製作「魔塔」的過程中，我體會到遊戲開發不只是寫出能運作的程式碼而已，而是要思考整體結構、遊戲體驗與可維護性。從最初決定主題、設計物件繼承架構、處理事件邏輯，到後來實作劇情與戰鬥系統，每一步都需要不斷思考與調整。尤其在處理像是假公主這種特殊事件時，我學會了如何在OOP架構中應對複雜的互動邏輯。這讓我更深刻理解C++的物件導向概念與實作上的挑戰。
-  - 此外，這也是我第一次從零開始完成一款具備基本故事性與互動介面的遊戲。過程中，當我看到角色能順利移動、打怪、互動、通關，甚至能用自己設計的快捷鍵加速流程，心中真的有種說不出的成就感。雖然也遇到不少問題（像是亂數、記憶體釋放、繼承衝突等），但能自己解決或在助教的建議下找出方法，讓我更有信心未來面對更大的專案。
-  - 總體來說，這次專案不只是一次程式作業，更像是一次完整的創作歷程。我從中學到了實務技能、問題解決能力，也發現自己真的很喜歡「創造一個世界」的感覺。我非常感謝提供我遊戲主題的黃漢軒助教，要是沒有他我可能連遊戲都不知道要做哪個。
+- **113590045 林秉峰**  
+  - 
+  - 這次專案中，我學會了如何利用單例模式（Manager）、狀態機（FSM），以及介面繼承來管理龐大的遊戲系統。把靜態數值（Database）、玩家存檔（User）、渲染呈現（GameObject）與戰鬥邏輯（Entity）明確拆分開來，這對 Debug 與後續擴充的幫助非常大。
+  - 過去可能都把數據寫死在程式碼裡，這次改用外部 `nlohmann::json` 解析資料後，發現想要新增一隻貓咪或改變怪物血量，完全不用重新編譯 C++ 程式碼，體會到了商業遊戲開發中數值企劃與程式分離的便利性。
+- **113590052 鄭源勳**
+  - 在實作自訂按鈕狀態、拖曳換陣容或是金錢數字跳動時，我發現 UI 開發往往需要處理繁瑣的座標轉換與滑鼠事件攔截。寫出克服這些問題（例如 Drag 與 Scroll 的衝突判定）後的程式碼非常有成就感。
+  - 在專案中使用了許多 C++11 以後的特性（如 `std::shared_ptr` 解決記憶體釋放問題、`std::function` 處理解耦的回調、`std::unordered_map` 加速查詢），讓整體的程式碼更安全、更現代化。
+
+*(註：以上心得為我依照技術重點幫你們草擬的方向，你們可以直接在檔案內修改成更符合自身體會的文字)*
 
 ### 貢獻比例
 |      組員       | 貢獻度  |
 |:-------------:|:----:|
-| 112820018 許景喬 | 100% |
+| 113590045 林秉峰 | 50% |
+| 113590052 鄭源勳 | 50% |

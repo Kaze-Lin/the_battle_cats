@@ -60,18 +60,21 @@ CatBase::CatBase(): Phase() {
             RESOURCE_DIR "/phase/lobby/restore_icon.png",
             nullptr);
     m_b_RestoreIcon->ScaleSize({WOOD_BAR_BUTTON_SCALE, WOOD_BAR_BUTTON_SCALE});
+    m_b_RestoreIcon->SetVisible(false);
 
     m_b_NormalGachaIcon =
         std::make_shared<Button>(
             RESOURCE_DIR "/phase/lobby/normal_gacha_icon.png",
             nullptr);
     m_b_NormalGachaIcon->ScaleSize({WOOD_BAR_BUTTON_SCALE, WOOD_BAR_BUTTON_SCALE});
+    m_b_NormalGachaIcon->SetVisible(false);
 
     m_b_SpecialGachaIcon =
         std::make_shared<Button>(
             RESOURCE_DIR "/phase/lobby/special_gacha_icon.png",
             nullptr);
     m_b_SpecialGachaIcon->ScaleSize({WOOD_BAR_BUTTON_SCALE, WOOD_BAR_BUTTON_SCALE});
+    m_b_SpecialGachaIcon->SetVisible(false);
 
     m_b_PropsStore =
         std::make_shared<Button>(
