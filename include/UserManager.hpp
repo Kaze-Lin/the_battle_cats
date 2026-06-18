@@ -190,12 +190,13 @@ public:
     }
 
     // Returns true if upgrade was successful. Outputs the updated cat data.
-    bool TryUpgradeCat(int catId, CatSaveData& outUpdatedCat) {
+    bool TryUpgradeCat(int catId, int cost, CatSaveData& outUpdatedCat) {
         if (!m_currentUser) return false;
 
         for (auto& cat : m_currentUser->unlockedCats) {
             if (cat.catId == catId) {
-                if (cat.level < 10) {
+                if (cat.level < 10 && m_currentUser->resources.xp >= cost) {
+                    m_currentUser->resources.xp -= cost;
                     cat.level += 1;
                     if (cat.level == 10) {
                         cat.currentForm = 2; // Unlock next form at level 10
@@ -204,7 +205,7 @@ public:
                     SaveDatabase(); // Ensure the upgrade is immediately persisted to disk
                     return true;
                 }
-                break; // Cat found but already max level
+                break; // Cat found but already max level or not enough XP
             }
         }
         return false;
