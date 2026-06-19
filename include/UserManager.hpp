@@ -48,10 +48,12 @@ public:
                 m_database[profile->username] = profile;
             }
             m_isLoaded = true;
-            LOG_INFO("User database loaded safely. Total users: %zu", m_database.size());
+            LOG_INFO("User database loaded safely. Total users: " + std::to_string(m_database.size()));
 
         } catch (const std::exception& e) {
-            LOG_ERROR("JSON parsing failed! Corrupted file? %s", e.what());
+            std::string log = "JSON parsing failed! Corrupted file? ";
+            log.append(e.what());
+            LOG_ERROR(log);
         }
     }
 
@@ -90,7 +92,9 @@ public:
 
     bool Register(const std::string& username, const std::string& password) {
         if (m_database.find(username) != m_database.end()) {
-            LOG_WARN("Registration failed: Username %s already exists.", username.c_str());
+            std::string log = "Registration failed: Username ";
+            log.append(username.c_str());
+            LOG_WARN(log + "%s already exists.");
             return false;
         }
 
@@ -120,23 +124,29 @@ public:
         auto it = m_database.find(username);
 
         if (it == m_database.end()) {
-            LOG_WARN("Login failed: User %s not found.", username.c_str());
+            std::string log = "Login failed: User ";
+            log.append(username.c_str());
+            LOG_WARN(log + " not found.");
             return false;
         }
 
         if (it->second->password == password) {
             m_currentUser = it->second;
-            LOG_INFO("User '%s' logged in successfully.", username.c_str());
+            std::string log = "User ";
+            log.append(username.c_str());
+            LOG_INFO(log + " logged in successfully.");
             return true;
         } else {
-            LOG_WARN("Login failed: Incorrect password for '%s'.", username.c_str());
+            std::string log = "Login failed: Incorrect password for ";
+            log.append(username.c_str());
+            LOG_WARN(log);
             return false;
         }
     }
 
     void Logout() {
         if (m_currentUser) {
-            LOG_INFO("User %s logged out.", m_currentUser->username.c_str());
+            LOG_INFO("User " + m_currentUser->username + " logged out.");
             m_currentUser = nullptr;
             SaveDatabase();
         }
