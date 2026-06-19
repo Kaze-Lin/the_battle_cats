@@ -42,63 +42,63 @@ public:
     void Place(const glm::vec2& p);
 };
 
-    class Fight: public Phase {
-    private:
-        enum class SubState {
-            PLAYING,
-            PAUSED
-        };
-        SubState m_CurrentState = SubState::PLAYING;
-
-        std::shared_ptr<BackgroundImage> m_PauseMenuBg;
-        std::shared_ptr<TextButton> m_ResumeBtn;
-        std::shared_ptr<TextButton> m_ExitBtn;
-
-        void SetPauseMenuVisible(bool visible);
-
-        // background image (without interaction image)
-        std::shared_ptr<BackgroundImage> m_BackgroundImage;
-
-        // button image (with interaction image)
-        std::shared_ptr<Button> m_b_Pause;
-        std::shared_ptr<Button> m_b_RickUpgrade;
-        std::shared_ptr<Button> m_b_CannonCharge;
-
-        // stage name
-        std::shared_ptr<TwoLayerText> m_StageName;
-
-        // wallet and its UI
-        std::shared_ptr<Wallet> m_Wallet;
-        std::shared_ptr<TwoLayerText> m_WalletMoneyText;
-        std::shared_ptr<TwoLayerText> m_WalletLevelText;
-
-        // cannon and its UI
-        std::shared_ptr<Cannon> m_Cannon;
-        std::shared_ptr<TwoLayerText> m_LaserEffectText;
-        float m_laserTimer = 0.0f;
-
-        float m_timeScale = 1.0f;
-
-        // generate cat button
-        std::vector<std::shared_ptr<CatSlotController>> m_CatSlots;
-
-        // IDs are in the team build
-        void DeployCatButton(std::vector<int> IDs);
-
-
-        bool m_isGameOver = false;
-
-        // 結算畫面元件
-        std::shared_ptr<TwoLayerText> m_SettlementText;
-        std::shared_ptr<TextButton> m_SettlementExitBtn;
-        void ShowSettlementScreen(bool isVictory);
-
-    public:
-        std::shared_ptr<Phase> GetDestinationPhase() override;
-
-        Fight();
-        ~Fight() override;
-
-        void Update() override;
+class Fight: public Phase {
+private:
+    enum class SubState {
+        PLAYING,
+        PAUSED
     };
+    SubState m_CurrentState = SubState::PLAYING;
+
+    std::shared_ptr<BackgroundImage> m_PauseMenuBg;
+    std::shared_ptr<TextButton> m_ResumeBtn;
+    std::shared_ptr<TextButton> m_ExitBtn;
+
+    void SetPauseMenuVisible(bool visible);
+
+    // background image (without interaction image)
+    std::shared_ptr<BackgroundImage> m_BackgroundImage;
+
+    // button image (with interaction image)
+    std::shared_ptr<Button> m_b_Pause;
+    std::shared_ptr<Button> m_b_RickUpgrade;
+    std::shared_ptr<Button> m_b_CannonCharge;
+
+    // stage name
+    std::shared_ptr<TwoLayerText> m_StageName;
+
+    // wallet and its UI
+    std::shared_ptr<Wallet> m_Wallet;
+    std::shared_ptr<TwoLayerText> m_WalletMoneyText;
+    std::shared_ptr<TwoLayerText> m_WalletLevelText;
+
+    // cannon and its UI
+    std::shared_ptr<Cannon> m_Cannon;
+    std::shared_ptr<TwoLayerText> m_LaserEffectText;
+    float m_laserTimer = 0.0f;
+
+    float m_timeScale = 1.0f;
+
+    // generate cat button
+    std::vector<std::shared_ptr<CatSlotController>> m_CatSlots;
+
+    // IDs are in the team build
+    void DeployCatButton(std::vector<int> IDs);
+
+
+    bool m_isGameOver = false;
+
+    // 結算畫面元件
+    std::shared_ptr<TwoLayerText> m_SettlementText;
+    std::shared_ptr<TextButton> m_SettlementExitBtn;
+    void ShowSettlementScreen(bool isVictory);
+
+public:
+    std::shared_ptr<Phase> GetDestinationPhase() override;
+
+    Fight();
+    ~Fight() override;
+
+    void Update() override;
+};
 #endif //FIGHT_HPP
