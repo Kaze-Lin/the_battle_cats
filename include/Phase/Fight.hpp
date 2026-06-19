@@ -88,6 +88,8 @@ public:
 
         bool m_isGameOver = false;
 
+        bool m_replay = false;
+
         // 結算畫面元件
         std::shared_ptr<TwoLayerText> m_SettlementText;
         std::shared_ptr<TextButton> m_SettlementExitBtn;

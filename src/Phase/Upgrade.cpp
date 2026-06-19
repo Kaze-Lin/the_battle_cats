@@ -174,7 +174,7 @@ void Upgrade::Update() {
 
             for (auto &cat: UserManager::GetInstance().GetCurrentUser()->unlockedCats) {
                 if (cat.catId == m_UpgradeSelectionBar[midIndex]->ID) {
-                    if (cat.level == 10) {
+                    if (cat.level == 30) {
                         m_b_Upgrade->SetVisible(false);
                         m_UpgradeSelectionBar[midIndex]->m_Max->SetVisible(true);
                         m_UpgradeSelectionBar[midIndex]->m_UpgradeXP->SetVisible(false);
@@ -306,7 +306,7 @@ void Upgrade::BuildSelectionBar() {
 
         // == max level ==
         bg->m_Max->SetVisible(false);
-        if (unlockedCats[i].level == 10) {
+        if (unlockedCats[i].level == 30) {
             bg->SetImage(RESOURCE_DIR "/phase/upgrade/cat_background.png");
 
             bg->m_Max->SetVisible(true);
@@ -338,7 +338,7 @@ void Upgrade::UpgradeLevel() {
             break;
         }
     }
-    if (currentLevel >= 10) return; // Already max level
+    if (currentLevel >= 30) return; // Already max level
 
     int cost = DatabaseManager::GetInstance().GetCatData(targetCatId)->upgradeCosts[currentLevel];
 
@@ -354,7 +354,7 @@ void Upgrade::UpgradeLevel() {
         m_UpgradeSelectionBar[midIndex]->m_CatLevel->SetText(currentLevel);
         m_UpgradeSelectionBar[midIndex]->m_UpgradeXP->SetText(currentUpgradeXP);
 
-        if (updatedCatData.level == 10) {
+        if (updatedCatData.level == 10 or updatedCatData.level == 30) {
             m_UpgradeSelectionBar[midIndex]->m_CatBlockImage->SetImage(RESOURCE_DIR + GetIconPath(updatedCatData));
 
             std::string newName = DatabaseManager::GetInstance().GetCatData(targetCatId)->forms[updatedCatData.currentForm - 1].name;

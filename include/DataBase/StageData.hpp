@@ -30,6 +30,7 @@ struct StageData {
     std::string basePath;
     int enemyBaseHp;
     int experience;
+    int unlockCat;
     std::vector<SpawnRule> spawnRules;
 };
 

@@ -47,10 +47,8 @@ public:
 
     int GetEnemyCount() const { return m_enemyUnits.size(); }
 
-    // 取得特定陣營的所有實體 (供範圍攻擊或技能使用)
     std::vector<Unit*> GetEntitiesByFaction(Faction faction);
 
-    // 取得在特定 X 座標範圍內的敵人 (供單體/範圍攻擊判定)
     std::vector<Unit*> GetEntitiesInRange(Faction targetFaction, float startX, float endX);
 
     bool IsPlayerWin() const { return m_enemyBase != nullptr && m_enemyBase->IsDead(); }
@@ -58,11 +56,9 @@ public:
     bool IsEnemyWin() const { return m_catBase != nullptr && m_catBase->IsDead(); }
 
     void ClearFactionUnitsExceptBase(Faction faction);
-    
-    // 清空所有實體 (包含主堡與雙方單位)，用於結算畫面
+
     void ClearAllEntities();
 
-    // 設定全域的角色與敵人移動速度乘數
     static void SetGlobalMovementSpeedScale(float scale) {
         m_GlobalMovementSpeedScale = scale;
     }

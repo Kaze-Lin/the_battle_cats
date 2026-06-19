@@ -96,6 +96,8 @@ Fight::Fight(): Phase() {
             -10.0F);
     AddChild(m_BackgroundImage);
 
+    m_replay = UserManager::GetInstance().GetCurrentUser()->progress.highestStageCleared >= LevelManager::GetInstance().GetCurrentStage()->stageId;
+
     // Wallet 初始化
     m_Wallet = std::make_shared<Wallet>();
     int workerCatEfficiency = 1;
@@ -167,7 +169,6 @@ Fight::Fight(): Phase() {
                             this->AddChild(m_LaserEffectText);
                         }
 
-                        // 對範圍內的敵人造成傷害並擊退
                         auto catBase = EntityManager::GetInstance().GetCatBase();
                         if (catBase) {
                             float cannonRange = c->GetRange();
@@ -186,7 +187,6 @@ Fight::Fight(): Phase() {
             50.0F);
     m_b_CannonCharge->ScaleSize({ORIGINAL_SCALING + 0.5F, ORIGINAL_SCALING + 0.5F});
 
-    // 連接 Cannon 的事件來更新 UI
     std::weak_ptr<Button> weakCannonBtn = m_b_CannonCharge;
     m_Cannon->SetOnChargeChanged([weakCannonBtn](int chargeState) {
         if (auto btn = weakCannonBtn.lock()) {
@@ -201,10 +201,8 @@ Fight::Fight(): Phase() {
         }
     });
 
-    // 初始化 Cannon 以觸發第一次 Callback
     m_Cannon->Initialize(cannonAttack, cannonRange, cannonCharge);
 
-    // 連接 Wallet 的事件來更新 UI
     std::weak_ptr<TwoLayerText> weakMoneyText = m_WalletMoneyText;
     std::weak_ptr<TwoLayerText> weakLevelText = m_WalletLevelText;
     std::weak_ptr<Button> weakUpgradeBtn = m_b_RickUpgrade;
@@ -260,10 +258,9 @@ Fight::Fight(): Phase() {
     m_ExitBtn = std::make_shared<TextButton>(
         32, "Exit to Lobby", 99.0f    ,
         [this]() {
-            this->m_DestinationPhase = "CatBase"; // 將目標階段設為大廳
+            this->m_DestinationPhase = "CatBase";
         });
 
-    // 加入為子物件，交給 Phase::Update 管理
     AddChild(m_PauseMenuBg);
     AddChild(m_ResumeBtn);
     AddChild(m_ExitBtn);
@@ -272,7 +269,6 @@ Fight::Fight(): Phase() {
     m_ResumeBtn->Place({0.0f, 50.0f});
     m_ExitBtn->Place({0.0f, -50.0f});
 
-    // 預設關閉暫停選單
     SetPauseMenuVisible(false);
 
     // stage name
@@ -283,11 +279,8 @@ Fight::Fight(): Phase() {
         );
     AddChild(m_StageName);
 
-    // --- Layout settings ---
-    // background image (without interaction image)
     m_BackgroundImage->AlignWithWindow();
 
-    // button image (with interaction image)
     const auto pauseX = -1 * System::GetWindowWidth() / 2.0F + m_b_Pause->GetSize().x / 2.0F + 5.0F;
     const auto pauseY = System::GetWindowHeight() / 2.0F - m_b_Pause->GetSize().y / 2.0F - 5.0F;
     m_b_Pause->Place({pauseX, pauseY});
@@ -316,7 +309,6 @@ Fight::Fight(): Phase() {
 
     EntityManager::GetInstance().SetSceneNode(this);
 
-    // 設定敵人死亡時掉落金錢
     EntityManager::GetInstance().SetOnEnemyDied([weakWallet](Unit* enemy) {
         if (auto w = weakWallet.lock()) {
             if (enemy && enemy->GetFaction() == Faction::Enemy) {
@@ -374,9 +366,9 @@ void Fight::Update() {
     float realDeltaTime = Util::Time::GetDeltaTime();
 
     if (Util::Input::IsKeyDown(Util::Keycode::D)) {
-        if (m_timeScale != 5.0f) {
-            m_timeScale = 5.0f;
-            LOG_INFO("Time Scale changed to: 5.0x Speed!");
+        if (m_timeScale != 6.0f) {
+            m_timeScale = 6.0f;
+            LOG_INFO("Time Scale changed to: 6.0x Speed!");
         }
     }
     else if (Util::Input::IsKeyDown(Util::Keycode::A)) {
@@ -435,7 +427,6 @@ void Fight::Update() {
         UserManager::GetInstance().AddXP(LevelManager::GetInstance().GetStageExperience());
         m_isGameOver = true;
 
-        // 更新關卡進度
         if (auto user = UserManager::GetInstance().GetCurrentUser()) {
             const StageData* currentStage = LevelManager::GetInstance().GetCurrentStage();
             if (currentStage && currentStage->stageId > user->progress.highestStageCleared) {
@@ -443,12 +434,11 @@ void Fight::Update() {
                 
                 if (currentChapter != nullptr) {
                     user->progress.highestStageCleared = currentStage->stageId;
-                    
-                    // 閾值保護：如果是最後一關，關卡記錄不再往後推
+
                     if (currentStage->stageId < currentChapter->stages.size()) {
-                        user->progress.currentStage[1] = currentStage->stageId + 1; // 自動將選擇標籤推進到下一關
+                        user->progress.currentStage[1] = currentStage->stageId + 1;
                     } else {
-                        user->progress.currentStage[1] = currentStage->stageId; // 停留在最後一關
+                        user->progress.currentStage[1] = currentStage->stageId;
                     }
                     LOG_INFO("User progress updated! Highest stage cleared: %d", currentStage->stageId);
                 }
@@ -463,11 +453,11 @@ void Fight::Update() {
     }
 
     if (Util::Input::IsKeyDown(Util::Keycode::X)) {
-        EntityManager::GetInstance().SpawnCat(0, 1, 0);
+        EntityManager::GetInstance().SpawnCat(0, 10000, 2);
     }
 
     if (Util::Input::IsKeyDown(Util::Keycode::Z)) {
-        EntityManager::GetInstance().SpawnEnemy(0, 100);
+        EntityManager::GetInstance().SpawnEnemy(0, 10000);
     }
 }
 
@@ -503,10 +493,8 @@ void Fight::DeployCatButton(std::vector<int> IDs) {
         int formIndexForData = currentForm - 1;
 
         int cost = catData->forms[formIndexForData].cost;
-        // 貓咪大戰爭資料庫的 rechargeTime 通常為 Frame (以 30FPS 為基準)，轉換為秒數：
         float maxCd = catData->forms[formIndexForData].rechargeTime / 30.0f;
 
-        // 建立這個格子的獨立控制器
         auto slot = std::make_shared<CatSlotController>(cost, maxCd);
         std::weak_ptr<CatSlotController> weakSlot = slot;
         std::weak_ptr<Wallet> weakWallet = m_Wallet;
@@ -515,12 +503,10 @@ void Fight::DeployCatButton(std::vector<int> IDs) {
             RESOURCE_DIR + catData->catGenButton[formIndexForData],
             [catId, weakWallet, weakSlot, cost, level, formIndexForData]() {
                 if (auto s = weakSlot.lock()) {
-                    // 【先判斷冷卻】
                     if (!s->IsReady()) {
                         LOG_INFO("Cat is cooling down!");
-                        return; // 直接擋下點擊事件
+                        return;
                     }
-                    // 【再判斷金錢】
                     if (auto w = weakWallet.lock()) {
                         if (w->SpendMoney(cost)) {
                             EntityManager::GetInstance().SpawnCat(
@@ -528,7 +514,6 @@ void Fight::DeployCatButton(std::vector<int> IDs) {
                                 level,
                                 formIndexForData);
 
-                            // 產貓成功！觸發冷卻器
                             s->StartCooldown();
                         } else {
                             LOG_INFO("Not enough money!");
@@ -542,12 +527,9 @@ void Fight::DeployCatButton(std::vector<int> IDs) {
         slot->SetButton(btn);
         m_CatSlots.push_back(slot);
 
-        // 將按鈕與讀條文字都交給 Scene Graph 管理
         AddChild(slot->GetButton());
         AddChild(slot->GetCdText());
         AddChild(slot->GetCostText());
-
-        // Calculate Position using existing offset logic equivalent
         float btnWidth = btn->GetSize().x;
         float btnHeight = btn->GetSize().y;
         
@@ -572,10 +554,8 @@ void Fight::SetPauseMenuVisible(bool visible) {
 }
 
 void Fight::ShowSettlementScreen(bool isVictory) {
-    // 1. 清空所有實體 (透過 EntityManager)
     EntityManager::GetInstance().ClearAllEntities();
 
-    // 2. 移除除了背景以外的所有 UI 子物件
     for (auto it = m_Children.begin(); it != m_Children.end(); ) {
         if (*it != m_BackgroundImage) {
             it = m_Children.erase(it);
@@ -583,9 +563,13 @@ void Fight::ShowSettlementScreen(bool isVictory) {
             ++it;
         }
     }
-
-    // 3. 建立並加入結算文字
     std::string textStr = isVictory ? "VICTORY!" : "DEFEAT!";
+    bool checkUnlockcat = LevelManager::GetInstance().GetCurrentStage()->unlockCat != -1;
+    if (isVictory and checkUnlockcat and !m_replay){
+            UserManager::GetInstance().addCat(LevelManager::GetInstance().GetCurrentStage()->unlockCat);
+            //LOG_INFO("Get Unlock Cat %s",LevelManager::GetInstance().GetCurrentStage()->unlockCat);
+        }
+
     auto color = isVictory ? Util::Color::FromName(Util::Colors::YELLOW) : Util::Color::FromName(Util::Colors::RED);
     m_SettlementText = std::make_shared<TwoLayerText>(
         TextThemeDetail::DefaultFontSize * 3,
@@ -596,11 +580,10 @@ void Fight::ShowSettlementScreen(bool isVictory) {
     m_SettlementText->Place({0.0f, 100.0f});
     AddChild(m_SettlementText);
 
-    // 4. 建立並加入離開按鈕
     m_SettlementExitBtn = std::make_shared<TextButton>(
         32, "Exit to Lobby", 100.0f,
         [this]() {
-            this->m_DestinationPhase = "CatBase"; // 返回大廳
+            this->m_DestinationPhase = "CatBase";
         }
     );
     m_SettlementExitBtn->Place({0.0f, -50.0f});
