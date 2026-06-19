@@ -6,7 +6,7 @@ Login::Login(): Phase(){
     m_Prompt =
         std::make_shared<TwoLayerText>(
             60,
-            "Please Enter Your Account In Terminal_",
+            "Welcome ",
             0);
 
     // layout
@@ -76,6 +76,7 @@ void Login::Update() {
         if (success and UserManager::GetInstance().GetCurrentUser() != nullptr) {
             m_hasEnteredName = true;
             m_hasEnteredPassword = true;
+            m_Prompt->SetText("Welcome " + AccountName);
             LOG_DEBUG("Welcome " + AccountName);
             AddChild(m_tb_ToBeContinue);
         }
