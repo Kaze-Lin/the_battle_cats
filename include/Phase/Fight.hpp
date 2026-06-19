@@ -88,10 +88,12 @@ private:
 
     bool m_isGameOver = false;
 
-    // 結算畫面元件
-    std::shared_ptr<TwoLayerText> m_SettlementText;
-    std::shared_ptr<TextButton> m_SettlementExitBtn;
-    void ShowSettlementScreen(bool isVictory);
+        bool m_replay = false;
+
+        // 結算畫面元件
+        std::shared_ptr<TwoLayerText> m_SettlementText;
+        std::shared_ptr<TextButton> m_SettlementExitBtn;
+        void ShowSettlementScreen(bool isVictory);
 
 public:
     std::shared_ptr<Phase> GetDestinationPhase() override;

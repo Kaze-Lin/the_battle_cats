@@ -102,6 +102,11 @@ public:
         newUser->username = username;
         newUser->password = password;
 
+        CatSaveData saveData;
+        saveData.catId = 0;
+        saveData.level = 1;
+        saveData.currentForm = 1;
+        newUser->unlockedCats.push_back(saveData);
         newUser->resources.catFood = 100;
         newUser->progress.currentStage = {1, 1};
         newUser->baseUpgrades.walletCapacity = 1;
@@ -145,6 +150,14 @@ public:
             m_currentUser = nullptr;
             SaveDatabase();
         }
+    }
+
+    void addCat(int catId) {
+        CatSaveData saveData;
+        saveData.catId = catId;
+        saveData.level = 1;
+        saveData.currentForm = 1;
+        m_currentUser->unlockedCats.push_back(saveData);
     }
 
     std::shared_ptr<UserProfile> GetCurrentUser() { return m_currentUser; }
@@ -205,11 +218,14 @@ public:
 
         for (auto& cat : m_currentUser->unlockedCats) {
             if (cat.catId == catId) {
-                if (cat.level < 10 && m_currentUser->resources.xp >= cost) {
+                if (cat.level < 30 && m_currentUser->resources.xp >= cost) {
                     m_currentUser->resources.xp -= cost;
                     cat.level += 1;
                     if (cat.level == 10) {
                         cat.currentForm = 2; // Unlock next form at level 10
+                    }
+                    if (cat.level == 30) {
+                        cat.currentForm = 3; // Unlock next form at level 10
                     }
                     outUpdatedCat = cat;
                     SaveDatabase(); // Ensure the upgrade is immediately persisted to disk

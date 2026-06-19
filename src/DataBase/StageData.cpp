@@ -21,6 +21,7 @@ void from_json(const json& j, StageData& s) {
     j.at("base_path").get_to(s.basePath);
     j.at("enemy_base_hp").get_to(s.enemyBaseHp);
     j.at("experience").get_to(s.experience);
+    j.at("unlock_cat").get_to(s.unlockCat);
     j.at("spawn_rules").get_to(s.spawnRules);
     LOG_INFO("loading stage StageData successfully");
 }

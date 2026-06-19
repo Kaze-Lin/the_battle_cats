@@ -13,6 +13,7 @@
           "base_path" : "/towel/koren.png",
           "enemy_base_hp": 500,
           "experience": 1000,
+          "unlock_cat":1,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -43,6 +44,7 @@
           "base_path" : "/towel/mongolia.png",
           "enemy_base_hp": 500,
           "experience": 1300,
+          "unlock_cat":2,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -73,6 +75,7 @@
           "base_path" : "/towel/china.png",
           "enemy_base_hp": 500,
           "experience": 1600,
+          "unlock_cat":3,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -103,6 +106,7 @@
           "base_path" : "/towel/thailand.png",
           "enemy_base_hp": 500,
           "experience": 1900,
+          "unlock_cat":4,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -142,6 +146,7 @@
           "base_path" : "/towel/cambodia.png",
           "enemy_base_hp": 750,
           "experience": 2200,
+          "unlock_cat":5,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -181,6 +186,7 @@
           "base_path" : "/towel/philippines.png",
           "enemy_base_hp": 750,
           "experience": 2500,
+          "unlock_cat":6,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -220,6 +226,7 @@
           "base_path" : "/towel/japan.png",
           "enemy_base_hp": 2400,
           "experience": 2800,
+          "unlock_cat": 7,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -277,6 +284,7 @@
           "base_path" : "/towel/australia.png",
           "enemy_base_hp": 1500,
           "experience": 3100,
+          "unlock_cat": 8,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -324,6 +332,7 @@
           "base_path" : "/towel/singapore.png",
           "enemy_base_hp": 3000,
           "experience": 3400,
+          "unlock_cat": 18,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -381,6 +390,7 @@
           "base_path" : "/towel/maldives.png",
           "enemy_base_hp": 2500,
           "experience": 3700,
+          "unlock_cat": 21,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -429,6 +439,7 @@
           "base_path" : "/towel/india.png",
           "enemy_base_hp": 3500,
           "experience": 4000,
+          "unlock_cat": 32,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -496,6 +507,7 @@
           "base_path" : "/towel/nepal.png",
           "enemy_base_hp": 4000,
           "experience": 4300,
+          "unlock_cat":37,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -563,6 +575,7 @@
           "base_path" : "/towel/dubai.png",
           "enemy_base_hp": 5000,
           "experience": 4600,
+          "unlock_cat":41,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -639,6 +652,7 @@
           "base_path" : "/towel/SaudiArabia.png",
           "enemy_base_hp": 6000,
           "experience": 4900,
+          "unlock_cat": 46,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -706,6 +720,7 @@
           "base_path" : "/towel/kenya.png",
           "enemy_base_hp": 6100,
           "experience": 5200,
+          "unlock_cat":47,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -791,6 +806,7 @@
           "base_path" : "/towel/madagascar.png",
           "enemy_base_hp": 7000,
           "experience": 5500,
+          "unlock_cat":52,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -858,6 +874,7 @@
           "base_path" : "/towel/South_Africa.png",
           "enemy_base_hp": 7000,
           "experience": 5800,
+          "unlock_cat":149,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -952,6 +969,7 @@
           "base_path" : "/towel/ghana.png",
           "enemy_base_hp": 8000,
           "experience": 6100,
+          "unlock_cat":-1,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -1055,6 +1073,7 @@
           "base_path" : "/towel/sahara.png",
           "enemy_base_hp": 9000,
           "experience": 6400,
+          "unlock_cat":-1,
           "spawn_rules": [
             {
               "enemy_id": 2,
@@ -1131,6 +1150,7 @@
           "base_path" : "/towel/egypt.png",
           "enemy_base_hp": 9000,
           "experience": 6700,
+          "unlock_cat":149,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -1207,6 +1227,7 @@
           "base_path" : "/towel/turkey.png",
           "enemy_base_hp": 10000,
           "experience": 7000,
+          "unlock_cat":149,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -1292,6 +1313,7 @@
           "base_path" : "/towel/russia.png",
           "enemy_base_hp": 12000,
           "experience": 7300,
+           "unlock_cat":-1,
           "spawn_rules": [
             {
               "enemy_id": 1,
@@ -1386,6 +1408,7 @@
           "base_path" : "/towel/greece.png",
           "enemy_base_hp": 15000,
           "experience": 7600,
+          "unlock_cat":-1,
           "spawn_rules": [
             {
               "enemy_id": 2,
@@ -1435,6 +1458,7 @@
           "base_path" : "/towel/italy.png",
           "enemy_base_hp": 15000,
           "experience": 7900,
+          "unlock_cat":-1,
           "spawn_rules": [
             {
               "enemy_id": 3,
@@ -1511,6 +1535,7 @@
           "base_path" : "/towel/monaco.png",
           "enemy_base_hp": 15000,
           "experience": 8200,
+          "unlock_cat":-1,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -1578,6 +1603,7 @@
           "base_path" : "/towel/spain.png",
           "enemy_base_hp": 15000,
           "experience": 8500,
+          "unlock_cat":-1,
           "spawn_rules": [
             {
               "enemy_id": 13,
@@ -1608,6 +1634,7 @@
           "base_path" : "/towel/france.png",
           "enemy_base_hp": 15000,
           "experience": 8800,
+          "unlock_cat":-1,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -1683,6 +1710,7 @@
           "base_path" : "/towel/germany.png",
           "enemy_base_hp": 15000,
           "experience": 9100,
+          "unlock_cat":-1,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -1767,6 +1795,7 @@
           "base_path" : "/towel/denmark.png",
           "enemy_base_hp": 18000,
           "experience": 9400,
+          "unlock_cat":-1,
           "spawn_rules": [
             {
               "enemy_id": 0,
@@ -1842,6 +1871,7 @@
           "base_path" : "/towel/norway.png",
           "enemy_base_hp": 15000,
           "experience": 9700,
+          "unlock_cat":-1,
           "spawn_rules": [
             {
               "enemy_id": 1,
