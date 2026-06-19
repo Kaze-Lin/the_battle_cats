@@ -160,8 +160,8 @@ void StageSelection::BuildSelectionBar() {
 
         bg->m_StageID = {user->progress.currentStage[0], i};
 
-        std::string debug = "chapter: " + std::to_string(bg->m_StageID[0]) + ", stage: " + std::to_string(bg->m_StageID[1]);
-        LOG_DEBUG(debug);
+        // std::string debug = "chapter: " + std::to_string(bg->m_StageID[0]) + ", stage: " + std::to_string(bg->m_StageID[1]);
+        // LOG_DEBUG(debug);
 
         auto stage = DatabaseManager::GetInstance().GetStageData(bg->m_StageID[0], bg->m_StageID[1]);
         bg->Place({selectedPos.x + (bg->GetSize().x + 20.0F) * (i - 1), selectedPos.y});

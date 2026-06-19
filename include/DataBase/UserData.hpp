@@ -9,7 +9,7 @@
 #include "spdlog/fmt/bundled/chrono.h"
 
 struct Resources {
-    int xp = 0;
+    int xp = 1000;
     int catFood = 0;
     int energy = 0;
     int maxEnergy = 0;
@@ -18,7 +18,7 @@ inline void to_json(nlohmann::json& j, const Resources& r) {
     j = nlohmann::json{{"xp", r.xp}, {"cat_food", r.catFood}, {"energy", r.energy}, {"max_energy", r.maxEnergy}};
 }
 inline void from_json(const nlohmann::json& j, Resources& r) {
-    r.xp = j.value("xp", 0);
+    r.xp = j.value("xp", 1000);
     r.catFood = j.value("cat_food", 0);
     r.energy = j.value("energy", 100);
     r.maxEnergy = j.value("max_energy", 100);

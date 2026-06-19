@@ -41,7 +41,7 @@ DeployBlock::DeployBlock(
     m_CatSaveData(catSaveData){
     m_OriginalSize = m_Drawable->GetSize();
 
-    LOG_DEBUG("Build Cat Block With ID: " + std::to_string(m_CatSaveData.catId));
+    // LOG_DEBUG("Build Cat Block With ID: " + std::to_string(m_CatSaveData.catId));
     auto id = catSaveData.catId;
 
     const UnitData* catData = DatabaseManager::GetInstance().GetCatData(id);
@@ -51,8 +51,8 @@ DeployBlock::DeployBlock(
         return;
     }
 
-    std::string deploySort = std::to_string(id) + ": " + catData->nameInternal;
-    LOG_DEBUG(deploySort);
+    // std::string deploySort = std::to_string(id) + ": " + catData->nameInternal;
+    // LOG_DEBUG(deploySort);
 
     // layout
     // this->ScaleSize({0.39F, 0.39F});

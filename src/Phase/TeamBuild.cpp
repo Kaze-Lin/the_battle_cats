@@ -36,6 +36,11 @@ namespace {
         return glm::all(glm::greaterThanEqual(pos, left_bottom_pos)) &&
                glm::all(glm::lessThanEqual(pos, right_top_pos));
     }
+
+    constexpr glm::vec2 block_size = {148.0F, 114.0F};
+    constexpr glm::vec2 horizontal_offset = {196.0F, 0.0F};
+    constexpr glm::vec2 vertical_offset = {0.0F, 127.0F};
+    constexpr glm::vec2 pos = {-331.0F, 219.0F};
 }
 
 TeamBuild::TeamBuild(): Phase() {
@@ -147,18 +152,14 @@ TeamBuild::TeamBuild(): Phase() {
 
         glm::vec2 pos = (m_BlocksRange[i][0] + m_BlocksRange[i][1]) / 2.0F;
         m_TeamImages[i]->Place(pos);
-        m_TeamImages[i]->ScaleSize({1.14F, 1.14F});
+        glm::vec2 temp = {110.0F, 85.0F};
+        m_TeamImages[i]->ScaleSize(block_size / temp);
         AddChild(m_TeamImages[i]);
     }
     RefreshTeamImages();
 }
 
 void TeamBuild::CalculateBlocksRange() {
-    constexpr glm::vec2 block_size = {148.0F, 114.0F};
-    constexpr glm::vec2 horizontal_offset = {196.0F, 0.0F};
-    constexpr glm::vec2 vertical_offset = {0.0F, 127.0F};
-    constexpr glm::vec2 pos = {-331.0F, 219.0F};
-
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 5; j++) {
             glm::vec2 offset = (-1.0F * static_cast<float>(i) * vertical_offset) + (horizontal_offset * static_cast<float>(j));
