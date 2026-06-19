@@ -158,6 +158,7 @@ public:
         saveData.level = 1;
         saveData.currentForm = 1;
         m_currentUser->unlockedCats.push_back(saveData);
+        SaveDatabase();
     }
 
     std::shared_ptr<UserProfile> GetCurrentUser() { return m_currentUser; }

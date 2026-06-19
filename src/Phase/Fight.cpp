@@ -314,7 +314,7 @@ Fight::Fight(): Phase() {
         if (auto w = weakWallet.lock()) {
             if (enemy && enemy->GetFaction() == Faction::Enemy) {
                 w->AddMoney(enemy->GetDropGold());
-                LOG_INFO("Enemy died. Wallet received " + std::to_string(enemy->GetDropGold()) + " money.");
+                LOG_INFO("Enemy died. Wallet received " + std::to_string((int)enemy->GetDropGold()) + " money.");
             }
         }
     });
@@ -567,9 +567,10 @@ void Fight::ShowSettlementScreen(bool isVictory) {
     std::string textStr = isVictory ? "VICTORY!" : "DEFEAT!";
     bool checkUnlockcat = LevelManager::GetInstance().GetCurrentStage()->unlockCat != -1;
     if (isVictory and checkUnlockcat and !m_replay){
-            UserManager::GetInstance().addCat(LevelManager::GetInstance().GetCurrentStage()->unlockCat);
-            //LOG_INFO("Get Unlock Cat %s",LevelManager::GetInstance().GetCurrentStage()->unlockCat);
-        }
+        UserManager::GetInstance().addCat(LevelManager::GetInstance().GetCurrentStage()->unlockCat);
+        std::string catName = DatabaseManager::GetInstance().GetCatData(LevelManager::GetInstance().GetCurrentStage()->unlockCat)->nameInternal;
+        LOG_INFO("Get Unlock Cat " + catName);
+    }
 
     auto color = isVictory ? Util::Color::FromName(Util::Colors::YELLOW) : Util::Color::FromName(Util::Colors::RED);
     m_SettlementText = std::make_shared<TwoLayerText>(
