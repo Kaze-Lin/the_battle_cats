@@ -28,6 +28,20 @@ CatBase::CatBase(): Phase() {
         std::make_shared<BackgroundImage>(
             RESOURCE_DIR "/phase/lobby/player_level.png",
             -7.0F);
+    int userLevel = 1;
+    auto userUnlockCat = UserManager::GetInstance().GetCurrentUser()->unlockedCats;
+    for (auto& item: userUnlockCat) {
+        userLevel += item.level;
+    }
+    std::shared_ptr<Text> UserLevel = std::make_shared<Text>(
+            50,
+            std::to_string(userLevel),
+            m_PlayerLevel->GetZIndex() + 20.0F,
+            Util::Color::FromName(Util::Colors::YELLOW)
+            );
+    // glm::vec2 userLevelPosOffset = {-500.0F, 0.0F};
+    // UserLevel->Place(m_PlayerLevel->GetCoordinate() + userLevelPosOffset);
+    m_PlayerLevel->AddChild(UserLevel);
     AddChild(m_PlayerLevel);
 
     m_CatBaseCatFace =
@@ -117,6 +131,7 @@ CatBase::CatBase(): Phase() {
     const auto playerLevelX = -1.0F *  System::GetWindowWidth() / 2.0F + 140.0F;
     const auto playerLevelY = lobbyBannerY - m_LobbyBanner->GetSize().y / 2.0F - m_PlayerLevel->GetSize().y / 2.0F -20.0F;
     m_PlayerLevel->Place({playerLevelX, playerLevelY});
+    UserLevel->Place({playerLevelX + 50.0F, playerLevelY});
 
     m_CatBaseCatFace->ScaleSize({2.0F, 2.0F});
     const auto catBaseCatFaceX = System::GetWindowWidth() / 2.0F - m_CatBaseCatFace->GetSize().x / 2.0F + 60.0F;

@@ -25,10 +25,10 @@ void App::Update() {
 
     m_Phase->Update();
 
-    if (Util::Input::IsKeyUp(Util::Keycode::MOUSE_LB)) {
-        const glm::vec2 mousePos = Util::Input::GetCursorPosition();
-        LOG_DEBUG("Click Coordinate: X={}, Y={}", mousePos.x, mousePos.y);
-    }
+    // if (Util::Input::IsKeyUp(Util::Keycode::MOUSE_LB)) {
+    //     const glm::vec2 mousePos = Util::Input::GetCursorPosition();
+    //     LOG_DEBUG("Click Coordinate: X={}, Y={}", mousePos.x, mousePos.y);
+    // }
 
     m_Root.Update();
 

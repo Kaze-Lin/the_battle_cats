@@ -197,7 +197,8 @@ Fight::Fight(): Phase() {
                 imagePath = RESOURCE_DIR "/phase/fight/Cannoncharge_" + std::to_string(chargeState) + ".png";
             }
             btn->SetImage(imagePath);
-            LOG_INFO("Cannon image updated to: %s", imagePath.c_str());
+            std::string log = "Cannon image updated to: " + std::to_string(chargeState);
+            LOG_INFO(log);
         }
     });
 
@@ -313,7 +314,7 @@ Fight::Fight(): Phase() {
         if (auto w = weakWallet.lock()) {
             if (enemy && enemy->GetFaction() == Faction::Enemy) {
                 w->AddMoney(enemy->GetDropGold());
-                LOG_INFO("Enemy died. Wallet received %.1f money.", enemy->GetDropGold());
+                LOG_INFO("Enemy died. Wallet received " + std::to_string(enemy->GetDropGold()) + " money.");
             }
         }
     });
@@ -440,7 +441,7 @@ void Fight::Update() {
                     } else {
                         user->progress.currentStage[1] = currentStage->stageId;
                     }
-                    LOG_INFO("User progress updated! Highest stage cleared: %d", currentStage->stageId);
+                    LOG_INFO("User progress updated! Highest stage cleared: " + std::to_string(currentStage->stageId));
                 }
             }
         }

@@ -241,8 +241,8 @@ void Upgrade::BuildSelectionBar() {
             continue;
         }
 
-        std::string deploySort = std::to_string(catId) + ": " + catData->nameInternal;
-        LOG_DEBUG(deploySort);
+        // std::string deploySort = std::to_string(catId) + ": " + catData->nameInternal;
+        // LOG_DEBUG(deploySort);
 
         // Upgrade block --
         auto bg = std::make_shared<UpgradeBlock>(
