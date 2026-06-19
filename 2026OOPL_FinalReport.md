@@ -28,6 +28,16 @@
 
 ## 遊戲介紹
 ### 遊戲規則
+- **遊戲操作**
+  - admin 帳號
+    - `Account`: admin
+    - `Password`: -1
+  - **大部分操作皆使用滑鼠操作**
+  - `戰鬥`階段的作弊模式
+    - D - 遊戲速度五倍速
+    - A - 遊戲速度一倍速
+    - X - 派出我方貓貓
+    - Z - 派出敵方狗勾 - 如果覺得關卡太簡單可以給自己增加難度(?
 - **戰鬥系統**
   - **資源管理**：戰鬥中錢包會隨時間自動累積金錢（Money），玩家可以消耗金錢來升級工作貓（Wallet Upgrade），藉此提高金錢累積速度與金錢上限。
   - **出兵機制**：畫面下方有貓咪陣容按鈕，當金錢足夠且貓咪冷卻完畢時，點擊即可消耗金錢召喚貓咪。
@@ -35,22 +45,23 @@
   - **勝負條件**：我方貓咪主堡與敵方主堡各自擁有血量，只要優先將敵方主堡摧毀即獲勝；反之若我方主堡血量歸零則戰鬥失敗。
   - **戰鬥判定**：每隻單位都有攻擊前搖（Precast）、後搖（Postcast）、攻擊間隔（Cooldown）與射程。當敵人進入射程後，單位會停下進行攻擊前搖，前搖結束當下進行傷害判定。
 - **貓咪基地與升級系統**
-  - 玩家可在基地查看當前持有的 XP 與貓罐頭。
-  - 進入「升級」介面可消耗 XP 升級解鎖的貓咪，或是升級主堡血量、工作貓效率、大砲攻擊力等科技。
-  - 進入「隊伍編成」介面可以藉由拖曳或是點擊的方式，將你所擁有的貓咪編排進 10 格的出戰陣容當中。
+  - 玩家可以在除了`戰鬥`之外的階段看到當前持有的 XP 與貓罐頭。
+  - 進入`升級`介面可消耗 XP 升級解鎖的貓咪，或是升級主堡血量、工作貓效率、大砲攻擊力等科技。
+  - 進入`隊伍編成`介面可以藉由拖曳或是點擊的方式，將你所擁有的貓咪編排進 10 格的出戰陣容當中。
 - **關卡系統**
   - 遊戲提供多個章節與關卡供玩家挑戰。會依據玩家的破關進度解鎖下一關。關卡會根據設計好的時間軸與觸發條件（如敵方主堡血量）來生成不同的敵人與 Boss。
 
 ### 遊戲畫面
 |   階段   |                        遊戲畫面                        |
 |:------:|:--------------------------------------------------:|
+| 輸入帳號密碼 |  <img src="FinalProjectImg/輸入帳密.jpg" width="400">  |
 |  登入畫面  |  <img src="FinalProjectImg/登入畫面.jpg" width="400">  |
 |  貓咪基地  | <img src="FinalProjectImg/貓咪基地畫面.jpg" width="400"> |
-|    升級   |  <img src="FinalProjectImg/升級介面.jpg" width="400">  |
-|隊伍編成介面|  <img src="FinalProjectImg/編成介面.jpg" width="400">  |
+|   升級   |  <img src="FinalProjectImg/升級介面.jpg" width="400">  |
+| 隊伍編成介面 |  <img src="FinalProjectImg/編成介面.jpg" width="400">  |
 |  關卡選擇  |  <img src="FinalProjectImg/關卡選擇.jpg" width="400">  |
-|    戰鬥   |  <img src="FinalProjectImg/戰鬥畫面.jpg" width="400">  |
-|   結算畫面   | <img src="FinalProjectImg/結算畫面.jpg" width="400"> |
+|   戰鬥   |  <img src="FinalProjectImg/戰鬥畫面.jpg" width="400">  |
+|  結算畫面  |  <img src="FinalProjectImg/結算畫面.jpg" width="400">  |
 
 ## 程式設計
 ### 程式架構
@@ -102,7 +113,6 @@ classDiagram
     Phase <|-- StageSelection
     Phase <|-- TeamBuild
     Phase <|-- Upgrade
-    Phase <|-- PropsStore
     Phase <|-- Fight
 
     class App
@@ -175,6 +185,10 @@ classDiagram
   - 在編成介面中實作了 Drag & Drop 機制。利用滑鼠按下的時間與座標差距來區分玩家是想要「滑動畫面（Scroll）」還是「拖拉物件（Drag）」。當判定為拖拉時，會生成半透明的跟隨虛影（Ghost），並在放開時計算最靠近的格子（Grid Index）進行陣容抽換。
 - **事件回調與解耦 (Observer / Callback Pattern)**
   - 大量利用 `std::function` 將 UI 更新邏輯與底層數值解耦。例如戰鬥中的 `Unit` 血量變化會觸發 `m_onHealthChanged` 通知血條更新；`Wallet` 餘額改變會通知 UI 更新文字，避免每幀在 UI 層輪詢變數。
+
+### 使用到 AI/AI Agent 的部分
+- `JSON`檔案讀取
+- 遊戲階段的 `Mapping` 系統
 
 ## 結語
 ### 問題與解決方法
