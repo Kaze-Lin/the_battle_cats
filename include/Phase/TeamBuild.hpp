@@ -10,6 +10,7 @@
 #include "Util/Time.hpp"
 #include "Component/ResourceDisplay.hpp"
 #include "Component/TwoLayerText.hpp"
+#include "AudioManager.hpp"
 
 class TeamBuild: public Phase {
 public:

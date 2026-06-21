@@ -35,7 +35,7 @@ set(SRC_FILES
     EntityManager.cpp
     LevelManager.cpp
     Unit.cpp
-
+    AudioManager.cpp
 )
 
 set(INCLUDE_FILES
@@ -81,6 +81,7 @@ set(INCLUDE_FILES
     nlohmann/json.hpp
     UserData.hpp
     UserManager.hpp
+    AudioManager.hpp
 
     Component/HealthBar.hpp
     Component/ScrollContainer.hpp

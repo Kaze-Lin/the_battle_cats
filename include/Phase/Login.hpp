@@ -8,8 +8,13 @@
 #include "PhaseManager.hpp"
 #include "UserManager.hpp"
 
+#include "Util/BGM.hpp"
+#include "Util/SFX.hpp"
+
 class Login: public Phase{
 private:
+    std::shared_ptr<Util::BGM> m_BGM;
+    std::shared_ptr<Util::SFX> m_PressButton;
     std::shared_ptr<TwoLayerText> m_Prompt;
 
     std::shared_ptr<TextButton> m_tb_ToBeContinue;

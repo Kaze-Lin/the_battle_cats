@@ -5,6 +5,8 @@
 #include "Phase/StageSelection.hpp"
 
 CatBase::CatBase(): Phase() {
+    AudioManager::PlayBGM(RESOURCE_DIR "/bgm/catbase.mp3");
+
     // background image (without interaction image)
     m_BackgroundImage =
         std::make_shared<BackgroundImage>(
@@ -28,7 +30,7 @@ CatBase::CatBase(): Phase() {
         std::make_shared<BackgroundImage>(
             RESOURCE_DIR "/phase/lobby/player_level.png",
             -7.0F);
-    int userLevel = 1;
+    int userLevel = 0;
     auto userUnlockCat = UserManager::GetInstance().GetCurrentUser()->unlockedCats;
     for (auto& item: userUnlockCat) {
         userLevel += item.level;
@@ -199,22 +201,27 @@ std::shared_ptr<Phase> CatBase::GetDestinationPhase() {
 }
 
 void CatBase::ToStageSelection() {
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3", 15);
     this->m_DestinationPhase = "StageSelection";
 }
 
 void CatBase::ToUpgrade() {
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3", 15);
     this->m_DestinationPhase = "Upgrade";
 }
 
 void CatBase::ToTeamBuild() {
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3", 15);
     this->m_DestinationPhase = "TeamBuild";
 }
 
 void CatBase::ToPropsStore() {
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3", 15);
     this->m_DestinationPhase = "PropsStore";
 }
 
 void CatBase::ToExit() {
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3", 15);
     LOG_INFO("The game be quit by the m_b_Back button in Phase 'CatBase'");
 
     const auto context = Core::Context::GetInstance();

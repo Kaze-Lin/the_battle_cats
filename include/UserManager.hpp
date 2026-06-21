@@ -9,6 +9,7 @@
 #include <memory>
 #include "DataBase/UserData.hpp"
 #include "Util/Logger.hpp"
+#include "AudioManager.hpp"
 
 class UserManager {
 private:
@@ -220,6 +221,7 @@ public:
         for (auto& cat : m_currentUser->unlockedCats) {
             if (cat.catId == catId) {
                 if (cat.level < 30 && m_currentUser->resources.xp >= cost) {
+                    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/levelup.mp3", 15);
                     m_currentUser->resources.xp -= cost;
                     cat.level += 1;
                     if (cat.level == 10) {
@@ -232,6 +234,7 @@ public:
                     SaveDatabase(); // Ensure the upgrade is immediately persisted to disk
                     return true;
                 }
+                else AudioManager::PlaySFX(RESOURCE_DIR "/bgm/unlevelup.mp3", 15);
                 break; // Cat found but already max level or not enough XP
             }
         }

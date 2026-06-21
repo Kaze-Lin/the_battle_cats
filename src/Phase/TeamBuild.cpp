@@ -228,10 +228,12 @@ std::shared_ptr<Phase> TeamBuild::GetDestinationPhase() {
 }
 
 void TeamBuild::GoBack() {
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3", 15);
     this->m_DestinationPhase = "";
 }
 
 void TeamBuild::ToPropsStore() {
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3", 15);
     this->m_DestinationPhase = "PropsStore";
 }
 

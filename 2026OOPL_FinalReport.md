@@ -17,13 +17,15 @@
     - 畫面事件觸發
     - 資料、邏輯引用
     - 素材裁切、加工
-    - 影片拍攝
     - 期末專案報告
+    - 影片字幕
   - 鄭源勳
     - JSON資料撰寫、讀取
     - 抓取素材
     - 角色召喚
     - 攻擊、升級邏輯
+    - 音效製作
+    - 影片拍攝
 
 ## 遊戲介紹
 ### 遊戲規則
@@ -151,6 +153,7 @@ classDiagram
     class DatabaseManager { <<Singleton>> }
     class LevelManager { <<Singleton>> }
     class UserManager { <<Singleton>> }
+    class AudioManager { <<Static>> }
 
     Fight *-- Wallet : contains
     Fight *-- Cannon : contains
@@ -163,15 +166,17 @@ classDiagram
     Fight ..> DatabaseManager : queries data
     Fight ..> LevelManager : checks progress
     Fight ..> UserManager : updates money/XP
+    Fight ..> AudioManager : plays SFX/BGM
 ```
 - `Fight`：核心戰鬥場景，負責整合介面（如金錢 UI `Wallet`、大砲充能 UI `Cannon`、出兵按鈕 `CatSlotController`）與底層邏輯。
 - **Entity 實體系統**：
   - `EntityManager`：戰鬥時專用的實體管理器。負責動態生成我方貓咪、敵方單位以及雙方主堡，並負責處理單位的死亡回收、碰撞偵測以及攻擊範圍篩選。
   - `Unit`：戰場上的戰鬥單位。內部擁有狀態機來控制（Walk, Precast, Postcast, Cooldown, Knockback, Dead），並處理動畫對齊與血量邏輯。
-- **資料管理類別（Singleton 單例模式）**：
+- **資料管理類別（Singleton 單例模式 / 靜態管理）**：
   - `DatabaseManager`：讀取並管理唯讀的遊戲靜態數據，如 `UnitData`（貓咪數值）、`EnemyData`（敵人數值）、`StageData`（關卡出怪規則）。
   - `UserManager`：處理玩家帳號系統，管理與儲存資源（XP/罐頭）、貓咪等級與解鎖進度、隊伍編成等資料。
   - `LevelManager`：載入並管理當前關卡的時間軸與出怪規則。
+  - `AudioManager`：處理全局音效與背景音樂（BGM / SFX）的播放與切換，利用靜態方法集中管理音訊資源，避免場景切換時音樂重疊或中斷。
 
 ### 程式技術
 - **場景管理 (Phase Management)**
@@ -184,6 +189,8 @@ classDiagram
   - 在編成介面中實作了 Drag & Drop 機制。利用滑鼠按下的時間與座標差距來區分玩家是想要「滑動畫面（Scroll）」還是「拖拉物件（Drag）」。當判定為拖拉時，會生成半透明的跟隨虛影（Ghost），並在放開時計算最靠近的格子（Grid Index）進行陣容抽換。
 - **事件回調與解耦 (Observer / Callback Pattern)**
   - 大量利用 `std::function` 將 UI 更新邏輯與底層數值解耦。例如戰鬥中的 `Unit` 血量變化會觸發 `m_onHealthChanged` 通知血條更新；`Wallet` 餘額改變會通知 UI 更新文字，避免每幀在 UI 層輪詢變數。
+- **音訊集中管理與狀態封裝 (Audio Management)**
+  - 封裝 `AudioManager` 靜態類別來統一處理背景音樂（BGM）與音效（SFX）的播放。透過記錄當前播放的音樂路徑，在場景轉換（Phase Switch）時自動判斷是否需要切換音樂，解決了多次切換場景導致音樂重疊播放或頻繁中斷的問題。
 
 ### 使用到 AI/AI Agent 的部分
 - 我們在對於完全沒碰過的東西或是不熟悉的架構或語法我們都會與使用 AI 來作為輔助查詢，像是 `JSON` 檔案的讀取與寫入、遊戲階段的返回功能、單例模式以及一些 `Manager` ，都是透過與 AI 的討論、學習。
@@ -223,6 +230,18 @@ classDiagram
   <br>
 
 #### **113590052 鄭源勳**
+
+&nbsp;&nbsp;&nbsp;&nbsp;這是我第一次與別人共同合作開發一個專案，在過程中難免有一些摩擦，所幸到最後都有圓滿解決。貓咪大戰爭這個遊戲的遊玩方式並不複雜，但如果要完美復刻的話肯定會做不完，所以我和我的隊友經過了長時間的討論後確定我們的目標，刪減掉了一些原版既有的功能，才讓這個專案得以進行下去。
+
+&nbsp;&nbsp;&nbsp;&nbsp;在開發的過程中，我有發現到我的一些問題，有時候在程式我會很容易鑽牛角尖，因為總是會想到很多問題，然後會想說怎麼樣去預防這些問題，間接導致可能拖累團隊的進度，所以我後面有稍微減緩點。
+
+&nbsp;&nbsp;&nbsp;&nbsp;然後我發現有時候我跟我隊友的想法會很不一樣，像是看中的點不太一樣，像是角色的圖片之類的，我的想法是因為有說圖片不怎麼重要，所以我會希望我們應該要著重在遊戲的架構跟進度上，但我的隊友有時候很執著在摳圖上，間接導致進度的拖累，後面我們有重新溝通，確認彼此的步調。
+
+&nbsp;&nbsp;&nbsp;&nbsp;在專案使用AI上我跟我的隊友也有很不一樣的想法，我的隊友做法基本上都是純手寫，但我是使用CLI去快速實現很多功能，我的做法是先寫一個自訂的設定檔(toml)，裡面詳細寫了我要的框架內容以及限制CLI的產出與說明，讓AI能夠快速且有效率的產出我想要的高品質code，之後在由我親自審核一遍，改成我想要的樣子。我覺得我們兩個的做法都各有優缺，我隊友的優點是可以記得所有手寫的功能，缺點是產出效率低且可能品質不穩定；我這裡的優點則是產出高且品質大部分都可以，且可以學到很多不知道的技巧，缺點就是code不是親自寫的很容易忘記詳細的函式，但我覺得我們兩個人的方法都不錯。
+
+
+
+這次的合作不僅是一次遊戲機制的實踐，更是一場在時間管理、溝通協調與 AI 工具應用上的全面演練。成功在摩擦中找到平衡，確立了適合雙方的合作節奏，這對於未來參與任何規模的軟體開發團隊，都會是非常寶貴的實戰經驗。
   
 
 ### 貢獻比例

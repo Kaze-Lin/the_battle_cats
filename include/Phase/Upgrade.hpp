@@ -10,6 +10,7 @@
 #include "Component/TwoLayerText.hpp"
 #include "Phase/CatBase.hpp"
 #include "Component/ResourceDisplay.hpp"
+#include "AudioManager.hpp"
 
 class Upgrade: public Phase {
 private:
