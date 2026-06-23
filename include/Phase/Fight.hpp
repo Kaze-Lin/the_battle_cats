@@ -14,16 +14,20 @@
 #include "Component/TextButton.hpp"
 #include "Component/ResourceDisplay.hpp"
 
+#include "AudioManager.hpp"
+
 class CatSlotController {
 private:
+    std::shared_ptr<Util::BGM> m_BGM;
+    std::shared_ptr<Util::BGM> m_PressButton;
+
     std::shared_ptr<Button> m_Button;
-    std::shared_ptr<TwoLayerText> m_CdText;
+    std::shared_ptr<Text> m_CdText;
     std::shared_ptr<TwoLayerText> m_CostText;
     float m_CurrentCd = 0.0f;
     float m_MaxCd = 0.0f;
     int m_Cost = 0;
 
-    // 用於快取目前顯示的秒數，避免每幀重建 Text Texture
     int m_LastSec = -1;
 
 public:
@@ -35,7 +39,7 @@ public:
     bool IsReady() const;
 
     std::shared_ptr<Button> GetButton() const { return m_Button; }
-    std::shared_ptr<TwoLayerText> GetCdText() const { return m_CdText; }
+    std::shared_ptr<Text> GetCdText() const { return m_CdText; }
     std::shared_ptr<TwoLayerText> GetCostText() const { return m_CostText; }
     int GetCost() const { return m_Cost; }
 

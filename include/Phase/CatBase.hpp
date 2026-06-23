@@ -8,6 +8,8 @@
 #include "Phase.hpp"
 #include "Util/Renderer.hpp"
 #include "Phase/Upgrade.hpp"
+#include "AudioManager.hpp"
+#include "Util/SFX.hpp"
 
 class CatBase: public Phase {
 private:

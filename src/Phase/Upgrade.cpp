@@ -154,10 +154,12 @@ std::shared_ptr<Phase> Upgrade::GetDestinationPhase() {
 }
 
 void Upgrade::GoBack() {
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3", 15);
     this->m_DestinationPhase = "";
 }
 
 void Upgrade::ToPropsStore() {
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3", 15);
     this->m_DestinationPhase = "PropsStore";
 }
 

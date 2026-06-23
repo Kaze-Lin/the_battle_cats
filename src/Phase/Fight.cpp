@@ -20,7 +20,7 @@ namespace {
 
 CatSlotController::CatSlotController(int cost, float maxCd)
     : m_Cost(cost), m_MaxCd(maxCd), m_CurrentCd(0.0f), m_LastSec(-1) {
-    m_CdText = std::make_shared<TwoLayerText>(
+    m_CdText = std::make_shared<Text>(
         TextThemeDetail::DefaultFontSize,
         " ",
         81.0f,
@@ -47,10 +47,9 @@ void CatSlotController::Update(float gameDeltaTime) {
         if (m_CurrentCd <= 0.0f) {
             m_CurrentCd = 0.0f;
             m_CdText->SetVisible(false);
-            m_LastSec = -1; // Reset cache
+            m_LastSec = -1;
+            AudioManager::PlaySFX(RESOURCE_DIR "/bgm/fight/EndOfUnitRecharge.mp3", 15);
         } else {
-            // [Performance Optimization]
-            // Calculate ceiling seconds. Only update text texture if the integer changes.
             int currentSec = static_cast<int>(std::ceil(m_CurrentCd));
             if (currentSec != m_LastSec) {
                 m_LastSec = currentSec;
@@ -89,7 +88,7 @@ Fight::~Fight() {
 }
 
 Fight::Fight(): Phase() {
-    // background image (without interaction image)
+    AudioManager::PlayBGM(RESOURCE_DIR "/bgm/fight/fight.mp3", 15);
     m_BackgroundImage =
         std::make_shared<BackgroundImage>(
             RESOURCE_DIR "/stage_background/Bg000.png",
@@ -98,7 +97,6 @@ Fight::Fight(): Phase() {
 
     m_replay = UserManager::GetInstance().GetCurrentUser()->progress.highestStageCleared >= LevelManager::GetInstance().GetCurrentStage()->stageId;
 
-    // Wallet 初始化
     m_Wallet = std::make_shared<Wallet>();
     int workerCatEfficiency = 1;
     int walletCapacity = 1;
@@ -108,7 +106,6 @@ Fight::Fight(): Phase() {
     }
     m_Wallet->Initialize(workerCatEfficiency, walletCapacity);
 
-    // Wallet UI - Money Text
     m_WalletMoneyText = std::make_shared<TwoLayerText>(
         TextThemeDetail::DefaultFontSize,
         "Money: 0 / 0",
@@ -116,7 +113,6 @@ Fight::Fight(): Phase() {
     );
     AddChild(m_WalletMoneyText);
 
-    // Wallet UI - Upgrade Cost Text
     m_WalletLevelText = std::make_shared<TwoLayerText>(
         TextThemeDetail::DefaultFontSize,
         "$ 0",
@@ -124,7 +120,6 @@ Fight::Fight(): Phase() {
     );
     AddChild(m_WalletLevelText);
 
-    // Cannon 參數讀取
     int cannonAttack = 1, cannonRange = 1, cannonCharge = 1;
     if (auto user = UserManager::GetInstance().GetCurrentUser()) {
         cannonAttack = user->baseUpgrades.cannonAttack;
@@ -133,14 +128,12 @@ Fight::Fight(): Phase() {
     }
     m_Cannon = std::make_shared<Cannon>();
 
-    // Laser Effect UI
     m_LaserEffectText = std::make_shared<TwoLayerText>(
         TextThemeDetail::DefaultFontSize * 2,
         "============ LASER ============",
         80,
         Util::Color::FromName(Util::Colors::YELLOW)
     );
-    // 預設不加入場景，開砲時再 AddChild
 
     std::weak_ptr<Wallet> weakWallet = m_Wallet;
     m_b_RickUpgrade =
@@ -193,6 +186,7 @@ Fight::Fight(): Phase() {
             std::string imagePath;
             if (chargeState >= 10) {
                 imagePath = RESOURCE_DIR "/phase/fight/Cannoncharge_full.png";
+                AudioManager::PlaySFX(RESOURCE_DIR "/bgm/fight/EndOfCannonCharge.mp3",15);
             } else {
                 imagePath = RESOURCE_DIR "/phase/fight/Cannoncharge_" + std::to_string(chargeState) + ".png";
             }
@@ -213,7 +207,6 @@ Fight::Fight(): Phase() {
         }
         if (auto lText = weakLevelText.lock()) {
             if (level >= 8) {
-                lText->SetText("MAX");
             } else {
                 lText->SetText("$ " + std::to_string(upgradeCost));
             }
@@ -236,6 +229,7 @@ Fight::Fight(): Phase() {
             RESOURCE_DIR "/phase/fight/pause.png",
             [this]() {
                 LOG_INFO("Pause Button Clicked!");
+                AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3",15);
                 if (this->m_CurrentState == SubState::PLAYING) {
                 this->m_CurrentState = SubState::PAUSED;
                 this->SetPauseMenuVisible(true);
@@ -253,12 +247,14 @@ Fight::Fight(): Phase() {
         32, "Resume", 99.0f,
         [this]() {
             this->m_CurrentState = SubState::PLAYING;
+            AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3",15);
             this->SetPauseMenuVisible(false);
         });
 
     m_ExitBtn = std::make_shared<TextButton>(
         32, "Exit to Lobby", 99.0f    ,
         [this]() {
+            AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3",15);
             this->m_DestinationPhase = "CatBase";
         });
 
@@ -427,6 +423,8 @@ void Fight::Update() {
         LOG_INFO("VICTORY! The Player has destroyed the Enemy Base!");
         UserManager::GetInstance().AddXP(LevelManager::GetInstance().GetStageExperience());
         m_isGameOver = true;
+        AudioManager::StopBGM();
+        AudioManager::PlaySFX(RESOURCE_DIR "/bgm/fight/victory.mp3", 15);
 
         if (auto user = UserManager::GetInstance().GetCurrentUser()) {
             const StageData* currentStage = LevelManager::GetInstance().GetCurrentStage();
@@ -451,6 +449,8 @@ void Fight::Update() {
         LOG_INFO("DEFEAT! The Enemy has destroyed the Cat Base!");
         m_isGameOver = true;
         ShowSettlementScreen(false);
+        AudioManager::StopBGM();
+        AudioManager::PlaySFX(RESOURCE_DIR "/bgm/fight/defeat.mp3", 15);
     }
 
     if (Util::Input::IsKeyDown(Util::Keycode::X)) {
@@ -510,6 +510,7 @@ void Fight::DeployCatButton(std::vector<int> IDs) {
                     }
                     if (auto w = weakWallet.lock()) {
                         if (w->SpendMoney(cost)) {
+                            AudioManager::PlaySFX(RESOURCE_DIR "/bgm/fight/deployCat.mp3", 15);
                             EntityManager::GetInstance().SpawnCat(
                                 catId,
                                 level,
@@ -565,6 +566,7 @@ void Fight::ShowSettlementScreen(bool isVictory) {
         }
     }
     std::string textStr = isVictory ? "VICTORY!" : "DEFEAT!";
+
     bool checkUnlockcat = LevelManager::GetInstance().GetCurrentStage()->unlockCat != -1;
     if (isVictory and checkUnlockcat and !m_replay){
         UserManager::GetInstance().addCat(LevelManager::GetInstance().GetCurrentStage()->unlockCat);

@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include "Util/Input.hpp"
+#include "AudioManager.hpp"
 
 template <typename T>
 class ScrollManager {
@@ -45,11 +46,13 @@ public:
         if (Util::Input::IsKeyDown(Util::Keycode::RIGHT)) {
             if (midIndex + 1 < v.size()) {
                 HorizontalMovement(v, v[midIndex + 1]->GetCoordinate().x);
+                AudioManager::PlaySFX(RESOURCE_DIR "/bgm/scrolling.mp3", 15);
                 return;
             }
         } else if (Util::Input::IsKeyDown(Util::Keycode::LEFT)) {
             if (midIndex > 0) {
                 HorizontalMovement(v, v[midIndex - 1]->GetCoordinate().x);
+                AudioManager::PlaySFX(RESOURCE_DIR "/bgm/scrolling.mp3", 15);
                 return;
             }
         }
@@ -58,6 +61,7 @@ public:
         if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB)) {
             if (!m_IsDragging) {
                 m_IsDragging = true;
+                AudioManager::PlaySFX(RESOURCE_DIR "/bgm/scrolling.mp3", 15);
                 m_LastMousePos = Util::Input::GetCursorPosition();
             } else {
                 glm::vec2 currentMousePos = Util::Input::GetCursorPosition();

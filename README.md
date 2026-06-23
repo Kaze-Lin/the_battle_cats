@@ -1,7 +1,3 @@
-# PTSD Template
-
-This is a [PTSD](https://github.com/ntut-open-source-club/practical-tools-for-simple-design) framework template for students taking OOPL2024s.
-
 ## Quick Start
 
 1. Use this template to create a new repository
@@ -13,7 +9,11 @@ This is a [PTSD](https://github.com/ntut-open-source-club/practical-tools-for-si
    git clone YOUR_GIT_URL --recursive
    ```
 
-3. Build your project
+3. Reset the project, because we have edit `PTSD`
+   ```bash
+   git reset --hard
+   ```
+4. Build your project
 
   > [!WARNING]
   > Please build your project in `Debug` because our `Release` path is broken D:

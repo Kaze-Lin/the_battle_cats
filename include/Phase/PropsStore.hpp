@@ -5,6 +5,7 @@
 #include "Component/BackgroundImage.hpp"
 #include "Component/Button.hpp"
 #include "Component/ResourceDisplay.hpp"
+#include "AudioManager.hpp"
 
 class PropsStore: public Phase {
 private:

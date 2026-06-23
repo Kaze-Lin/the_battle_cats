@@ -11,6 +11,7 @@
 #include "Phase.hpp"
 #include "Component/Block/StageBlock.hpp"
 #include "Component/ResourceDisplay.hpp"
+#include "AudioManager.hpp"
 
 class StageSelection: public Phase {
 private:

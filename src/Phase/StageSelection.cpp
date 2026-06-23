@@ -127,14 +127,18 @@ void StageSelection::ToFight() {
     } else {
         LevelManager::GetInstance().LoadStage(1, 1);
     }
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3", 15);
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/fight/enterBattle.mp3", 15);
     this->m_DestinationPhase = "Fight";
 }
 
 void StageSelection::ToPropsStore() {
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3", 15);
     this->m_DestinationPhase = "PropsStore";
 }
 
 void StageSelection::GoBack() {
+    AudioManager::PlaySFX(RESOURCE_DIR "/bgm/pressing_button.mp3", 15);
     this->m_DestinationPhase = "";
 }
 

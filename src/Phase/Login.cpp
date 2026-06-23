@@ -3,6 +3,14 @@
 #include <limits>
 
 Login::Login(): Phase(){
+    int volumn = 15;
+    m_BGM = std::make_shared<Util::BGM>(RESOURCE_DIR "/bgm/login.mp3");
+    m_BGM->SetVolume(volumn);
+    m_BGM->Play();
+
+    m_PressButton = std::make_shared<Util::SFX>(RESOURCE_DIR "/bgm/pressing_button.mp3");
+    m_PressButton->SetVolume(volumn);
+
     m_Prompt =
         std::make_shared<TwoLayerText>(
             60,
@@ -88,5 +96,6 @@ std::shared_ptr<Phase> Login::GetDestinationPhase() {
 }
 
 void Login::ToCatbase() {
+    m_PressButton->Play();
     this->m_DestinationPhase = "CatBase";
 }
